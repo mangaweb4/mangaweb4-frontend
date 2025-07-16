@@ -31,7 +31,7 @@ export async function validateSession(url: URL) {
 
     } catch (err: any) {
         console.log(err.message)
-        //redirect(307, loginUrl(url.origin, url))
+        redirect(307, loginUrl(url.origin, url))
     }
 }
 
