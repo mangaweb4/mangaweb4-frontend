@@ -4,6 +4,7 @@ import * as jose from 'jose'
 import { redirect } from '@sveltejs/kit'
 import { loginUrl } from './routes'
 import { variables } from './variables.server'
+import logger from '$lib/logger'
 
 export const tokens = persisted('preferences', {
     accessToken: '<INVALID>',
@@ -30,7 +31,7 @@ export async function validateSession(url: URL) {
         })
 
     } catch (err: any) {
-        console.log(err.message)
+        logger.warn(err, 'validate JWT error')
         redirect(307, loginUrl(url.origin, url))
     }
 }
