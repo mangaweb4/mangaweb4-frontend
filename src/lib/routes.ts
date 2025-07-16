@@ -16,6 +16,10 @@ export function viewURL(base: URL | string, name: string): URL {
     return u;
 }
 
+export function userURL(base:URL| string): URL {
+    return new URL("/user", base)
+}
+
 export function tagURL(base: URL | string, options?: {
     user?: string;
     tag?: string;
@@ -96,4 +100,13 @@ export function browseURL(base: URL | string, options?: {
     }
 
     return output;
+}
+
+export function loginUrl(baseUrl: URL | string, targetUrl: URL | string) {
+    const target = targetUrl.toString().substring(baseUrl.toString().length + 1)
+
+    const loginUrl = new URL("/login", baseUrl)
+    loginUrl.searchParams.set('target', target)
+
+    return loginUrl
 }

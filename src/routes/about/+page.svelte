@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { aboutURL, browseURL, historyURL, tagURL } from '$lib/routes';
+	import { aboutURL, browseURL, historyURL, tagURL, userURL } from '$lib/routes';
 	import type { PageData } from './$types';
 	import {
 		Button,
@@ -66,10 +66,7 @@
 	async function purgeCache() {
 		const url = new URL('/api/maintenance/purge_cache', page.url.origin);
 		await fetch(url);
-		toast.show(
-			'Purging cache',
-			'Purging cache in progress. Please refresh after a few minutes.'
-		);
+		toast.show('Purging cache', 'Purging cache in progress. Please refresh after a few minutes.');
 	}
 </script>
 
@@ -97,6 +94,9 @@
 			</Dropdown>
 			<NavItem>
 				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
+			</NavItem>
+			<NavItem>
+				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
 			</NavItem>
 			<NavItem>
 				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>

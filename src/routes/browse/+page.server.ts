@@ -7,8 +7,6 @@ import { MangaClient } from '$lib/grpc/manga.client';
 import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 import { $enum } from 'ts-enum-util';
 
-
-
 function createDefaultRequest(): {
     user: string;
     filter: Filter;

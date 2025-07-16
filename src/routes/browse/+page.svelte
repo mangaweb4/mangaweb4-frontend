@@ -5,7 +5,7 @@
 	import MoveToTop from '$lib/MoveToTop.svelte';
 	import Pagination from '$lib/Pagination.svelte';
 	import Toast from '$lib/Toast.svelte';
-	import { aboutURL, browseURL, historyURL, tagURL, viewURL } from '$lib/routes';
+	import { aboutURL, browseURL, historyURL, tagURL, userURL, viewURL } from '$lib/routes';
 
 	import {
 		Button,
@@ -74,7 +74,7 @@
 			search: data.request.search,
 			sort: data.request.sort,
 			tag: data.request.tag
-		} 
+		};
 		if (options != null) {
 			const { filter, item_per_page, order, page, search, sort, tag } = options;
 			if (filter != null) {
@@ -253,6 +253,9 @@
 			</Dropdown>
 			<NavItem>
 				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
+			</NavItem>
+			<NavItem>
+				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
 			</NavItem>
 			<NavItem>
 				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>

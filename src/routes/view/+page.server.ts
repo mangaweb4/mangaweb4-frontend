@@ -4,6 +4,7 @@ import { variables } from '$lib/variables';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
+import { validateSession } from '$lib/auth';
 
 export const prerender = false;
 

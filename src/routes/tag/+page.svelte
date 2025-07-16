@@ -23,7 +23,7 @@
 	} from '@sveltestrap/sveltestrap';
 	import Pagination from '$lib/Pagination.svelte';
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
-	import { aboutURL, tagURL, browseURL, historyURL } from '$lib/routes';
+	import { aboutURL, tagURL, browseURL, historyURL, userURL } from '$lib/routes';
 	import { ITEM_PER_PAGE } from '$lib/constants';
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
 	import PlaceholderCard from '$lib/PlaceholderCard.svelte';
@@ -184,6 +184,9 @@
 			</Dropdown>
 			<NavItem>
 				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
+			</NavItem>
+			<NavItem>
+				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
 			</NavItem>
 			<NavItem>
 				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>

@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 	import FavoriteButton from '$lib/FavoriteButton.svelte';
 	import Toast from '$lib/Toast.svelte';
-	import { aboutURL, browseURL, historyURL } from '$lib/routes';
+	import { aboutURL, browseURL, historyURL, userURL } from '$lib/routes';
 
 	import {
 		Collapse,
@@ -208,6 +208,9 @@
 			</Dropdown>
 			<NavItem>
 				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
+			</NavItem>
+			<NavItem>
+				<NavLink onclick={()=> goto(userURL(page.url.origin))}>User</NavLink>
 			</NavItem>
 			<NavItem>
 				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>

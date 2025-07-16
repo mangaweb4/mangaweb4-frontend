@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 	import MoveToTop from '$lib/MoveToTop.svelte';
 	import Pagination from '$lib/Pagination.svelte';
-	import { aboutURL, browseURL, historyURL, tagURL, viewURL } from '$lib/routes';
+	import { aboutURL, browseURL, historyURL, tagURL, userURL, viewURL } from '$lib/routes';
 
 	import {
 		Collapse,
@@ -81,7 +81,9 @@
 			<NavItem>
 				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
 			</NavItem>
-
+			<NavItem>
+				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
+			</NavItem>
 			<NavItem>
 				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
 			</NavItem>
@@ -110,7 +112,7 @@
 							pageCount={item.pageCount}
 							linkUrl={viewURL(page.url, item.name)}
 							imageUrl={createThumbnailUrl(item.name)}
-							accessTime={item.accessTime?Timestamp.toDate(item.accessTime): new Date()}
+							accessTime={item.accessTime ? Timestamp.toDate(item.accessTime) : new Date()}
 						/>
 					</div>
 				{/each}
