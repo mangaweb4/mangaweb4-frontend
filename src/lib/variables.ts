@@ -2,8 +2,8 @@ import { env } from '$env/dynamic/private';
 
 export const variables = {
     apiBasePath: env.BACKEND_URL ?? 'localhost:8972',
-    defaultSortField: env.DEFAULT_SORT_FIELD ?? "createTime",
-    defaultOrder: env.DEFAULT_ORDER ?? "descending",
+    defaultSortField: env.DEFAULT_SORT_FIELD ?? "CREATION_TIME",
+    defaultOrder: env.DEFAULT_ORDER ?? "DESCENDING",
 
     oidcEnable: env.OIDC_ENABLE ? env.OIDC_ENABLE == "true" : false,
     oidcClient: env.OIDC_CLIENT ?? '',

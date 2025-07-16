@@ -6,8 +6,8 @@
 
 ```sh
 BACKEND_URL=localhost:8972
-DEFAULT_SORT_FIELD=createTime # can be either 'name', 'pageCount', or 'createTime'
-DEFAULT_ORDER=descending # can be either 'ascending' or 'descending'
+DEFAULT_SORT_FIELD=CREATION_TIME # can be either 'NAME', 'PAGECOUNT', or 'CREATION_TIME'
+DEFAULT_ORDER=DESCENDING # can be either 'ASCENDING' or 'DESCENDING'
 ```
 **MangaWeb 4** also supports reading environment variables from `.env` file at run time.
 

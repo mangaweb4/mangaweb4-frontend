@@ -17,21 +17,8 @@ function createDefaultRequest(): {
     sort: SortField;
     tag: string;
 } {
-    let sortField: SortField
-    switch (variables.defaultSortField) {
-        case "name":
-            sortField = SortField.NAME;
-            break;
-
-        case "pageCount":
-            sortField = SortField.PAGECOUNT;
-            break;
-
-        default:
-            sortField = SortField.CREATION_TIME;
-            break;
-
-    }
+    let sortField: SortField = $enum(SortField)
+        .getValueOrDefault(variables.defaultSortField, SortField.CREATION_TIME)
 
     let order = SortOrder.DESCENDING
     if (sortField == SortField.NAME) {
