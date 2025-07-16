@@ -1,6 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit'
+import logger from './logger'
 
 export default defineConfig(({ command, mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
@@ -48,6 +49,7 @@ export default defineConfig(({ command, mode }) => {
 				},
 			})
 		],
+		customLogger: logger,
 		ssr: { noExternal: ['@popperjs/core'] },
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}']
