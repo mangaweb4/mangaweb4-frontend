@@ -15,7 +15,7 @@ export function getUser(request: Request): string {
 
     const payload = jose.decodeJwt(idToken)
 
-    return payload.email as string && '';
+    return payload.email as string ?? '';
 }
 
 export function getUserDetail(request: Request): {
@@ -31,13 +31,13 @@ export function getUserDetail(request: Request): {
     const payload = jose.decodeJwt(idToken)
 
     return {
-        email: payload.email as string || '',
-        name: payload.name as string || ''
+        email: payload.email as string ?? '',
+        name: payload.name as string ?? ''
     }
 }
 
 function getUserCF(request: Request): string {
-    return request.headers.get("Cf-Access-Authenticated-User-Email") || DEFAULT_EMAIL;
+    return request.headers.get("Cf-Access-Authenticated-User-Email") ?? DEFAULT_EMAIL;
 }
 
 function getUserDetailCF(request: Request): {
