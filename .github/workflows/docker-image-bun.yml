@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: docker-image
+name: docker-image-bun
 on:
   release:
     types: [published]
@@ -36,8 +36,8 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
           flavor: |
-            latest=true
-            prefix=bun
+            latest=false
+            prefix=bun-
 
       - name: Find Tag
         if: ${{ github.event_name == 'release' }}
