@@ -31,7 +31,7 @@
 </script>
 
 <svelte:head>
-	<title>User: Mangaweb 3</title>
+	<title>User: Mangaweb 4</title>
 </svelte:head>
 
 <Navbar color="dark" dark expand="md" sticky={'top'}>

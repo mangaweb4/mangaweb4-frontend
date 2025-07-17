@@ -71,7 +71,7 @@
 </script>
 
 <svelte:head>
-	<title>About: Mangaweb 3</title>
+	<title>About: Mangaweb 4</title>
 </svelte:head>
 
 <Navbar color="dark" dark expand="md" sticky={'top'}>
@@ -105,7 +105,7 @@
 	</Collapse>
 </Navbar>
 <Container>
-	<h1>MangaWeb 3</h1>
+	<h1>MangaWeb 4</h1>
 
 	<h6>Version {version}</h6>
 	<p>&copy; Copyright 2021-2023 Wutipong Wongsakuldej.</p>
