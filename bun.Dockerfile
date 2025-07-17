@@ -6,4 +6,4 @@ RUN bun install
 RUN bun run --bun build
 
 EXPOSE 3000
-CMD ["bun", "run", "--bun" "build/index.js"]
+CMD ["bun", "run", "--bun", "build/index.js"]
