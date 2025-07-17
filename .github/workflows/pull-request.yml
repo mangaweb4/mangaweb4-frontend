@@ -19,5 +19,9 @@ jobs:
         with:
           submodules: false
 
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
       - name: Post the knip results
         uses: codex-/knip-reporter@v2
