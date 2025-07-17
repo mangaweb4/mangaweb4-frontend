@@ -1,9 +1,18 @@
-FROM oven/bun:latest
+FROM node:20-alpine AS builder
 
-COPY src . .
+WORKDIR /app
 
-RUN bun install
-RUN bun run build
+COPY . .
+
+RUN npm ci
+RUN npm run build
+RUN npm prune --production
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app .
 
 EXPOSE 3000
-CMD ["bun", "build/index.js"]
+CMD ["node", "build"]
