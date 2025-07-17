@@ -1,23 +1,22 @@
-import Logger, { pino } from 'pino'
-import {createLogger} from 'vite'
+import logger from './src/lib/logger'
+import { createLogger } from 'vite'
 
-const pinoLogger = Logger()
-const logger = createLogger()
+const customLogger = createLogger()
 
-logger.info = (msg, options) =>{
-    pinoLogger.info(msg)
+customLogger.info = (msg, options) => {
+    logger.info(msg)
 }
 
-logger.warn = (msg, options) =>{
-    pinoLogger.warn(msg)
+customLogger.warn = (msg, options) => {
+    logger.warn(msg)
 }
 
-logger.warnOnce = (msg, options) => {
-    pinoLogger.warn(msg)
+customLogger.warnOnce = (msg, options) => {
+    logger.warn(msg)
 }
 
-logger.error = (msg, options) =>{
-    pinoLogger.error(msg)
+customLogger.error = (msg, options) => {
+    logger.error(msg)
 }
 
-export default logger;
+export default customLogger;
