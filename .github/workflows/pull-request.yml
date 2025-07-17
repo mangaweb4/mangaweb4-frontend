@@ -23,5 +23,7 @@ jobs:
         with:
           bun-version: latest
 
+      - run: bun install
+      
       - name: Post the knip results
         uses: codex-/knip-reporter@v2
