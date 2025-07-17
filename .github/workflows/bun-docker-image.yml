@@ -1,0 +1,67 @@
+# This is a basic workflow to help you get started with Actions
+name: docker-image
+on:
+  release:
+    types: [published]
+
+  push:
+    branches: ["master"]
+
+jobs:
+  push_to_registry:
+    name: docker-image-build-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            wutipong/mangaweb4-frontend
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+          flavor: |
+            latest=true
+            prefix=bun
+
+      - name: Find Tag
+        if: ${{ github.event_name == 'release' }}
+        id: tagger
+        uses: jimschubert/query-tag-action@v2
+        with:
+          include: "v*"
+
+      - uses: haya14busa/action-cond@v1
+        id: condval
+        with:
+          cond: ${{ github.event_name == 'release' }}
+          if_true: ${{steps.tagger.outputs.tag}}
+          if_false: "Development"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: ${{ !env.ACT }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          file: bun.Dockerfile
+          build-args: |
+            VERSION=${{ steps.condval.outputs.value }}
