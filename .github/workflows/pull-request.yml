@@ -11,8 +11,13 @@ permissions:
 
 jobs:
   knip:
-    name: Push Docker image to Docker Hub
+    name: knip
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
       - name: Post the knip results
         uses: codex-/knip-reporter@v2
