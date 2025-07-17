@@ -36,11 +36,11 @@ export function getUserDetail(request: Request): {
     }
 }
 
-export function getUserCF(request: Request): string {
+function getUserCF(request: Request): string {
     return request.headers.get("Cf-Access-Authenticated-User-Email") || DEFAULT_EMAIL;
 }
 
-export function getUserDetailCF(request: Request): {
+function getUserDetailCF(request: Request): {
     email: string,
     name: string
 } {
