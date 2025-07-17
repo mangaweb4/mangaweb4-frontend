@@ -1,7 +1,7 @@
-import { tokens } from '$lib/auth'
+import { tokens } from '$lib/auth.server'
 import { get } from 'svelte/store';
 import * as jose from 'jose'
-import { variables } from './variables';
+import { variables } from './variables.server';
 
 const DEFAULT_EMAIL = "default@example.com"
 

@@ -1,4 +1,4 @@
-import { validateSession } from '$lib/auth';
+import { validateSession } from '$lib/auth.server';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {

@@ -1,7 +1,7 @@
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import type { RequestHandler } from './$types';
 import { ChannelCredentials } from '@grpc/grpc-js';
-import { variables } from '$lib/variables';
+import { variables } from '$lib/variables.server';
 import { TagClient } from '$lib/grpc/tag.client';
 
 export const GET: RequestHandler = async ({ request }) => {

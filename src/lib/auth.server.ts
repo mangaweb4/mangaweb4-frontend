@@ -3,7 +3,7 @@ import { get } from 'svelte/store'
 import * as jose from 'jose'
 import { redirect } from '@sveltejs/kit'
 import { loginUrl } from './routes'
-import { variables } from './variables'
+import { variables } from './variables.server'
 
 export const tokens = persisted('preferences', {
     accessToken: '<INVALID>',

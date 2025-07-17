@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
-import { getUser } from '$lib/user';
-import { variables } from '$lib/variables';
+import { getUser } from '$lib/user.server';
+import { variables } from '$lib/variables.server';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { TagClient } from '$lib/grpc/tag.client';

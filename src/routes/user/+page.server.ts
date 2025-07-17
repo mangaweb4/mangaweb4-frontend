@@ -1,7 +1,7 @@
 import type { PageServerLoad } from "./$types";
-import { validateSession } from "$lib/auth";
-import { getUserDetail } from "$lib/user";
-import { variables } from "$lib/variables";
+import { validateSession } from "$lib/auth.server";
+import { getUserDetail } from "$lib/user.server";
+import { variables } from "$lib/variables.server";
 
 export const load: PageServerLoad = async ({ request, url }) => {
    const user = getUserDetail(request)

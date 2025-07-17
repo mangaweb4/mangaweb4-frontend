@@ -1,9 +1,9 @@
 import { redirect } from "@sveltejs/kit";
-import type { PageLoad } from "./$types";
-import { updateToken } from "$lib/auth";
-import { variables } from "$lib/variables";
+import { updateToken } from "$lib/auth.server";
+import { variables } from "$lib/variables.server";
+import type { PageServerLoad } from "./$types";
 
-export const load: PageLoad = async ({ url, fetch }) => {
+export const load: PageServerLoad = async ({ url, fetch }) => {
     const code = url.searchParams.get('code');
     if (!code) {
         throw new Error("Authorization code not found in URL");

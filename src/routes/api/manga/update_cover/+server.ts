@@ -2,7 +2,7 @@ import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import type { RequestHandler } from './$types';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
-import { variables } from '$lib/variables';
+import { variables } from '$lib/variables.server';
 import type { URLSearchParams } from 'url';
 
 function parseParamInt(name: string, searchParams: URLSearchParams) {
