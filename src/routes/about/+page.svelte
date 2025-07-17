@@ -136,12 +136,12 @@
 	<h3>Project Page</h3>
 	<ul>
 		<li>
-			<a class="icon-link" href="https://github.com/wutipong/managaweb4-frontend">
+			<a class="icon-link" href="https://github.com/mangaweb4/managaweb4-frontend">
 				<Icon name="github" />Frontend
 			</a>
 		</li>
 		<li>
-			<a class="icon-link" href="https://github.com/wutipong/managaweb4-backtend">
+			<a class="icon-link" href="https://github.com/mangaweb4/managaweb4-backtend">
 				<Icon name="github" />Backend
 			</a>
 		</li>
