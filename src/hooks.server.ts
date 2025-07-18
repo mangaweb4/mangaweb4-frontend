@@ -2,6 +2,7 @@ import { validateSession } from '$lib/auth.server';
 import type { Handle, ServerInit } from '@sveltejs/kit';
 import logger from '$lib/logger';
 import { setLogger } from '@grpc/grpc-js/build/src/logging';
+import { env } from '$env/dynamic/private';
 
 export const handle: Handle = async ({ event, resolve }) => {
 
@@ -17,5 +18,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 };
 
 export const init: ServerInit = async () => {
+    logger.level = env.LOG_LEVEL ?? 'info'
     setLogger(logger)
 }

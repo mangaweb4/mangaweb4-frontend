@@ -6,6 +6,7 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
 import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 import { $enum } from 'ts-enum-util';
+import logger from '$lib/logger';
 
 function createDefaultRequest(): {
     user: string;
@@ -89,6 +90,9 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
         sort: sort,
         order: order
     })
+
+    logger.debug(call.request, "browse request")
+    logger.debug(call.response, "browse response")
 
     return { request: call.request, response: call.response }
 };
