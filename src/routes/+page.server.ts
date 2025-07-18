@@ -6,14 +6,16 @@ import logger from '$lib/logger';
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
 
-    const idToken = cookies.get("idToken")
-    const accessToken = cookies.get("accessToken")
+    if (variables.oidcEnable) {
+        const idToken = cookies.get("idToken")
+        const accessToken = cookies.get("accessToken")
 
-    if (idToken == null || accessToken == null) {
-        logger.info('token missing.')
+        if (idToken == null || accessToken == null) {
+            logger.debug('token missing.')
 
-        redirect(307, loginUrl(url.origin, "/"))
+            redirect(307, loginUrl(url.origin, "/"))
+        }
+
     }
-
     redirect(307, browseURL(url.origin))
 }

@@ -19,7 +19,7 @@ export async function validateSession(url: URL, cookies: Cookies) {
     const accessToken = cookies.get("accessToken")
 
     if (idToken == null || accessToken == null) {
-        logger.info('token missing.')
+        logger.debug('token missing.')
         
         redirect(307, loginUrl(url.origin, "/"))
     }
