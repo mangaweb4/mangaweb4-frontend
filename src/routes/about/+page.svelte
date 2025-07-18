@@ -22,6 +22,7 @@
 	} from '@sveltestrap/sveltestrap';
 	import Toast from '$lib/Toast.svelte';
 	import ConfirmDialog from '$lib/ConfirmDialog.svelte';
+	import {version} from '$app/environment'
 
 	let navbarToggleOpen = $state(false);
 	function handleUpdate(event: CustomEvent<boolean>) {
@@ -33,7 +34,7 @@
 		data: PageData;
 	}
 
-	let { version = '', data }: Props = $props();
+	let { data }: Props = $props();
 
 	let toast: Toast;
 	let confirm: ConfirmDialog;

@@ -31,7 +31,7 @@ export async function validateSession(url: URL, cookies: Cookies) {
         })
 
     } catch (err: any) {
-        logger.warn(err, 'validate JWT error')
+        logger.debug(err, 'validate JWT error')
         redirect(307, loginUrl(url.origin, url))
     }
 }
