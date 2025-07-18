@@ -8,6 +8,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     // '/url' handler handles anything related to authentication. 
     // Skip the validation to make sure the authentication is performed.
     if (!event.url.pathname.startsWith('/login') && 
+        !event.url.pathname.startsWith('/logout') && 
         !event.url.pathname.startsWith('/.well-known')) {
         await validateSession(event.url, event.cookies)
     }

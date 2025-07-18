@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { aboutURL, browseURL, historyURL, tagURL, userURL } from '$lib/routes';
+	import { aboutURL, browseURL, historyURL, tagURL, logoutURL, userURL } from '$lib/routes';
 	import {
 		Button,
 		Collapse,
@@ -27,7 +27,7 @@
 		navbarToggleOpen = event.detail;
 	}
 
-	let { email, name, logoutURL } = page.data;
+	let { email, name } = page.data;
 </script>
 
 <svelte:head>
@@ -75,7 +75,5 @@
 	<h2 class="mt-4">{name}</h2>
 	<p><b>Email</b> {email}</p>
 
-	{#if logoutURL != ''}
-		<Button href={logoutURL} class="mt-4" size="xl">Logout</Button>
-	{/if}
+	<Button onclick={() => goto(logoutURL(page.url.origin))} class="mt-4" size="xl">Logout</Button>
 </Container>

@@ -5,7 +5,7 @@ import { variables } from "$lib/variables.server";
 export const load: PageServerLoad = async ({ request, url, cookies }) => {
    const user = getUserDetail(request, cookies)
 
-   return { ...user, logoutURL: variables.oidcLogout }
+   return { ...user }
 }
 
 export const prerender = false;

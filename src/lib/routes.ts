@@ -16,8 +16,12 @@ export function viewURL(base: URL | string, name: string): URL {
     return u;
 }
 
-export function userURL(base:URL| string): URL {
+export function userURL(base: URL | string): URL {
     return new URL("/user", base)
+}
+
+export function logoutURL(base: URL | string): URL {
+    return new URL("/logout", base)
 }
 
 export function tagURL(base: URL | string, options?: {
