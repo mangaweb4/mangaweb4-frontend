@@ -5,7 +5,7 @@ import { MangaClient } from '$lib/grpc/manga.client';
 import { variables } from '$lib/variables.server';
 import { getUser } from '$lib/user.server';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ request, cookies }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
@@ -15,7 +15,7 @@ export const GET: RequestHandler = async ({ request }) => {
     const url = new URL(request.url)
 
     let name = url.searchParams.get('name') ?? ""
-    let user = getUser(request)
+    let user = getUser(request, cookies)
     let favorite = url.searchParams.get('favorite')?.toLocaleLowerCase() == "true"
 
     let { response } = await client.setFavorite({ name, user, favorite })

@@ -8,7 +8,7 @@ import { MangaClient } from '$lib/grpc/manga.client';
 
 export const prerender = false;
 
-export const load: PageServerLoad = async ({ request, url }) => {
+export const load: PageServerLoad = async ({ request, url, cookies }) => {
     const params = url.searchParams;
     
     let name = ''
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ request, url }) => {
         name = params.get('name') as string;
     }
 
-    const user = getUser(request);
+    const user = getUser(request, cookies);
 
     let transport = new GrpcTransport({
         host: variables.apiBasePath,

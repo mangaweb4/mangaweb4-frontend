@@ -1,9 +1,8 @@
 import { redirect } from "@sveltejs/kit";
-import { updateToken } from "$lib/auth.server";
 import { variables } from "$lib/variables.server";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ url, fetch }) => {
+export const load: PageServerLoad = async ({ url, fetch, cookies }) => {
     const code = url.searchParams.get('code');
     if (!code) {
         throw new Error("Authorization code not found in URL");
@@ -26,7 +25,12 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
         });
 
     const tokens = await resp.json();
-    updateToken(tokens.access_token, tokens.id_token);
+    // updateToken(tokens.access_token, tokens.id_token);
+
+    console.log(url.origin)
+
+    cookies.set("accessToken", tokens.access_token, { path: "/" })
+    cookies.set("idToken", tokens.id_token, { path: "/" })
 
     redirect(307, targetUrl);
 }

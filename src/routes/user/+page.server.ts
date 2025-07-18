@@ -1,10 +1,9 @@
 import type { PageServerLoad } from "./$types";
-import { validateSession } from "$lib/auth.server";
 import { getUserDetail } from "$lib/user.server";
 import { variables } from "$lib/variables.server";
 
-export const load: PageServerLoad = async ({ request, url }) => {
-   const user = getUserDetail(request)
+export const load: PageServerLoad = async ({ request, url, cookies }) => {
+   const user = getUserDetail(request, cookies)
 
    return { ...user, logoutURL: variables.oidcLogout }
 }
