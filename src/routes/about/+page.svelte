@@ -108,7 +108,7 @@
 	<h1>MangaWeb 4</h1>
 
 	<h6>Version {version}</h6>
-	<p>&copy; Copyright 2021-2023 Wutipong Wongsakuldej.</p>
+	<p>&copy; Copyright 2021-2025 Wutipong Wongsakuldej.</p>
 	<p>
 		Permission is hereby granted, free of charge, to any person obtaining a copy of this software
 		and associated documentation files (the “Software”), to deal in the Software without
