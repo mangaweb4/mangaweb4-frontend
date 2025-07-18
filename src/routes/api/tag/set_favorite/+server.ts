@@ -5,7 +5,7 @@ import { variables } from '$lib/variables.server';
 import { TagClient } from '$lib/grpc/tag.client';
 import { getUser } from '$lib/user.server';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ request, cookies }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
@@ -15,7 +15,7 @@ export const GET: RequestHandler = async ({ request }) => {
     const url = new URL(request.url)
 
     let name = url.searchParams.get('name') ?? ""
-    let user = getUser(request)
+    let user = getUser(request, cookies)
     let favorite = url.searchParams.get('favorite')?.toLowerCase() == "true"
 
     let { response } = await client.setFavorite({ tag: name, user, favorite })

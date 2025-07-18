@@ -6,10 +6,11 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { TagClient } from '$lib/grpc/tag.client';
 import { SortOrder, SortField, Filter } from '$lib/grpc/types';
 import { $enum } from 'ts-enum-util';
+import type { Cookies } from '@sveltejs/kit';
 
 export const prerender = false;
 
-function createDefaultRequest(request: Request): {
+function createDefaultRequest(request: Request, cookies: Cookies): {
     user: string;
     filter: Filter;
     order: SortOrder;
@@ -19,7 +20,7 @@ function createDefaultRequest(request: Request): {
     item_per_page: number;
 } {
     return {
-        user: getUser(request),
+        user: getUser(request, cookies),
         search: "",
         filter: Filter.UNKNOWN,
         page: 0,
@@ -29,8 +30,9 @@ function createDefaultRequest(request: Request): {
     };
 }
 
-export const load: PageServerLoad = async ({ request, url }) => {
-    let { user, search, filter, page, item_per_page, order, sort } = createDefaultRequest(request);
+export const load: PageServerLoad = async ({ request, url, cookies }) => {
+    let { user, search, filter, page, item_per_page, order, sort } 
+        = createDefaultRequest(request, cookies);
 
     const params = url.searchParams;
     if (params.has('sort')) {

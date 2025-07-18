@@ -18,7 +18,6 @@
         "pino-pretty": "^13.0.0",
         "svelte-easy-crop": "^4.0.1",
         "svelte-eslint-parser": "^1.1.2",
-        "svelte-persisted-store": "^0.12.0",
         "ts-enum-util": "^4.1.0",
       },
       "devDependencies": {
@@ -1290,8 +1289,6 @@
     "svelte-easy-crop": ["svelte-easy-crop@4.0.1", "", { "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-0k7vVpHVLrPyobSXqey5IJUmFVxOoCaQrobFEsFXpSCyK8N5jTkRj1VX6NuCOZK8XXcMAqUvV0MktB8D5x1oCw=="],
 
     "svelte-eslint-parser": ["svelte-eslint-parser@1.1.2", "", { "dependencies": { "eslint-scope": "^8.2.0", "eslint-visitor-keys": "^4.0.0", "espree": "^10.0.0", "postcss": "^8.4.49", "postcss-scss": "^4.0.9", "postcss-selector-parser": "^7.0.0" }, "peerDependencies": { "svelte": "^3.37.0 || ^4.0.0 || ^5.0.0" } }, "sha512-vqFBRamDKo1l70KMfxxXj1/0Cco5TfMDnqaAjgz6D8PyoMhfMcDOLRkAwPg8WkMyZjMtQL3wW66TZ0x59iqO2w=="],
-
-    "svelte-persisted-store": ["svelte-persisted-store@0.12.0", "", { "peerDependencies": { "svelte": "^3.48.0 || ^4 || ^5" } }, "sha512-BdBQr2SGSJ+rDWH8/aEV5GthBJDapVP0GP3fuUCA7TjYG5ctcB+O9Mj9ZC0+Jo1oJMfZUd1y9H68NFRR5MyIJA=="],
 
     "temp-dir": ["temp-dir@2.0.0", "", {}, "sha512-aoBAniQmmwtcKp/7BzsH8Cxzv8OL736p7v1ihGb5e9DJ9kTwGWHrQrVB5+lfVDzfGrdRzXch+ig7LHaY1JTOrg=="],
 

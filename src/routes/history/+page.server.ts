@@ -6,7 +6,7 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { HistoryClient } from '$lib/grpc/history.client';
 import { ITEM_PER_PAGE } from '$lib/constants';
 
-export const load: PageServerLoad = async ({ request, url }) => {
+export const load: PageServerLoad = async ({ request, url, cookies }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ request, url }) => {
 
     const pageStr = url.searchParams.get('page') ?? "0"
     const page = parseInt(pageStr);
-    const user = getUser(request);
+    const user = getUser(request, cookies);
 
     let call = await client.list({ page: page, user, itemPerPage: ITEM_PER_PAGE })
 
