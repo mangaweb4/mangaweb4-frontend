@@ -25,9 +25,6 @@ export const load: PageServerLoad = async ({ url, fetch, cookies }) => {
         });
 
     const tokens = await resp.json();
-    // updateToken(tokens.access_token, tokens.id_token);
-
-    console.log(url.origin)
 
     cookies.set("accessToken", tokens.access_token, { path: "/" })
     cookies.set("idToken", tokens.id_token, { path: "/" })
