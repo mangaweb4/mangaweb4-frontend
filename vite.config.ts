@@ -54,6 +54,8 @@ export default defineConfig(({ command, mode }) => {
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}']
 		},
-		
+		server:{
+			allowedHosts: ["host.docker.internal"]
+		}
 	}
 });
