@@ -8,7 +8,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     // '/api/maintenance' could be called by other services such as airflow.
     if (event.url.pathname.startsWith('/api/maintenance') &&
-        event.request.headers.has("MW-ServiceToken")) {
+        event.request.headers.has("Authorization")) {
         try {
             validateSessionWithHeader(event.url, event.request)
 

@@ -15,13 +15,25 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
         return
     }
 
-    const authorization = request.headers.get("MW-ServiceToken")
+    const authorization = request.headers.get("Authorization")
     if (authorization == null) {
         return
     }
 
+    const parts = authorization.split('')
+    if (parts.length != 2) {
+        throw Error ("invalid authorization error")
+    }
+
+    const method = parts[0].trim()
+    const accessToken = parts[1].trim()
+
+    if (method != "Bearer") {
+        throw Error("invalid authorization method")
+    }
+
     try {
-        const { payload, protectedHeader } = await jose.jwtVerify(authorization, JWKS, {
+        const { payload, protectedHeader } = await jose.jwtVerify(accessToken, JWKS, {
             issuer: variables.oidcIssuer,
             audience: variables.oidcClient,
         })
