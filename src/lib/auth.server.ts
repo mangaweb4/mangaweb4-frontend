@@ -20,14 +20,17 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
         return
     }
 
-    const regex = /Bearer (.*)/
-    const matches = regex.exec(authorization)
-
-    if (matches == null || matches.length < 2){
-        throw new Error("invalid Authorization header")
+    const parts = authorization.split('')
+    if (parts.length != 2) {
+        throw Error ("invalid authorization error")
     }
 
-    const accessToken = matches[1]
+    const method = parts[0].trim()
+    const accessToken = parts[1].trim()
+
+    if (method != "Bearer") {
+        throw Error("invalid authorization method")
+    }
 
     try {
         const { payload, protectedHeader } = await jose.jwtVerify(accessToken, JWKS, {
@@ -36,8 +39,7 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
         })
 
     } catch (err: any) {
-        logger.debug(err, 'validate JWT error')
-        throw new Error("invalid Authorization header")
+        throw Error("invalid access token")
     }
 
 }
