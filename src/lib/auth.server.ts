@@ -20,7 +20,7 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
         return
     }
 
-    const parts = authorization.split('')
+    const parts = authorization.split(' ')
     if (parts.length != 2) {
         throw Error ("invalid authorization error")
     }
