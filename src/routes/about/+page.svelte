@@ -22,7 +22,7 @@
 	} from '@sveltestrap/sveltestrap';
 	import Toast from '$lib/Toast.svelte';
 	import ConfirmDialog from '$lib/ConfirmDialog.svelte';
-	import {version} from '$app/environment'
+	import { version } from '$app/environment';
 
 	let navbarToggleOpen = $state(false);
 	function handleUpdate(event: CustomEvent<boolean>) {
@@ -106,76 +106,114 @@
 	</Collapse>
 </Navbar>
 <Container>
-	<h1>MangaWeb 4</h1>
+	<h1 class="mt-4">MangaWeb 4</h1>
+	<h6>
+		<a class="icon-link" href="https://github.com/mangaweb4/managaweb4-frontend">
+			<Icon name="github" />Github
+		</a>
+	</h6>
 
-	<h6>Version {version}</h6>
-	<p>&copy; Copyright 2021-2025 Wutipong Wongsakuldej.</p>
-	<p>
-		Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-		and associated documentation files (the “Software”), to deal in the Software without
-		restriction, including without limitation the rights to use, copy, modify, merge, publish,
-		distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-		Software is furnished to do so, subject to the following conditions:
-	</p>
+	<div class="mt-4">
+		<p>&copy; Copyright 2021-2025 Wutipong Wongsakuldej.</p>
+		<p>
+			Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+			and associated documentation files (the “Software”), to deal in the Software without
+			restriction, including without limitation the rights to use, copy, modify, merge, publish,
+			distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+			Software is furnished to do so, subject to the following conditions:
+		</p>
 
-	<p>
-		The above copyright notice and this permission notice shall be included in all copies or
-		substantial portions of the Software.
-	</p>
+		<p>
+			The above copyright notice and this permission notice shall be included in all copies or
+			substantial portions of the Software.
+		</p>
 
-	<p>
-		THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-		BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-		NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-		DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	</p>
-
-	<h6>Using API server: {data.basePath}</h6>
+		<p>
+			THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+			BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+			NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+			DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+			OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+		</p>
+	</div>
 
 	<hr />
-	<h3>Project Page</h3>
-	<ul>
-		<li>
-			<a class="icon-link" href="https://github.com/mangaweb4/managaweb4-frontend">
-				<Icon name="github" />Frontend
-			</a>
-		</li>
-		<li>
-			<a class="icon-link" href="https://github.com/mangaweb4/managaweb4-backtend">
-				<Icon name="github" />Backend
-			</a>
-		</li>
-	</ul>
+
+	<div class="mt-4">
+		<h4>Maintenance</h4>
+
+		<Table>
+			<thead>
+				<tr>
+					<th colspan="2"> Maintenance Operations </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="align-middle"> Update library. </td>
+					<td>
+						<Button color="danger" onclick={() => confirmUpdateLibrary()}>
+							<Icon name="play-circle" class="me-3" />Run
+						</Button>
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle"> Purge caches. </td>
+					<td>
+						<Button color="danger" onclick={() => confirmPurgeCache()}>
+							<Icon name="play-circle" class="me-3" />Run
+						</Button>
+					</td>
+				</tr>
+			</tbody>
+		</Table>
+	</div>
+
 	<hr />
 
-	<h3>Maintenance</h3>
-
-	<Table>
-		<thead>
-			<tr>
-				<th colspan="2"> Maintenance Operations </th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class="align-middle"> Update library. </td>
-				<td>
-					<Button color="danger" onclick={() => confirmUpdateLibrary()}>
-						<Icon name="play-circle" class="me-3" />Run
-					</Button>
-				</td>
-			</tr>
-			<tr>
-				<td class="align-middle"> Purge caches. </td>
-				<td>
-					<Button color="danger" onclick={() => confirmPurgeCache()}>
-						<Icon name="play-circle" class="me-3" />Run
-					</Button>
-				</td>
-			</tr>
-		</tbody>
-	</Table>
+	<div class="mt-4">
+		<h4>Information</h4>
+		<Table>
+			<thead>
+				<tr>
+					<th colspan="2"> Services </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="align-middle"> Frontend version </td>
+					<td>
+						{data.frontend.version}
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle"> Backend version </td>
+					<td>
+						{data.backend.version}
+					</td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th colspan="2"> Manga information </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="align-middle"> # items </td>
+					<td>
+						{data.backend.itemCount}
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle"> # tags </td>
+					<td>
+						{data.backend.tagCount}
+					</td>
+				</tr>
+			</tbody>
+		</Table>
+	</div>
 </Container>
 
 <ConfirmDialog bind:this={confirm} />
