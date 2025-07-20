@@ -17,7 +17,8 @@
 		NavLink,
 		Navbar,
 		NavbarBrand,
-		NavbarToggler
+		NavbarToggler,
+		Table
 	} from '@sveltestrap/sveltestrap';
 	import md5 from 'md5';
 
@@ -76,4 +77,49 @@
 	<p><b>Email</b> {email}</p>
 
 	<Button onclick={() => goto(logoutURL(page.url.origin))} class="mt-4" size="xl">Logout</Button>
+
+	<div class="mt-4 mb-4">
+		<h4>Information</h4>
+		<Table>
+			<thead>
+				<tr>
+					<th colspan="2"> User details </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="align-middle"> User ID </td>
+					<td>
+						{page.data.userId}
+					</td>
+				</tr>
+			</tbody>
+
+			<thead>
+				<tr>
+					<th colspan="2"> Reading statistic </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="align-middle"> # Read items </td>
+					<td>
+						{page.data.readItemCount} / {page.data.backend.itemCount}
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle"> # Favorite items </td>
+					<td>
+						{page.data.favoriteItemCount} / {page.data.backend.itemCount}
+					</td>
+				</tr>
+				<tr>
+					<td class="align-middle"> # Favorite tags </td>
+					<td>
+						{page.data.favoriteTagCount} / {page.data.backend.tagCount}
+					</td>
+				</tr>
+			</tbody>
+		</Table>
+	</div>
 </Container>

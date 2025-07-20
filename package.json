@@ -13,7 +13,7 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 static/favicon.svg",
-		"generate-grpc": "protoc --ts_out=src/lib/grpc --proto_path=./schema history.proto maintenance.proto manga.proto tag.proto types.proto system.proto",
+		"generate-grpc": "protoc --ts_out=src/lib/grpc --proto_path=./schema history.proto maintenance.proto manga.proto tag.proto types.proto system.proto user.proto",
 		"knip": "knip"
 	},
 	"devDependencies": {
