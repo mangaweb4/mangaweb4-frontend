@@ -17,6 +17,7 @@
 		Icon,
 		Input,
 		InputGroup,
+		InputGroupText,
 		Nav,
 		NavItem,
 		NavLink,
@@ -167,13 +168,17 @@
 
 <Navbar color="dark" dark expand="md" sticky={'top'}>
 	<NavbarBrand href="/">
-		{data.request.tag == '' ? 'Browse' : `Browse: ${data.request.tag}`}
+		{data.request.tag == '' ? 'Browse' : `Browse Tag: ${data.request.tag}`}
 	</NavbarBrand>
 
 	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
 
 	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
 		<Nav navbar>
+			<NavItem class="d-block d-md-none">
+				{data.request.tag == '' ? 'All items' : `Tag: ${data.request.tag}`}
+				<hr>
+			</NavItem>
 			<Dropdown nav inNavbar>
 				<DropdownToggle nav caret>Browse</DropdownToggle>
 				<DropdownMenu end>
@@ -264,13 +269,14 @@
 		<Nav class="ms-auto me-3" navbar>
 			<NavItem hidden={tag == '' ? true : undefined}>
 				<FavoriteButton onclick={() => onTagFavorite()} isFavorite={tag_favorite}>
-					Favorite tag
+					&nbsp;Favorite tag
 				</FavoriteButton>
 			</NavItem>
 		</Nav>
 		<Nav navbar>
 			<NavItem>
 				<InputGroup>
+					<InputGroupText>Search</InputGroupText>
 					<Input
 						type="text"
 						bind:value={search}
@@ -282,8 +288,7 @@
 					/>
 					<Button onclick={() => (search = '')}><Icon name="x" /></Button>
 					<Button onclick={() => goto(browseURL(page.url.origin, { search: search }))}>
-						<div class="d-lg-none"><Icon name="search" class="me-3" /></div>
-						<div class="d-none d-lg-block"><Icon name="search" class="me-3" />Search</div>
+						<Icon name="search" />
 					</Button>
 				</InputGroup>
 			</NavItem>
