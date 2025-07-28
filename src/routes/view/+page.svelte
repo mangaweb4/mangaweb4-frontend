@@ -159,6 +159,16 @@
 	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
 	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
 		<Nav navbar>
+			<NavItem class="d-block d-md-none">
+				<NavLink onclick={aboutToggle}>
+					<Icon name="info-circle" /> &nbsp;
+					{name.length > 80 ? `${name.substring(0, 75)}...` : name}
+				</NavLink>
+				<FavoriteButton onclick={() => toggleFavorite()} isFavorite={favorite}>
+					&nbsp;Favorite
+				</FavoriteButton>
+				<hr>
+			</NavItem>
 			<Dropdown nav inNavbar>
 				<DropdownToggle nav caret>Browse</DropdownToggle>
 				<DropdownMenu>
@@ -219,13 +229,13 @@
 		<Nav navbar class="ms-auto">
 			<NavItem class="me-3 d-none d-md-block">
 				<NavLink onclick={aboutToggle}>
-					{name.length > 40 ? `${name.substring(0, 35)}...` : name}
 					<Icon name="info-circle" />
+					{name.length > 40 ? `${name.substring(0, 35)}...` : name}
 				</NavLink>
 			</NavItem>
-			<NavItem class="me-3">
+			<NavItem class="me-3 d-none d-md-block">
 				<FavoriteButton onclick={() => toggleFavorite()} isFavorite={favorite}>
-					Favorite
+					&nbsp;Favorite
 				</FavoriteButton>
 			</NavItem>
 		</Nav>
