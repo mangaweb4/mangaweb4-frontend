@@ -2,12 +2,14 @@
 	import { page } from '$app/state';
 	import {
 		Button,
+		Container,
 		Icon,
 		Input,
 		InputGroup,
 		Modal,
 		ModalBody,
 		ModalFooter,
+		Offcanvas,
 		Pagination,
 		PaginationItem,
 		PaginationLink
@@ -59,7 +61,7 @@
 	}
 </script>
 
-<Pagination>
+<Pagination >
 	<PaginationItem>
 		<PaginationLink first href={createLink(first).toString()} />
 	</PaginationItem>
@@ -83,21 +85,27 @@
 	</PaginationItem>
 </Pagination>
 
-<Modal isOpen={customOpen} toggle={() => (customOpen = !customOpen)}>
-	<div class="modal-header">
-		<h5 class="modal-title">Go to page</h5>
-	</div>
-	<ModalBody>
+<Offcanvas
+	isOpen={customOpen}
+	toggle={() => (customOpen = !customOpen)}
+	header="Go to page"
+	placement="bottom"
+	
+>
+	<Container class="ms-auto me-auto" style="min-width: 10em; max-width: 50em;">
 		<InputGroup>
 			<Button onclick={() => (customPage = 0)}>0</Button>
-			<Input type="number" bind:value={customPage} placeholder="page #" max={totalPage - 1} min={0}
-			></Input>
+			<Input
+				type="number"
+				bind:value={customPage}
+				placeholder="page #"
+				max={totalPage - 1}
+				min={0}
+			/>
 			<Button onclick={() => (customPage = totalPage - 1)}>{totalPage - 1}</Button>
+			<Button onclick={() => gotoPage(customPage)}>
+				<Icon name="box-arrow-right"></Icon>
+			</Button>
 		</InputGroup>
-	</ModalBody>
-	<ModalFooter>
-		<Button onclick={() => gotoPage(customPage)}>
-			<Icon name="box-arrow-right"></Icon>&nbsp;Go
-		</Button>
-	</ModalFooter>
-</Modal>
+	</Container>
+</Offcanvas>
