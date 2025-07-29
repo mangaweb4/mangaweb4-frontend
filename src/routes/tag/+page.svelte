@@ -28,6 +28,7 @@
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
 	import PlaceholderCard from '$lib/PlaceholderCard.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
+	import NavigationMenu from '$lib/components/NavigationMenu.svelte';
 
 	interface Props {
 		data: PageData;
@@ -123,20 +124,6 @@
 	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
 		<Nav navbar>
 			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Browse</DropdownToggle>
-
-				<DropdownMenu end>
-					<DropdownItem onclick={() => goto(browseURL(page.url.origin))}>
-						<Icon name="list-ul" class="me-3" />
-						All items
-					</DropdownItem>
-					<DropdownItem onclick={() => goto(tagURL(page.url.origin))}>
-						<Icon name="tags-fill" class="me-3" />
-						Tag list
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-			<Dropdown nav inNavbar>
 				<DropdownToggle nav caret>Filter</DropdownToggle>
 				<DropdownMenu>
 					<DropdownItem
@@ -182,16 +169,8 @@
 					</DropdownItem>
 				</DropdownMenu>
 			</Dropdown>
-			<NavItem>
-				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
-			</NavItem>
 		</Nav>
+		<NavigationMenu />
 		<Nav navbar class="ms-auto me-3">
 			<NavItem>
 				<InputGroup>

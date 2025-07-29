@@ -25,6 +25,7 @@
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
 	import PlaceholderCard from '$lib/PlaceholderCard.svelte';
 	import { Timestamp } from '$lib/grpc/google/protobuf/timestamp';
+	import NavigationMenu from '$lib/components/NavigationMenu.svelte';
 
 	interface Props {
 		data: PageData;
@@ -63,31 +64,7 @@
 	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
 
 	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
-		<Nav navbar>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Browse</DropdownToggle>
-				<DropdownMenu end>
-					<DropdownItem onclick={() => goto(browseURL(page.url.origin))}>
-						<Icon name="list-ul" class="me-3" />
-						All items
-					</DropdownItem>
-					<DropdownItem onclick={() => goto(tagURL(page.url.origin))}>
-						<Icon name="tags-fill" class="me-3" />
-						Tag list
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-
-			<NavItem>
-				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
-			</NavItem>
-		</Nav>
+		<NavigationMenu />
 	</Collapse>
 </Navbar>
 
