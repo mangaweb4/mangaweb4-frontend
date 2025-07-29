@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { Icon } from '@sveltestrap/sveltestrap';
+	import star_border from '@material-design-icons/svg/round/star_border.svg?raw';
+	import star from '@material-design-icons/svg/round/star.svg?raw';
+
+	import { Icon } from 'svelte-icon';
 	import './custom.scss';
 
 	let { isFavorite = false, children, onclick } = $props();
@@ -7,8 +10,8 @@
 
 <button class="btn" class:btn-pink={isFavorite} class:btn-outline-pink={!isFavorite} {onclick}>
 	{#if isFavorite}
-		<span><Icon name="star-fill" class="me-3" /> {@render children?.()}</span>
+		<span><Icon data={star} /> {@render children?.()}</span>
 	{:else}
-		<span><Icon name="star" class="me-3" /> {@render children?.()}</span>
+		<span><Icon data={star_border} /> {@render children?.()}</span>
 	{/if}
 </button>

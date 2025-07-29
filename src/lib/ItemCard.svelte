@@ -1,6 +1,17 @@
 <script lang="ts">
-	import { Card, CardBody, CardFooter, Icon } from '@sveltestrap/sveltestrap';
+	import { Card, CardBody, CardFooter } from '@sveltestrap/sveltestrap';
+	
+	import star from '@material-design-icons/svg/round/star.svg?raw';
+	import tag from '@material-design-icons/svg/round/tag.svg?raw';
+	import new_releases from '@material-design-icons/svg/round/new_releases.svg?raw';
+	import menu_book from '@material-design-icons/svg/round/menu_book.svg?raw';
+	import check from '@material-design-icons/svg/round/check.svg?raw';
+	import insert_drive_file from '@material-design-icons/svg/round/insert_drive_file.svg?raw';
+	import library_books from '@material-design-icons/svg/round/library_books.svg?raw';
+	import warning from '@material-design-icons/svg/round/warning.svg?raw';
+	import photo from '@material-design-icons/svg/round/photo.svg?raw';
 
+	import { Icon } from 'svelte-icon';
 	import '$lib/custom.scss';
 
 	interface Props {
@@ -18,17 +29,6 @@
 		currentPage?: number;
 	}
 
-	const ERROR_IMAGE = `data:image/svg+xml;utf8,
-    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" fill="yellow" class="bi bi-exclamation-triangle-fill" viewBox="-8 -8 32 32">
-        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-    </svg>`;
-
-	const PLACEHOLDER_IMAGE = `data:image/svg+xml;utf8,
-    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" fill="gray" class="bi bi-file-minus" viewBox="-8 -8 32 32">
-        <path d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5"/>
-        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
-    </svg>
-    `;
 
 	let {
 		favorite = false,
@@ -39,7 +39,7 @@
 		pageCount,
 		itemCount,
 		linkUrl,
-		imageUrl = PLACEHOLDER_IMAGE,
+		imageUrl = '',
 		accessTime = '',
 		placeholder,
 		currentPage
@@ -60,8 +60,9 @@
 	}
 
 	let img: HTMLImageElement | undefined = $state();
+	let imageLoadErr = $state(false);
 	function onImageError() {
-		if (img) img.src = ERROR_IMAGE;
+		imageLoadErr = true;
 	}
 
 	let progressPercent = $derived(((currentPage ?? 0) / (pageCount ?? 1)) * 100);
@@ -71,27 +72,23 @@
 <Card class="{borderCls} h-100" id={id.toString()}>
 	{#if placeholder}
 		<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
-			<img
-				bind:this={img}
-				class="card-img-top h-100"
-				alt={name}
-				loading="lazy"
-				src={imageUrl.toString()}
-				style="object-fit: cover;"
-				onerror={() => onImageError()}
-			/>
+			<Icon class="card-img-top h-100" data={photo} color="gray" width="210" height="210" />
 		</div>
 	{:else}
 		<a href={linkUrl?.toString()} aria-label={name} style="display:block; aspect-ratio: 1/1.414">
-			<img
-				bind:this={img}
-				class="card-img-top h-100"
-				alt={name}
-				loading="lazy"
-				src={imageUrl.toString()}
-				style="object-fit: cover; object-position: 25% top"
-				onerror={() => onImageError()}
-			/>
+			{#if imageLoadErr}
+				<Icon class="card-img-top h-100" data={warning} color="yellow" width="210" height="210" />		
+			{:else}
+				<img
+					bind:this={img}
+					class="card-img-top h-100"
+					alt={name}
+					loading="lazy"
+					src={imageUrl.toString()}
+					style="object-fit: cover; object-position: 25% top"
+					onerror={() => onImageError()}
+				/>
+			{/if}
 		</a>
 	{/if}
 	<CardBody style="height: 8em; overflow:hidden;">
@@ -114,37 +111,37 @@
 		{#if !placeholder}
 			{#if favorite}
 				<span class="badge bg-pink">
-					<span><Icon name="star-fill" /> Favorite </span>
+					<span><Icon data={star} /> Favorite </span>
 				</span>
 			{/if}
 
 			{#if favoriteTag}
 				<span class="badge bg-purple">
-					<span><Icon name="tag" /> Favorite Tag</span>
+					<span><Icon data={tag} /> Favorite Tag</span>
 				</span>
 			{/if}
 
 			{#if !isRead}
 				<span class="badge bg-yellow">
-					<span><Icon name="lightning-fill" /> New </span>
+					<span><Icon data={new_releases} /> New </span>
 				</span>
 			{:else}
 				<span class="badge">
 					{#if progressPercent < READ_THRESHOLD}
-						<span><Icon name="book-half" /> {Math.round(progressPercent)}% </span>
+						<span><Icon data={menu_book} /> {Math.round(progressPercent)}% </span>
 					{:else}
-						<span><Icon name="check" /> Read </span>
+						<span><Icon data={check} /> Read </span>
 					{/if}
 				</span>
 			{/if}
 			{#if pageCount}
 				<span class="badge bg-blue">
-					<span><Icon name="file-earmark-fill" /> {pageCount}p </span>
+					<span><Icon data={insert_drive_file} /> {pageCount}p </span>
 				</span>
 			{/if}
 			{#if itemCount}
 				<span class="badge bg-blue">
-					<span><Icon name="journals" /> {itemCount}</span>
+					<span><Icon data={library_books} /> {itemCount}</span>
 				</span>
 			{/if}
 		{/if}

@@ -3,17 +3,17 @@
 	import {
 		Button,
 		Container,
-		Icon,
 		Input,
 		InputGroup,
-		Modal,
-		ModalBody,
-		ModalFooter,
 		Offcanvas,
 		Pagination,
 		PaginationItem,
 		PaginationLink
 	} from '@sveltestrap/sveltestrap';
+
+	import { Icon } from 'svelte-icon';
+	import numbers from '@material-design-icons/svg/round/numbers.svg?raw';
+	import arrow_forward from '@material-design-icons/svg/round/arrow_forward.svg?raw';
 	import { goto } from '$app/navigation';
 
 	interface Props {
@@ -61,7 +61,7 @@
 	}
 </script>
 
-<Pagination >
+<Pagination>
 	<PaginationItem>
 		<PaginationLink first href={createLink(first).toString()} />
 	</PaginationItem>
@@ -76,7 +76,7 @@
 
 	<PaginationItem>
 		<PaginationLink onclick={() => (customOpen = true)}>
-			<Icon name="hash"></Icon>
+			<Icon data={numbers}></Icon>
 		</PaginationLink>
 	</PaginationItem>
 
@@ -90,7 +90,6 @@
 	toggle={() => (customOpen = !customOpen)}
 	header="Go to page"
 	placement="bottom"
-	
 >
 	<Container class="ms-auto me-auto" style="min-width: 10em; max-width: 50em;">
 		<InputGroup>
@@ -104,7 +103,7 @@
 			/>
 			<Button onclick={() => (customPage = totalPage - 1)}>{totalPage - 1}</Button>
 			<Button onclick={() => gotoPage(customPage)}>
-				<Icon name="box-arrow-right"></Icon>
+				<Icon data={arrow_forward}></Icon>
 			</Button>
 		</InputGroup>
 	</Container>
