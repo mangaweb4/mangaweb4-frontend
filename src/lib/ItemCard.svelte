@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Card, CardBody, CardFooter } from '@sveltestrap/sveltestrap';
-	
+
 	import star from '@material-design-icons/svg/round/star.svg?raw';
 	import tag from '@material-design-icons/svg/round/tag.svg?raw';
 	import new_releases from '@material-design-icons/svg/round/new_releases.svg?raw';
@@ -12,7 +12,6 @@
 	import photo from '@material-design-icons/svg/round/photo.svg?raw';
 
 	import { Icon } from 'svelte-icon';
-	import '$lib/custom.scss';
 
 	interface Props {
 		favorite?: boolean;

@@ -3,7 +3,6 @@
 	import star from '@material-design-icons/svg/round/star.svg?raw';
 
 	import { Icon } from 'svelte-icon';
-	import './custom.scss';
 
 	let { isFavorite = false, children, onclick } = $props();
 </script>

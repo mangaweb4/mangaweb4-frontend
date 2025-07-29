@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { Card, CardBody, CardFooter, Icon } from '@sveltestrap/sveltestrap';
 
-	import '$lib/custom.scss';
-
 	interface Props {
 		accessTime?: boolean;
 	}

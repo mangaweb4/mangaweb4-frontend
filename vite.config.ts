@@ -1,6 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit'
+import tailwindcss from "@tailwindcss/vite";
 import customLogger from './logger'
 
 export default defineConfig(({ command, mode }) => {
@@ -8,6 +9,7 @@ export default defineConfig(({ command, mode }) => {
 
 	return {
 		plugins: [
+			tailwindcss(),
 			sveltekit(),
 			SvelteKitPWA({
 				srcDir: './src',

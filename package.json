@@ -52,9 +52,11 @@
 		"@protobuf-ts/grpc-transport": "^2.11.1",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@sveltestrap/sveltestrap": "^7.1.0",
+		"@tailwindcss/vite": "^4.1.11",
 		"bootstrap": "^5.3.5",
 		"bootstrap-icons": "^1.11.3",
 		"bootswatch": "^5.3.5",
+		"daisyui": "^5.0.50",
 		"fs-extra": "^11.3.0",
 		"jose": "^6.0.11",
 		"md5": "^2.3.0",
@@ -63,6 +65,7 @@
 		"svelte-easy-crop": "^4.0.1",
 		"svelte-eslint-parser": "^1.1.2",
 		"svelte-icon": "^2.1.1",
+		"tailwindcss": "^4.1.11",
 		"ts-enum-util": "^4.1.0"
 	}
 }
