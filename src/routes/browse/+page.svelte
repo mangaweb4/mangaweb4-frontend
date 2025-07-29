@@ -18,12 +18,15 @@
 		Input,
 		InputGroup,
 		InputGroupText,
+		ListGroup,
+		ListGroupItem,
 		Nav,
 		NavItem,
 		NavLink,
 		Navbar,
 		NavbarBrand,
-		NavbarToggler
+		NavbarToggler,
+		Offcanvas
 	} from '@sveltestrap/sveltestrap';
 
 	import type { PageData } from './$types';
@@ -149,151 +152,151 @@
 		tag_favorite = json.favorite;
 	}
 
-	let navbarToggleOpen = $state(false);
-	function handleUpdate(event: CustomEvent<boolean>) {
-		navbarToggleOpen = event.detail;
-	}
-
 	function createThumbnailUrl(name: string): URL {
 		const u = new URL('/api/manga/thumbnail', page.url);
 		u.searchParams.set('name', name);
 
 		return u;
 	}
+
+	let showMenu = $state(false);
 </script>
 
 <svelte:head>
-	<title>Browse: {tag}</title>
+	<title>Browse {data.request.tag == '' ? 'all items' : `tag: ${data.request.tag}`}</title>
 </svelte:head>
 
+<Offcanvas toggle={() => (showMenu = !showMenu)} isOpen={showMenu} placement="start" header="Menu">
+	<h6>Sort By</h6>
+	<ListGroup>
+		<ListGroupItem
+			tag="button"
+			action
+			active={sort == SortField.NAME}
+			onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
+		>
+			<Icon name="type" class="me-3" /> Name
+		</ListGroupItem>
+		<ListGroupItem
+			tag="button"
+			action
+			active={sort == SortField.CREATION_TIME}
+			onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
+		>
+			<Icon name="clock" class="me-3" /> Create time
+		</ListGroupItem>
+		<ListGroupItem
+			tag="button"
+			action
+			active={sort == SortField.PAGECOUNT}
+			onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
+		>
+			<Icon name="file-earmark" class="me-3" /> Page count
+		</ListGroupItem>
+	</ListGroup>
+
+	<h6>Order</h6>
+
+	<ListGroup>
+		<ListGroupItem
+			tag="button"
+			action
+			active={order == SortOrder.ASCENDING}
+			onclick={() => goto(createBrowseURL({ order: SortOrder.ASCENDING }))}
+		>
+			<Icon name="sort-down-alt" class="me-3" />Ascending
+		</ListGroupItem>
+		<ListGroupItem
+			tag="button"
+			action
+			active={order == SortOrder.DESCENDING}
+			onclick={() => goto(createBrowseURL({ order: SortOrder.DESCENDING }))}
+		>
+			<Icon name="sort-up-alt" class="me-3" /> Descending
+		</ListGroupItem>
+	</ListGroup>
+
+	<h6>Filter</h6>
+	<ListGroup>
+		<ListGroupItem
+			tag="button"
+			action
+			active={filter == Filter.FAVORITE_ITEMS}
+			onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
+		>
+			<Icon name="star" class="me-3" /> Favorite items
+		</ListGroupItem>
+		<ListGroupItem
+			tag="button"
+			action
+			active={filter == Filter.FAVORITE_TAGS}
+			disabled={tag != ''}
+			onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
+		>
+			<Icon name="tag-fill" class="me-3" /> Items with favorite tags
+		</ListGroupItem>
+	</ListGroup>
+	<h6>Search</h6>
+
+	<InputGroup>
+		<Input
+			type="text"
+			bind:value={search}
+			onkeyup={(e) => {
+				if (e.key == 'Enter') {
+					goto(browseURL(page.url.origin, { search: search }));
+				}
+			}}
+		/>
+		<Button onclick={() => (search = '')}><Icon name="x" /></Button>
+		<Button onclick={() => goto(browseURL(page.url.origin, { search: search }))}>
+			<Icon name="search" />
+		</Button>
+	</InputGroup>
+
+	<h6>Navigation</h6>
+	<Nav vertical>
+		<NavItem>
+			<NavLink onclick={() => goto(browseURL(page.url.origin))}>
+				<Icon name="list-ul" class="me-3" /> &nbsp;All items
+			</NavLink>
+		</NavItem>
+		<NavItem>
+			<NavLink onclick={() => goto(tagURL(page.url.origin))}>
+				<Icon name="tags-fill" class="me-3" />&nbsp;Tag list
+			</NavLink>
+		</NavItem>
+
+		<NavItem>
+			<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
+		</NavItem>
+		<NavItem>
+			<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
+		</NavItem>
+		<NavItem>
+			<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
+		</NavItem>
+	</Nav>
+</Offcanvas>
+
 <Navbar color="dark" dark expand="md" sticky={'top'}>
-	<NavbarBrand href="/">
-		{data.request.tag == '' ? 'Browse' : `Browse Tag: ${data.request.tag}`}
+	<Nav navbar class="me-3">
+		<Button class="border" onclick={() => (showMenu = true)}>
+			<Icon name="list" />
+		</Button>
+	</Nav>
+
+	<NavbarBrand>
+		{data.request.tag == '' ? 'Browse all items' : `Browse tag: ${data.request.tag}`}
 	</NavbarBrand>
 
-	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
-
-	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
-		<Nav navbar>
-			<NavItem class="d-block d-md-none">
-				{data.request.tag == '' ? 'All items' : `Tag: ${data.request.tag}`}
-				<hr>
-			</NavItem>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Browse</DropdownToggle>
-				<DropdownMenu end>
-					<DropdownItem onclick={() => goto(browseURL(page.url.origin))}>
-						<Icon name="list-ul" class="me-3" />
-						All items
-					</DropdownItem>
-					<DropdownItem onclick={() => goto(tagURL(page.url.origin))}>
-						<Icon name="tags-fill" class="me-3" />
-						Tag list
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Sort By</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem
-						active={sort == SortField.NAME}
-						onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
-					>
-						<Icon name="type" class="me-3" /> Name
-					</DropdownItem>
-					<DropdownItem
-						active={sort == SortField.CREATION_TIME}
-						onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
-					>
-						<Icon name="clock" class="me-3" /> Create time
-					</DropdownItem>
-					<DropdownItem
-						active={sort == SortField.PAGECOUNT}
-						onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
-					>
-						<Icon name="file-earmark" class="me-3" /> Page count
-					</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem
-						active={order == SortOrder.ASCENDING}
-						onclick={() => goto(createBrowseURL({ order: SortOrder.ASCENDING }))}
-					>
-						<Icon name="sort-down-alt" class="me-3" />Ascending
-					</DropdownItem>
-					<DropdownItem
-						active={order == SortOrder.DESCENDING}
-						onclick={() => goto(createBrowseURL({ order: SortOrder.DESCENDING }))}
-					>
-						<Icon name="sort-up-alt" class="me-3" /> Descending
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>
-					{#if filter == Filter.UNKNOWN}
-						<Icon name="funnel" class="me-1" />
-					{:else}
-						<Icon name="check" class="me-1" />
-					{/if}&nbsp;Filter
-				</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem
-						active={filter == Filter.FAVORITE_ITEMS}
-						onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
-					>
-						<Icon name="star" class="me-3" /> Favorite items
-					</DropdownItem>
-					<DropdownItem
-						active={filter == Filter.FAVORITE_TAGS}
-						disabled={tag != ''}
-						onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
-					>
-						<Icon name="tag-fill" class="me-3" /> Items with favorite Tags
-					</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
-						><Icon name="x-circle-fill" class="me-3" /> Clear</DropdownItem
-					>
-				</DropdownMenu>
-			</Dropdown>
-			<NavItem>
-				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
-			</NavItem>
-		</Nav>
-		<Nav class="ms-auto me-3" navbar>
-			<NavItem hidden={tag == '' ? true : undefined}>
-				<FavoriteButton onclick={() => onTagFavorite()} isFavorite={tag_favorite}>
-					&nbsp;Favorite tag
-				</FavoriteButton>
-			</NavItem>
-		</Nav>
-		<Nav navbar>
-			<NavItem>
-				<InputGroup>
-					<InputGroupText>Search</InputGroupText>
-					<Input
-						type="text"
-						bind:value={search}
-						onkeyup={(e) => {
-							if (e.key == 'Enter') {
-								goto(browseURL(page.url.origin, { search: search }));
-							}
-						}}
-					/>
-					<Button onclick={() => (search = '')}><Icon name="x" /></Button>
-					<Button onclick={() => goto(browseURL(page.url.origin, { search: search }))}>
-						<Icon name="search" />
-					</Button>
-				</InputGroup>
-			</NavItem>
-		</Nav>
-	</Collapse>
+	<Nav class="ms-auto" navbar>
+		<NavItem hidden={tag == '' ? true : undefined}>
+			<FavoriteButton onclick={() => onTagFavorite()} isFavorite={tag_favorite}>
+				<span class="d-none d-md-block">&nbsp;Favorite</span>
+			</FavoriteButton>
+		</NavItem>
+	</Nav>
 </Navbar>
 
 <div class="container-fluid" style="padding-top:30px;">
