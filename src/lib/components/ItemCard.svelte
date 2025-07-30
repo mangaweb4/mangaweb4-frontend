@@ -11,6 +11,8 @@
 
 	import { Icon } from 'svelte-icon';
 
+	import colors from 'tailwindcss/colors'
+
 	interface Props {
 		favorite?: boolean;
 		isRead?: boolean;
@@ -46,11 +48,11 @@
 	if (placeholder) {
 		borderCls = '';
 	} else if (favorite) {
-		borderCls = 'border border-2 border-pink';
+		borderCls = 'border border-2 border-pink-500';
 	} else if (!isRead) {
-		borderCls = 'border border-2 border-yellow';
+		borderCls = 'border border-2 border-yellow-500';
 	} else if (favoriteTag) {
-		borderCls = 'border border-2 border-purple';
+		borderCls = 'border border-2 border-purple-500';
 	} else {
 		borderCls = '';
 	}
@@ -65,7 +67,7 @@
 	const READ_THRESHOLD = 95; // 5%
 </script>
 
-<div class="{borderCls} card bg-base-100 h-full shadow-sm" id={id.toString()}>
+<div class="{borderCls} card bg-base-100 h-full shadow-xl" id={id.toString()}>
 	<figure class="mt-0 mb-0">
 		{#if placeholder}
 			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
@@ -112,45 +114,47 @@
 				}).format(new Date(accessTime))}
 			</div>
 		{/if}
-		<div style="height: 2em; overflow:hidden;"></div>
+
 		{#if !placeholder}
-			{#if favorite}
-				<span class="badge bg-pink badge-xs">
-					<Icon data={star} /> Favorite
-				</span>
-			{/if}
+			<div style="height: 2em; overflow:hidden;">
+				{#if favorite}
+					<div class="badge p-2 bg-pink-200 text-pink-800">
+						<Icon data={star}/> Favorite
+					</div>
+				{/if}
 
-			{#if favoriteTag}
-				<span class="badge bg-purple badge-xs">
-					<Icon data={tag} /> Favorite Tag
-				</span>
-			{/if}
+				{#if favoriteTag}
+					<div class="badge p-2 bg-purple-200 text-purple-800">
+						<Icon data={tag}/> Favorite Tag
+					</div>
+				{/if}
 
-			{#if !isRead}
-				<span class="badge bg-yellow badge-xs">
-					<Icon data={new_releases} /> New
-				</span>
-			{:else}
-				<span class="badge badge-xs">
-					{#if progressPercent < READ_THRESHOLD}
-						<Icon data={menu_book} /> {Math.round(progressPercent)}%
-					{:else}
-						<Icon data={check} /> Read
-					{/if}
-				</span>
-			{/if}
-			{#if pageCount}
-				<span class="badge bg-blue badge-xs">
-					<Icon data={insert_drive_file} />
-					{pageCount}p
-				</span>
-			{/if}
-			{#if itemCount}
-				<span class="badge bg-blue badge-xs">
-					<Icon data={library_books} />
-					{itemCount}
-				</span>
-			{/if}
+				{#if !isRead}
+					<div class="badge p-2 bg-yellow-200 text-yellow-800">
+						<Icon data={new_releases} /> New
+					</div>
+				{:else}
+					<div class="badge p-2 bg-emerald-200 text-emerald-800">
+						{#if progressPercent < READ_THRESHOLD}
+							<Icon data={menu_book} /> {Math.round(progressPercent)}%
+						{:else}
+							<Icon data={check}/> Read
+						{/if}
+					</div>
+				{/if}
+				{#if pageCount}
+					<div class="badge p-2 bg-blue-200 text-blue-800">
+						<Icon data={insert_drive_file}/>
+						{pageCount}p
+					</div>
+				{/if}
+				{#if itemCount}
+					<div class="badge p-2 bg-blue-200 text-blue-800">
+						<Icon data={library_books}/>
+						{itemCount}
+					</div>
+				{/if}
+			</div>
 		{/if}
 	</div>
 </div>
