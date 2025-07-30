@@ -6,7 +6,7 @@
 	let { isFavorite = false, children, onclick } = $props();
 </script>
 
-<button class="btn" class:btn-pink={isFavorite} class:btn-outline-pink={!isFavorite} {onclick}>
+<button class="btn text-pink-800" class:bg-pink-200={isFavorite} class:border-pink-500={!isFavorite} {onclick}>
 	{#if isFavorite}
 		<Icon data={star} /> {@render children?.()}
 	{:else}
