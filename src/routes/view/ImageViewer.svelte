@@ -43,11 +43,11 @@
 	}
 </script>
 
-<div class="carousel slide w-100 h-100" id="carouselControl">
-	<div class="carousel-inner w-100 h-100" id="carousel" style="width:100%; height:100%;">
+<div class="carousel slide w-full h-full" id="carouselControl">
+	<div class="carousel-inner w-full h-full" id="carousel" style="width:100%; height:100%;">
 		{#each imageURLs as url, index}
-			<div class="carousel-item w-100 h-100" class:active={index === (startIndex ?? 0)}>
-				<div class="w-100 h-100 d-flex flex-col">
+			<div class="carousel-item w-full h-full" class:active={index === (startIndex ?? 0)}>
+				<div class="w-full h-full d-flex flex-col">
 					<PageImage alt="page {index}" src={new URL(url)} bind:this={imgs[index]} />
 				</div>
 			</div>

@@ -3,24 +3,11 @@
 	import { page } from '$app/state';
 	import FavoriteButton from '$lib/FavoriteButton.svelte';
 	import Toast from '$lib/Toast.svelte';
+	import Container from '$lib/components/Container.svelte';
+	import Content from '$lib/components/Content.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
+	import SideBar from '$lib/components/SideBar.svelte';
 	import { aboutURL, browseURL, historyURL, userURL } from '$lib/routes';
-
-	import {
-		Collapse,
-		Dropdown,
-		DropdownItem,
-		DropdownMenu,
-		DropdownToggle,
-		Icon,
-		Modal,
-		Nav,
-		NavItem,
-		NavLink,
-		Navbar,
-		NavbarBrand,
-		NavbarToggler,
-		Table
-	} from '@sveltestrap/sveltestrap';
 
 	import type { PageData } from './$types';
 	import ImageViewer from './ImageViewer.svelte';
@@ -54,14 +41,14 @@
 
 		return output;
 	}
-	
+
 	function downloadManga() {
 		const url = new URL('/api/manga/download', page.url.origin);
 		url.searchParams.set('name', name);
 
 		download(url.toString());
 	}
-	
+
 	function downloadPage() {
 		const url = new URL('/api/manga/page_image', page.url.origin);
 		url.searchParams.set('name', name);
@@ -78,28 +65,31 @@
 		const resp = await fetch(url, { method: 'GET' });
 		const json = await resp.json();
 
+		/*
 		if (json.favorite) {
 			toast.show('Favorite', 'The current manga is now your favorite.');
 		} else {
 			toast.show('Favorite', 'The current manga is no longer your favorite.');
 		}
-
+*/
 		favorite = json.favorite;
 	}
-	
+
 	async function fixMetaData() {
 		const url = new URL('/api/manga/repair', page.url.origin);
-		url.searchParams.set("name", name)
+		url.searchParams.set('name', name);
 
 		const resp = await fetch(url);
 		const json = await resp.json();
 
+		/*
 		if (json.isSuccess) {
 			toast.show('Fix metadata', 'The metadata has been updated.');
 			invalidateAll();
 		} else {
 			toast.show('Fix metadata', 'The metadata updates fails.');
 		}
+			*/
 	}
 
 	async function updateCover() {
@@ -137,11 +127,28 @@
 	const aboutToggle = () => {
 		aboutOpen = !aboutOpen;
 	};
+
+	let showMenu = $state(false);
 </script>
 
 <svelte:head>
 	<title>View: {name}</title>
 </svelte:head>
+
+<Container bind:showMenu>
+	<Content>
+		<NavBar bind:showMenu title={name.length > 40 ? `${name.substring(0, 35)}...` : name}></NavBar>
+		<ImageViewer
+			imageURLs={createImageUrls(name, pageCount)}
+			{onIndexChange}
+			bind:this={viewer}
+			startIndex={data.response.currentPage}
+		/>
+	</Content>
+	<SideBar bind:showMenu></SideBar>
+</Container>
+
+<!--
 
 <PageScroll PageCount={pageCount} {onValueChange} Current={current} />
 
@@ -153,6 +160,8 @@
 		startIndex={data.response.currentPage}
 	/>
 </div>
+
+
 
 <Navbar color="dark" dark expand="md" sticky={'top'}>
 	<NavbarBrand href="/">View</NavbarBrand>
@@ -254,3 +263,4 @@
 </Modal>
 
 <Toast bind:this={toast} />
+-->
