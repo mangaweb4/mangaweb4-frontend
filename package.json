@@ -49,6 +49,7 @@
 	"dependencies": {
 		"@grpc/grpc-js": "^1.13.4",
 		"@jamescoyle/svelte-icon": "^0.1.1",
+		"@mdi/js": "^7.4.47",
 		"@mdi/svg": "^7.4.47",
 		"@protobuf-ts/grpc-transport": "^2.11.1",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
@@ -58,6 +59,7 @@
 		"bootstrap-icons": "^1.11.3",
 		"bootswatch": "^5.3.5",
 		"daisyui": "^5.0.50",
+		"embla-carousel-svelte": "^8.6.0",
 		"fs-extra": "^11.3.0",
 		"jose": "^6.0.11",
 		"md5": "^2.3.0",
@@ -67,6 +69,7 @@
 		"svelte-easy-crop": "^4.0.1",
 		"svelte-eslint-parser": "^1.1.2",
 		"svelte-icon": "^2.1.1",
+		"swiper": "^8.4.7",
 		"tailwindcss": "^4.1.11",
 		"ts-enum-util": "^4.1.0"
 	}

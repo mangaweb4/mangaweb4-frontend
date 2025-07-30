@@ -10,7 +10,7 @@
 	import { aboutURL, browseURL, historyURL, userURL } from '$lib/routes';
 
 	import type { PageData } from './$types';
-	import ImageViewer from './ImageViewer.svelte';
+	import ImageViewer from './Viewer.svelte';
 	import PageScroll from './PageScroll.svelte';
 
 	let current = $state(0);
@@ -115,7 +115,7 @@
 	}
 
 	function onValueChange(n: number) {
-		viewer.advance(n);
+		//viewer.advance(n);
 	}
 
 	let navbarToggleOpen = $state(false);
@@ -138,12 +138,14 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu title={name.length > 40 ? `${name.substring(0, 35)}...` : name}></NavBar>
-		<ImageViewer
-			imageURLs={createImageUrls(name, pageCount)}
-			{onIndexChange}
-			bind:this={viewer}
-			startIndex={data.response.currentPage}
-		/>
+		<div class="fixed top-18 bottom-0 start-0 end-0">
+			<ImageViewer
+				imageURLs={createImageUrls(name, pageCount)}
+				{onIndexChange}
+				bind:this={viewer}
+				startIndex={data.response.currentPage}
+			/>
+		</div>
 	</Content>
 	<SideBar bind:showMenu></SideBar>
 </Container>
