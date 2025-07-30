@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import type { PageData } from './$types';
-	import MoveToTop from '$lib/MoveToTop.svelte';
+	import MoveToTop from '$lib/components/MoveToTop.svelte';
 	import {
 		Button,
 		Input,
@@ -19,7 +19,7 @@
 		DropdownMenu,
 		DropdownItem
 	} from '@sveltestrap/sveltestrap';
-	import Pagination from '$lib/Pagination.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { aboutURL, tagURL, browseURL, historyURL, userURL } from '$lib/routes';
 	import { ITEM_PER_PAGE } from '$lib/constants';

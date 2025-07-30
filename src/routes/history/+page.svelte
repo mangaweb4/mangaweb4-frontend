@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import MoveToTop from '$lib/MoveToTop.svelte';
-	import Pagination from '$lib/Pagination.svelte';
+	import MoveToTop from '$lib/components/MoveToTop.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
 	import { viewURL } from '$lib/routes';
 
 	import type { PageData } from './$types';

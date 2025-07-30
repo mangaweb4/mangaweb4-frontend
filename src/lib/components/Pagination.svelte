@@ -1,19 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import {
-		Button,
-		Container,
-		Input,
-		InputGroup,
-		Offcanvas,
-		Pagination,
-		PaginationItem,
-		PaginationLink
-	} from '@sveltestrap/sveltestrap';
 
 	import { Icon } from 'svelte-icon';
 	import numbers from '@material-design-icons/svg/round/numbers.svg?raw';
 	import arrow_forward from '@material-design-icons/svg/round/arrow_forward.svg?raw';
+	import page_first from '@mdi/svg/svg/page-first.svg?raw';
+	import page_last from '@mdi/svg/svg/page-last.svg?raw';
 	import { goto } from '$app/navigation';
 
 	interface Props {
@@ -61,31 +53,36 @@
 	}
 </script>
 
-<Pagination>
-	<PaginationItem>
-		<PaginationLink first href={createLink(first).toString()} />
-	</PaginationItem>
+<nav class="fixed bottom-0 p-3 inset-x-0">
+	<div class="mx-auto w-100 flex">
+	<div class="join shadow">
+		<button class="join-item btn" onclick={() => goto(createLink(first).toString())}>
+			<Icon data={page_first} />
+		</button>
 
-	{#each pageNumbers as i}
-		<PaginationItem active={i === currentPage}>
-			<PaginationLink href={createLink(i).toString()}>
+		{#each pageNumbers as i}
+			<button
+				class="join-item btn {currentPage === i ? 'btn-active' : undefined}"
+				onclick={() => goto(createLink(i).toString())}
+			>
 				{i}
-			</PaginationLink>
-		</PaginationItem>
-	{/each}
+			</button>
+		{/each}
 
-	<PaginationItem>
+		<!--PaginationItem>
 		<PaginationLink onclick={() => (customOpen = true)}>
 			<Icon data={numbers}></Icon>
 		</PaginationLink>
-	</PaginationItem>
+	</PaginationItem -->
 
-	<PaginationItem>
-		<PaginationLink last href={createLink(last).toString()} />
-	</PaginationItem>
-</Pagination>
+		<button class="join-item btn" onclick={() => goto(createLink(last).toString())}>
+			<Icon data={page_last} />
+		</button>
+	</div>
+	</div>
+</nav>
 
-<Offcanvas
+<!-- Offcanvas
 	isOpen={customOpen}
 	toggle={() => (customOpen = !customOpen)}
 	header="Go to page"
@@ -107,4 +104,4 @@
 			</Button>
 		</InputGroup>
 	</Container>
-</Offcanvas>
+</Offcanvas -->

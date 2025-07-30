@@ -2,8 +2,8 @@
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import FavoriteButton from '$lib/FavoriteButton.svelte';
-	import MoveToTop from '$lib/MoveToTop.svelte';
-	import Pagination from '$lib/Pagination.svelte';
+	import MoveToTop from '$lib/components/MoveToTop.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
 	import Toast from '$lib/Toast.svelte';
 	import { browseURL, viewURL } from '$lib/routes';
 
@@ -203,12 +203,7 @@
 
 		<div style="height: 100px;"></div>
 
-		<div
-			aria-label="Page navigation"
-			class="position-fixed bottom-0 start-50 p-3 translate-middle-x"
-		>
-			<Pagination currentPage={pageIndex} {totalPage} />
-		</div>
+		<Pagination currentPage={pageIndex} {totalPage} />
 
 		<Toast bind:this={toast} />
 
