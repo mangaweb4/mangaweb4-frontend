@@ -10,7 +10,7 @@
 	import md5 from 'md5';
 
 	import { Icon } from 'svelte-icon';
-	import logout from '@material-design-icons/svg/round/logout.svg?raw';
+	import logout from '@mdi/svg/svg/logout.svg?raw';
 
 	let { email, name } = page.data;
 	let showMenu = $state(false);

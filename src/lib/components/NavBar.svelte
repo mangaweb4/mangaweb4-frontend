@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Icon } from 'svelte-icon';
-	import menu from '@material-design-icons/svg/round/menu.svg?raw';
+	import menu from '@mdi/svg/svg/menu.svg?raw';
 
 	let { title, showMenu = $bindable() } = $props();
 </script>

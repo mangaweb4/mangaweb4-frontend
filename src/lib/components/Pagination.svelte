@@ -2,8 +2,6 @@
 	import { page } from '$app/state';
 
 	import { Icon } from 'svelte-icon';
-	import numbers from '@material-design-icons/svg/round/numbers.svg?raw';
-	import arrow_forward from '@material-design-icons/svg/round/arrow_forward.svg?raw';
 	import page_first from '@mdi/svg/svg/page-first.svg?raw';
 	import page_last from '@mdi/svg/svg/page-last.svg?raw';
 	import { goto } from '$app/navigation';
