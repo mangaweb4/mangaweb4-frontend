@@ -9,7 +9,7 @@
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import { ITEM_PER_PAGE } from '$lib/constants';
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
-	import PlaceholderCard from '$lib/PlaceholderCard.svelte';
+	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import { Timestamp } from '$lib/grpc/google/protobuf/timestamp';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Container from '$lib/components/Container.svelte';

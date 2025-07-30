@@ -26,7 +26,7 @@
 	import { aboutURL, tagURL, browseURL, historyURL, userURL } from '$lib/routes';
 	import { ITEM_PER_PAGE } from '$lib/constants';
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
-	import PlaceholderCard from '$lib/PlaceholderCard.svelte';
+	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 	import NavigationMenu from '$lib/components/NavigationMenu.svelte';
 
