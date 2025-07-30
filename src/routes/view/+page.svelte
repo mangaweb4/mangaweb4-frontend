@@ -13,6 +13,11 @@
 	import ImageViewer from './Viewer.svelte';
 	import PageScroll from './PageScroll.svelte';
 
+	import { Icon } from 'svelte-icon';
+	import downloadBox from '@mdi/svg/svg/download-box.svg?raw';
+	import cropPortrait from '@mdi/svg/svg/crop-portrait.svg?raw';
+	import tools from '@mdi/svg/svg/tools.svg?raw';
+
 	let current = $state(0);
 	let viewer: ImageViewer;
 	let toast: Toast;
@@ -137,7 +142,7 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu title={name.length > 40 ? `${name.substring(0, 35)}...` : name}></NavBar>
+		<NavBar bind:showMenu title="View"></NavBar>
 		<div class="fixed top-18 bottom-0 start-0 end-0">
 			<ImageViewer
 				imageURLs={createImageUrls(name, pageCount)}
@@ -147,23 +152,47 @@
 			/>
 		</div>
 	</Content>
-	<SideBar bind:showMenu></SideBar>
+	<SideBar bind:showMenu>
+		<ul class="menu">
+			<li class="text">
+				<div class="tooltip tooltip-left" data-tip={name}>
+				<div class="h-20 overflow-hidden">
+					{name.length > 60 ? `${name.substring(0, 55)}...` : name}
+				</div>
+				</div>
+			</li>
+			<li>
+				<FavoriteButton onclick={() => toggleFavorite()} isFavorite={favorite}>
+					Favorite
+				</FavoriteButton>
+			</li>
+
+			<li class="menu-title">Tools</li>
+			<li>
+				<button onclick={() => downloadManga()}>
+					<Icon data={downloadBox} /> Download
+				</button>
+			</li>
+
+			<li>
+				<button onclick={() => updateCover()}>
+					<Icon data={cropPortrait} /> Replace Cover
+				</button>
+			</li>
+
+			<li>
+				<button onclick={() => fixMetaData()}>
+					<Icon data={tools} />
+					Fix the manga
+				</button>
+			</li>
+		</ul>
+	</SideBar>
 </Container>
 
 <!--
 
 <PageScroll PageCount={pageCount} {onValueChange} Current={current} />
-
-<div class="fullscreen" style="padding-top:80px;">
-	<ImageViewer
-		imageURLs={createImageUrls(name, pageCount)}
-		{onIndexChange}
-		bind:this={viewer}
-		startIndex={data.response.currentPage}
-	/>
-</div>
-
-
 
 <Navbar color="dark" dark expand="md" sticky={'top'}>
 	<NavbarBrand href="/">View</NavbarBrand>
