@@ -13,7 +13,7 @@
 
 	function slidesInView(emblaApi: EmblaCarouselType, eventName: EmblaEventType): void {
 		if (eventName == 'slidesInView') {
-			const progress = Math.max(...emblaApi.slidesInView());
+			const progress = emblaApi.selectedScrollSnap();
 			onIndexChange(progress);
 
 			let len = pages.length
