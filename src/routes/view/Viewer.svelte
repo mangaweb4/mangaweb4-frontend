@@ -5,26 +5,29 @@
 	import { Icon } from 'svelte-icon';
 	import chevronLeft from '@mdi/svg/svg/chevron-left.svg?raw';
 	import chevronRight from '@mdi/svg/svg/chevron-right.svg?raw';
+	import chevronUp from '@mdi/svg/svg/chevron-up.svg?raw';
+
 	import Page from './Page.svelte';
 
 	let { imageURLs = [], onIndexChange, startIndex } = $props();
 
 	let pages: Page[] = $state(new Array(imageURLs.length));
+	let progress = $state(0);
 
 	function slidesInView(emblaApi: EmblaCarouselType, eventName: EmblaEventType): void {
 		if (eventName == 'slidesInView') {
-			const progress = emblaApi.selectedScrollSnap();
+			progress = emblaApi.selectedScrollSnap();
 			onIndexChange(progress);
 
-			let len = pages.length
-			let prev = progress -1;
+			let len = pages.length;
+			let prev = progress - 1;
 			if (prev < 0) prev = len + prev;
 
-			let next = progress +1;
+			let next = progress + 1;
 			if (next >= len) next = len - prev;
 
-			pages[prev].forceLoad()
-			pages[next].forceLoad()
+			pages[prev].forceLoad();
+			pages[next].forceLoad();
 		}
 	}
 
@@ -35,6 +38,8 @@
 		emblaApi = event.detail;
 		emblaApi.on('slidesInView', slidesInView);
 	}
+
+	let pageScroll: HTMLDialogElement;
 </script>
 
 <button
@@ -64,3 +69,28 @@
 		{/each}
 	</div>
 </div>
+
+<button
+	class="btn text-gray-500/50 hover:text-gray-500 bg-transparent border-transparent shadow-none fixed inset-x-1/4 w-1/2 z-10 h-20 bottom-2"
+	onclick={() => pageScroll.showModal()}><Icon data={chevronUp}></Icon></button
+>
+
+<dialog class="modal modal-bottom" bind:this={pageScroll}>
+	<div class="modal-box w-full max-w-[1024px] mx-auto">
+		<h3 class="text-lg font-bold">Move to page</h3>
+		<p class="py-4">
+			<input
+				type="range"
+				class="w-full"
+				min="0"
+				max={pages.length - 1}
+				bind:value={progress}
+				onchange={(e: any) => emblaApi.scrollTo(e.target.value)}
+			/>
+			{progress + 1} of {pages.length}
+		</p>
+	</div>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
+	</form>
+</dialog>
