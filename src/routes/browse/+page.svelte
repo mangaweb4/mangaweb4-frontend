@@ -1,28 +1,11 @@
 <script lang="ts">
-	import { afterNavigate, beforeNavigate, goto, onNavigate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import FavoriteButton from '$lib/FavoriteButton.svelte';
 	import MoveToTop from '$lib/MoveToTop.svelte';
 	import Pagination from '$lib/Pagination.svelte';
 	import Toast from '$lib/Toast.svelte';
-	import { aboutURL, browseURL, historyURL, tagURL, userURL, viewURL } from '$lib/routes';
-
-	import {
-		Button,
-		Collapse,
-		Dropdown,
-		DropdownItem,
-		DropdownMenu,
-		DropdownToggle,
-		Input,
-		InputGroup,
-		Nav,
-		NavItem,
-		NavLink,
-		Navbar,
-		NavbarBrand,
-		NavbarToggler
-	} from '@sveltestrap/sveltestrap';
+	import { browseURL, viewURL } from '$lib/routes';
 
 	import type { PageData } from './$types';
 	import ItemCard from '$lib/components/ItemCard.svelte';
@@ -30,20 +13,20 @@
 	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
-	import NavigationMenu from '$lib/components/NavigationMenu.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import title from '@material-design-icons/svg/round/title.svg?raw';
-	import calendar_month from '@material-design-icons/svg/round/calendar_month.svg?raw';
-	import insert_drive_file from '@material-design-icons/svg/round/insert_drive_file.svg?raw';
-	import sortIcon from '@material-design-icons/svg/round/sort.svg?raw';
-	import star from '@material-design-icons/svg/round/star.svg?raw';
-	import label from '@material-design-icons/svg/round/label.svg?raw';
-	import block from '@material-design-icons/svg/round/block.svg?raw';
+	import title from '@mdi/svg/svg/format-title.svg?raw';
+	import calendar_clock from '@mdi/svg/svg/calendar-clock.svg?raw';
+	import file_multiple from '@mdi/svg/svg/file-multiple.svg?raw';
+	import sortAscending from '@mdi/svg/svg/sort-ascending.svg?raw';
+	import sortDescending from '@mdi/svg/svg/sort-descending.svg?raw';
+	import fileStar from '@mdi/svg/svg/file-star.svg?raw';
+	import tagMultiple from '@mdi/svg/svg/tag-multiple.svg?raw';
+	import cancel from '@mdi/svg/svg/cancel.svg?raw';
 
 	let toast: Toast;
 
@@ -265,7 +248,7 @@
 					class={sort == SortField.CREATION_TIME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
 				>
-					<Icon data={calendar_month} /> Create time
+					<Icon data={calendar_clock} /> Create time
 				</button>
 			</li>
 
@@ -274,7 +257,7 @@
 					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
 				>
-					<Icon data={insert_drive_file} /> Page Count
+					<Icon data={file_multiple} /> Page Count
 				</button>
 			</li>
 
@@ -284,7 +267,7 @@
 					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.ASCENDING }))}
 				>
-					<Icon data={sortIcon} /> Ascending
+					<Icon data={sortAscending} /> Ascending
 				</button>
 			</li>
 
@@ -293,7 +276,7 @@
 					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={sortIcon} /> Descending
+					<Icon data={sortDescending} /> Descending
 				</button>
 			</li>
 
@@ -303,7 +286,7 @@
 					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
 				>
-					<Icon data={block} /> None
+					<Icon data={cancel} /> None
 				</button>
 			</li>
 			<li>
@@ -311,7 +294,7 @@
 					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
 				>
-					<Icon data={star} /> Favorite items
+					<Icon data={fileStar} /> Favorite items
 				</button>
 			</li>
 
@@ -320,7 +303,7 @@
 					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
 				>
-					<Icon data={label} /> Items with favorite tags
+					<Icon data={tagMultiple} /> Items with favorite tags
 				</button>
 			</li>
 		</ul>

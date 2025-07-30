@@ -4,29 +4,31 @@
 	import { browseURL, tagURL, historyURL, userURL, aboutURL } from '$lib/routes';
 
 	import { Icon } from 'svelte-icon';
-	import library_books from '@material-design-icons/svg/sharp/library_books.svg?raw';
-	import label from '@material-design-icons/svg/sharp/label.svg?raw';
-	import history from '@material-design-icons/svg/sharp/history.svg?raw';
-	import person from '@material-design-icons/svg/sharp/person.svg?raw';
-	import info from '@material-design-icons/svg/sharp/info.svg?raw';
+	import bookshelf from '@mdi/svg/svg/bookshelf.svg?raw';
+	import tag_multiple from '@mdi/svg/svg/tag-multiple.svg?raw';
+	import history from '@mdi/svg/svg/history.svg?raw';
+	import account from '@mdi/svg/svg/account.svg?raw';
+	import information from '@mdi/svg/svg/information.svg?raw';
 
 	let { children = undefined, showMenu = $bindable() } = $props();
 </script>
 
 <div class="drawer-side">
-	<div class="drawer-overlay" onclick={() => (showMenu = false)}></div>
+	<div class="drawer-overlay" role="none" onkeydown={() => (showMenu = false)} onclick={() => (showMenu = false)}></div>
 	<ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
 		{@render children?.()}
+
+		<li class="menu-title">Navigation</li>
+			
 		<ul class="list">
-			<li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Navigation</li>
 			<li class="list-row">
 				<button onclick={() => goto(browseURL(page.url.origin))}>
-					<Icon data={library_books} />&nbsp;Browse items
+					<Icon data={bookshelf} />&nbsp;Browse items
 				</button>
 			</li>
 			<li class="list-row">
 				<button onclick={() => goto(tagURL(page.url.origin))}>
-					<Icon data={label} />&nbsp;Tag list
+					<Icon data={tag_multiple} />&nbsp;Tag list
 				</button>
 			</li>
 
@@ -37,12 +39,12 @@
 			</li>
 			<li class="list-row">
 				<button onclick={() => goto(userURL(page.url.origin))}>
-					<Icon data={person} />User
+					<Icon data={account} />User
 				</button>
 			</li>
 			<li class="list-row">
 				<button onclick={() => goto(aboutURL(page.url.origin))}>
-					<Icon data={info} />About
+					<Icon data={information} />About
 				</button>
 			</li>
 		</ul>
