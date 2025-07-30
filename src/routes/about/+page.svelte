@@ -3,9 +3,10 @@
 	import type { PageData } from './$types';
 	import Toast from '$lib/Toast.svelte';
 	import ConfirmDialog from '$lib/ConfirmDialog.svelte';
-	
+
 	import { Icon } from 'svelte-icon';
-	import play_circle from '@material-design-icons/svg/round/play_circle.svg?raw';
+	import play_circle from '@mdi/svg/svg/play-circle.svg?raw';
+	import github from '@mdi/svg/svg/github.svg?raw';
 
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Container from '$lib/components/Container.svelte';
@@ -67,9 +68,10 @@
 
 		<div class="container mx-auto prose max-w-[1024px] mt-4">
 			<h1>MangaWeb 4</h1>
-			<h6>
-				<a class="icon-link" href="https://github.com/mangaweb4"> Github </a>
-			</h6>
+
+			<a class="btn" href="https://github.com/mangaweb4">
+				<Icon data={github} />&nbsp;Github
+			</a>
 
 			<div class="mt-4">
 				<p>&copy; Copyright 2021-2025 Wutipong Wongsakuldej.</p>
