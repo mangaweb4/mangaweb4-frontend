@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '@sveltestrap/sveltestrap';
 	import { Icon } from 'svelte-icon';
-	import arrow_upward from '@material-design-icons/svg/round/arrow_upward.svg?raw';
+	import arrow_upward from '@mdi/svg/svg/arrow-up-box.svg?raw';
 
 	function moveToTop() {
 		location.hash = '#top';

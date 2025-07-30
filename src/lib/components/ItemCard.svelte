@@ -1,13 +1,13 @@
 <script lang="ts">
-	import star from '@material-design-icons/svg/round/star.svg?raw';
-	import tag from '@material-design-icons/svg/round/tag.svg?raw';
-	import new_releases from '@material-design-icons/svg/round/new_releases.svg?raw';
-	import menu_book from '@material-design-icons/svg/round/menu_book.svg?raw';
-	import check from '@material-design-icons/svg/round/check.svg?raw';
-	import insert_drive_file from '@material-design-icons/svg/round/insert_drive_file.svg?raw';
-	import library_books from '@material-design-icons/svg/round/library_books.svg?raw';
-	import warning from '@material-design-icons/svg/round/warning.svg?raw';
-	import photo from '@material-design-icons/svg/round/photo.svg?raw';
+	import star from '@mdi/svg/svg/star.svg?raw';
+	import tag from '@mdi/svg/svg/tag.svg?raw';
+	import new_releases from '@mdi/svg/svg/alert-decagram.svg?raw';
+	import menu_book from '@mdi/svg/svg/book-open-variant.svg?raw';
+	import check from '@mdi/svg/svg/check.svg?raw';
+	import insert_drive_file from '@mdi/svg/svg/file.svg?raw';
+	import library_books from '@mdi/svg/svg/bookshelf.svg?raw';
+	import warning from '@mdi/svg/svg/alert-box.svg?raw';
+	import photo from '@mdi/svg/svg/image.svg?raw';
 
 	import { Icon } from 'svelte-icon';
 
