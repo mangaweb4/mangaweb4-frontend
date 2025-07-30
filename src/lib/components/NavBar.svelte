@@ -5,7 +5,7 @@
 	let { title, showMenu = $bindable() } = $props();
 </script>
 
-<div class="navbar bg-base-100 shadow-sm sticky top-0">
+<div class="navbar bg-base-100 shadow-sm sticky top-0 z-1">
 	<div class="w-full max-w-[1024px] mx-auto flex">
 		<div class="flex-1">
 			<p class="text-xl">{title}</p>

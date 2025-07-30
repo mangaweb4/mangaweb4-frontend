@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import ItemCard from '$lib/ItemCard.svelte';
+	import ItemCard from '$lib/components/ItemCard.svelte';
 	import type { PageData } from './$types';
 	import MoveToTop from '$lib/MoveToTop.svelte';
 	import {

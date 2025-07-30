@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { Card, CardBody, CardFooter } from '@sveltestrap/sveltestrap';
-
 	import star from '@material-design-icons/svg/round/star.svg?raw';
 	import tag from '@material-design-icons/svg/round/tag.svg?raw';
 	import new_releases from '@material-design-icons/svg/round/new_releases.svg?raw';
@@ -27,7 +25,6 @@
 		placeholder?: boolean;
 		currentPage?: number;
 	}
-
 
 	let {
 		favorite = false,
@@ -68,81 +65,92 @@
 	const READ_THRESHOLD = 95; // 5%
 </script>
 
-<Card class="{borderCls} h-100" id={id.toString()}>
-	{#if placeholder}
-		<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
-			<Icon class="card-img-top h-100" data={photo} color="gray" width="210" height="210" />
+<div class="{borderCls} card bg-base-100 h-full shadow-sm" id={id.toString()}>
+	<figure class="mt-0 mb-0">
+		{#if placeholder}
+			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
+				<Icon class="card-img-top h-full" data={photo} color="gray" width="210" height="210" />
+			</div>
+		{:else}
+			<a href={linkUrl?.toString()} aria-label={name} style="display:block; aspect-ratio: 1/1.414">
+				{#if imageLoadErr}
+					<Icon
+						class="card-img-top h-full"
+						data={warning}
+						color="yellow"
+						width="210"
+						height="210"
+					/>
+				{:else}
+					<img
+						bind:this={img}
+						class="card-img-top h-full mt-0 mb-0"
+						alt={name}
+						loading="lazy"
+						src={imageUrl.toString()}
+						style="object-fit: cover; object-position: 25% top"
+						onerror={() => onImageError()}
+					/>
+				{/if}
+			</a>
+		{/if}
+	</figure>
+	<div class="card-body">
+		<div style="height: 4em; overflow:hidden;">
+			<a href={placeholder == true ? '' : linkUrl?.toString()}>{name}</a>
 		</div>
-	{:else}
-		<a href={linkUrl?.toString()} aria-label={name} style="display:block; aspect-ratio: 1/1.414">
-			{#if imageLoadErr}
-				<Icon class="card-img-top h-100" data={warning} color="yellow" width="210" height="210" />		
-			{:else}
-				<img
-					bind:this={img}
-					class="card-img-top h-100"
-					alt={name}
-					loading="lazy"
-					src={imageUrl.toString()}
-					style="object-fit: cover; object-position: 25% top"
-					onerror={() => onImageError()}
-				/>
-			{/if}
-		</a>
-	{/if}
-	<CardBody style="height: 8em; overflow:hidden;">
-		<a href={placeholder == true ? '' : linkUrl?.toString()}>{name}</a>
-	</CardBody>
-	{#if accessTime != ''}
-		<CardFooter style="height: 4em; overflow:hidden;">
-			{Intl.DateTimeFormat('en', {
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-				hour: 'numeric',
-				minute: 'numeric',
-				second: 'numeric',
-				timeZoneName: 'short'
-			}).format(new Date(accessTime))}
-		</CardFooter>
-	{/if}
-	<CardFooter style="height: 3em; overflow:hidden;">
+		{#if accessTime != ''}
+			<div style="height: 2em; overflow:hidden;">
+				{Intl.DateTimeFormat('en', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+					hour: 'numeric',
+					minute: 'numeric',
+					second: 'numeric',
+					timeZoneName: 'short'
+				}).format(new Date(accessTime))}
+			</div>
+		{/if}
+		<div style="height: 2em; overflow:hidden;"></div>
 		{#if !placeholder}
 			{#if favorite}
-				<span class="badge bg-pink">
-					<span><Icon data={star} /> Favorite </span>
+				<span class="badge bg-pink badge-xs">
+					<Icon data={star} /> Favorite
 				</span>
 			{/if}
 
 			{#if favoriteTag}
-				<span class="badge bg-purple">
-					<span><Icon data={tag} /> Favorite Tag</span>
+				<span class="badge bg-purple badge-xs">
+					<Icon data={tag} /> Favorite Tag
 				</span>
 			{/if}
 
 			{#if !isRead}
-				<span class="badge bg-yellow">
-					<span><Icon data={new_releases} /> New </span>
+				<span class="badge bg-yellow badge-xs">
+					<Icon data={new_releases} /> New
 				</span>
 			{:else}
-				<span class="badge">
+				<span class="badge badge-xs">
 					{#if progressPercent < READ_THRESHOLD}
-						<span><Icon data={menu_book} /> {Math.round(progressPercent)}% </span>
+						<Icon data={menu_book} /> {Math.round(progressPercent)}%
 					{:else}
-						<span><Icon data={check} /> Read </span>
+						<Icon data={check} /> Read
 					{/if}
 				</span>
 			{/if}
 			{#if pageCount}
-				<span class="badge bg-blue">
-					<span><Icon data={insert_drive_file} /> {pageCount}p </span>
+				<span class="badge bg-blue badge-xs">
+					<Icon data={insert_drive_file} />
+					{pageCount}p
 				</span>
 			{/if}
 			{#if itemCount}
-				<span class="badge bg-blue">
-					<span><Icon data={library_books} /> {itemCount}</span>
+				<span class="badge bg-blue badge-xs">
+					<Icon data={library_books} />
+					{itemCount}
 				</span>
 			{/if}
 		{/if}
-	</CardFooter>
-</Card>
+	</div>
+</div>

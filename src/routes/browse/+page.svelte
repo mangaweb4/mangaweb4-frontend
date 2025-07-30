@@ -26,7 +26,7 @@
 	} from '@sveltestrap/sveltestrap';
 
 	import type { PageData } from './$types';
-	import ItemCard from '$lib/ItemCard.svelte';
+	import ItemCard from '$lib/components/ItemCard.svelte';
 	import { ITEM_PER_PAGE } from '$lib/constants';
 	import PlaceholderCard from '$lib/PlaceholderCard.svelte';
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
