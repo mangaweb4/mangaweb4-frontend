@@ -1,16 +1,15 @@
 <script lang="ts">
-	import star_border from '@material-design-icons/svg/round/star_border.svg?raw';
-	import star from '@material-design-icons/svg/round/star.svg?raw';
-
 	import { Icon } from 'svelte-icon';
+	import star from '@mdi/svg/svg/star.svg?raw';
+	import star_outline from '@mdi/svg/svg/star-outline.svg?raw';
 
 	let { isFavorite = false, children, onclick } = $props();
 </script>
 
 <button class="btn" class:btn-pink={isFavorite} class:btn-outline-pink={!isFavorite} {onclick}>
 	{#if isFavorite}
-		<span><Icon data={star} /> {@render children?.()}</span>
+		<Icon data={star} /> {@render children?.()}
 	{:else}
-		<span><Icon data={star_border} /> {@render children?.()}</span>
+		<Icon data={star_outline} /> {@render children?.()}
 	{/if}
 </button>
