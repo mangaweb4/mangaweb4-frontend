@@ -11,8 +11,6 @@
 
 	import { Icon } from 'svelte-icon';
 
-	import colors from 'tailwindcss/colors'
-
 	interface Props {
 		favorite?: boolean;
 		isRead?: boolean;
@@ -47,10 +45,10 @@
 
 	if (placeholder) {
 		borderCls = '';
-	} else if (favorite) {
-		borderCls = 'border border-2 border-pink-500';
 	} else if (!isRead) {
 		borderCls = 'border border-2 border-yellow-500';
+	} else if (favorite) {
+		borderCls = 'border border-2 border-pink-500';
 	} else if (favoriteTag) {
 		borderCls = 'border border-2 border-purple-500';
 	} else {
@@ -119,13 +117,13 @@
 			<div style="height: 2em; overflow:hidden;">
 				{#if favorite}
 					<div class="badge p-2 bg-pink-200 text-pink-800">
-						<Icon data={star}/> Favorite
+						<Icon data={star} /> Favorite
 					</div>
 				{/if}
 
 				{#if favoriteTag}
 					<div class="badge p-2 bg-purple-200 text-purple-800">
-						<Icon data={tag}/> Favorite Tag
+						<Icon data={tag} /> Favorite Tag
 					</div>
 				{/if}
 
@@ -138,19 +136,19 @@
 						{#if progressPercent < READ_THRESHOLD}
 							<Icon data={menu_book} /> {Math.round(progressPercent)}%
 						{:else}
-							<Icon data={check}/> Read
+							<Icon data={check} /> Read
 						{/if}
 					</div>
 				{/if}
 				{#if pageCount}
 					<div class="badge p-2 bg-blue-200 text-blue-800">
-						<Icon data={insert_drive_file}/>
+						<Icon data={insert_drive_file} />
 						{pageCount}p
 					</div>
 				{/if}
 				{#if itemCount}
 					<div class="badge p-2 bg-blue-200 text-blue-800">
-						<Icon data={library_books}/>
+						<Icon data={library_books} />
 						{itemCount}
 					</div>
 				{/if}
