@@ -54,9 +54,9 @@
 		const json = await resp.json();
 
 		if (json.success) {
-			toast.add('The thumbnail is updated successfully.');
+			toast.add('The thumbnail is updated successfully.', 'success');
 		} else {
-			toast.add('The thumbnail is not updated.');
+			toast.add('The thumbnail is not updated.', 'error');
 		}
 	}
 

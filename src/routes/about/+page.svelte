@@ -35,7 +35,7 @@
 		const url = new URL('/api/maintenance/update_library', page.url.origin);
 		await fetch(url);
 
-		toast.add('Updating the library in progress. Please refresh after a few minutes.');
+		toast.add('Updating the library in progress. Please refresh after a few minutes.', 'info');
 	}
 
 	function confirmPurgeCache() {
@@ -49,7 +49,7 @@
 	async function purgeCache() {
 		const url = new URL('/api/maintenance/purge_cache', page.url.origin);
 		await fetch(url);
-		toast.add('Purging cache in progress. Please refresh after a few minutes.');
+		toast.add('Purging cache in progress. Please refresh after a few minutes.', 'info');
 	}
 
 	let showMenu = $state(false);

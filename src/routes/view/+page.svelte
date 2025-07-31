@@ -71,9 +71,9 @@
 		const json = await resp.json();
 
 		if (json.favorite) {
-			toast.add('The current item is now your favorite.');
+			toast.add('The current item is now your favorite.', 'success');
 		} else {
-			toast.add('The current item is no longer your favorite.');
+			toast.add('The current item is no longer your favorite.', 'success');
 		}
 
 		favorite = json.favorite;
@@ -87,10 +87,10 @@
 		const json = await resp.json();
 
 		if (json.isSuccess) {
-			toast.add('The item metadata has been updated.');
+			toast.add('The item metadata has been updated.', 'success');
 			invalidateAll();
 		} else {
-			toast.add('The item metadata updates fails.');
+			toast.add('The item metadata updates fails.', 'error');
 		}
 	}
 

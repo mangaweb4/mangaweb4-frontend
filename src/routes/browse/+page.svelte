@@ -145,9 +145,9 @@
 		const json = await resp.json();
 
 		if (json.favorite) {
-			toast.add(`The tag "${tag}" is now your favorite.`);
+			toast.add(`The tag "${tag}" is now your favorite.`, 'success');
 		} else {
-			toast.add(`The tag "${tag}" is no longer your favorite.`);
+			toast.add(`The tag "${tag}" is no longer your favorite.`, 'success');
 		}
 
 		tag_favorite = json.favorite;
