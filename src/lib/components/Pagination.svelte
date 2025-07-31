@@ -4,6 +4,8 @@
 	import { Icon } from 'svelte-icon';
 	import page_first from '@mdi/svg/svg/page-first.svg?raw';
 	import page_last from '@mdi/svg/svg/page-last.svg?raw';
+	import arrowRight from '@mdi/svg/svg/arrow-right-circle.svg?raw';
+	import dotsVertical from '@mdi/svg/svg/dots-vertical.svg?raw';
 	import { goto } from '$app/navigation';
 
 	interface Props {
@@ -17,7 +19,6 @@
 	let first = $state(0);
 	let last = $derived(totalPage - 1);
 
-	let customOpen = $state(false);
 	let customPage = $state(currentPage);
 
 	let pageNumbers: number[] = $state([]);
@@ -49,11 +50,12 @@
 
 		return url;
 	}
+
+	let customInput: HTMLDialogElement;
 </script>
 
-<nav class="fixed bottom-0 p-3 inset-x-0">
-	<div class="mx-auto w-100 flex">
-	<div class="join shadow">
+<div class="fixed bottom-20 inset-x-1/3 w-1/3">
+	<div class="join shadow-xl">
 		<button class="join-item btn" onclick={() => goto(createLink(first).toString())}>
 			<Icon data={page_first} />
 		</button>
@@ -67,18 +69,43 @@
 			</button>
 		{/each}
 
-		<!--PaginationItem>
-		<PaginationLink onclick={() => (customOpen = true)}>
-			<Icon data={numbers}></Icon>
-		</PaginationLink>
-	</PaginationItem -->
+		<button class="join-item btn" onclick={() => customInput.showModal()}>
+			<Icon data={dotsVertical} />
+		</button>
 
 		<button class="join-item btn" onclick={() => goto(createLink(last).toString())}>
 			<Icon data={page_last} />
 		</button>
 	</div>
+</div>
+
+<dialog class="modal modal-bottom" bind:this={customInput}>
+	<div class="modal-box w-full max-w-[640px] mx-auto">
+		<h3 class="text-lg font-bold">Move to page</h3>
+		<div class="py-4">
+			<div class="join w-full">
+				<button class="join-item btn" onclick={() => (customPage = 0)}>0</button>
+				<input
+					type="number"
+					class="input join-item"
+					bind:value={customPage}
+					placeholder="page #"
+					max={totalPage - 1}
+					min={0}
+				/>
+				<button class="join-item btn" onclick={() => (customPage = totalPage - 1)}
+					>{totalPage - 1}</button
+				>
+				<button class="join-item btn" onclick={() => gotoPage(customPage)}>
+					<Icon data={arrowRight}></Icon>
+				</button>
+			</div>
+		</div>
 	</div>
-</nav>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
+	</form>
+</dialog>
 
 <!-- Offcanvas
 	isOpen={customOpen}
