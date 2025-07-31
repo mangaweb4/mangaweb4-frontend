@@ -70,13 +70,12 @@
 		const resp = await fetch(url, { method: 'GET' });
 		const json = await resp.json();
 
-		/*
 		if (json.favorite) {
-			toast.show('Favorite', 'The current manga is now your favorite.');
+			toast.add('The current item is now your favorite.');
 		} else {
-			toast.show('Favorite', 'The current manga is no longer your favorite.');
+			toast.add('The current item is no longer your favorite.');
 		}
-*/
+
 		favorite = json.favorite;
 	}
 
@@ -87,17 +86,15 @@
 		const resp = await fetch(url);
 		const json = await resp.json();
 
-		/*
 		if (json.isSuccess) {
-			toast.show('Fix metadata', 'The metadata has been updated.');
+			toast.add('The item metadata has been updated.');
 			invalidateAll();
 		} else {
-			toast.show('Fix metadata', 'The metadata updates fails.');
+			toast.add('The item metadata updates fails.');
 		}
-			*/
 	}
 
-	async function updateCover() {
+	async function changeThumbnail() {
 		const url = new URL('/view/thumb_edit', page.url.origin);
 		url.searchParams.set('index', `${current}`);
 		url.searchParams.set('name', name);
@@ -118,20 +115,6 @@
 	function onIndexChange(i: number) {
 		current = i;
 	}
-
-	function onValueChange(n: number) {
-		//viewer.advance(n);
-	}
-
-	let navbarToggleOpen = $state(false);
-	function handleUpdate(event: CustomEvent<boolean>) {
-		navbarToggleOpen = event.detail;
-	}
-
-	let aboutOpen = $state(false);
-	const aboutToggle = () => {
-		aboutOpen = !aboutOpen;
-	};
 
 	let showMenu = $state(false);
 	let aboutDialog: HTMLDialogElement;
@@ -192,8 +175,8 @@
 			</li>
 
 			<li>
-				<button onclick={() => updateCover()}>
-					<Icon data={cropPortrait} /> Replace Cover
+				<button onclick={() => changeThumbnail()}>
+					<Icon data={cropPortrait} /> Change thumbnail
 				</button>
 			</li>
 
@@ -236,6 +219,4 @@
 	</form>
 </dialog>
 
-<!--
 <Toast bind:this={toast} />
--->
