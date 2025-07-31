@@ -48,11 +48,9 @@
 	"type": "module",
 	"dependencies": {
 		"@grpc/grpc-js": "^1.13.4",
-		"@jamescoyle/svelte-icon": "^0.1.1",
 		"@mdi/svg": "^7.4.47",
 		"@protobuf-ts/grpc-transport": "^2.11.1",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
-		"@sveltestrap/sveltestrap": "^7.1.0",
 		"@tailwindcss/vite": "^4.1.11",
 		"daisyui": "^5.0.50",
 		"embla-carousel-svelte": "^8.6.0",
