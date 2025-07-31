@@ -36,11 +36,7 @@ OIDC_LOGOUT=<Logout URL>
 
 ## Development
 
-**MangaWeb 4** was developed with [Node.JS](https://nodejs.org/en) runtime for a long time (since version 1). However, recently I made a switch to [Bun](https://bun.com/) and I don't find any issue. 
-
-To put it simply, you can switch the command `npm` with `bun` and it should work just fine.
-
-Feel free to create an issue if you run into a problem though.
+**MangaWeb 4** was developed with [Node.JS](https://nodejs.org/en) runtime. Currently other runtimes such as [Bun](https://bun.com/) are not supported. 
 
 ### Running MangaWeb 4
 
