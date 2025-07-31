@@ -1,10 +1,5 @@
 <script lang="ts">
-	interface Props {
-		alt: string;
-		src: URL;
-	}
-
-	let { alt, src }: Props = $props();
+	let { alt, src } = $props();
 
 	let img: HTMLImageElement;
 	let loading: 'lazy' | 'eager' = $state('lazy');
@@ -26,7 +21,7 @@
 </script>
 
 <img
-	class="ms-auto me-auto"
+	class="w-full h-full"
 	{loading}
 	{alt}
 	src={src.toString()}

@@ -1,30 +1,22 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
-	import FavoriteButton from '$lib/FavoriteButton.svelte';
-	import Toast from '$lib/Toast.svelte';
-	import { aboutURL, browseURL, historyURL, userURL } from '$lib/routes';
-
-	import {
-		Collapse,
-		Dropdown,
-		DropdownItem,
-		DropdownMenu,
-		DropdownToggle,
-		Icon,
-		Modal,
-		Nav,
-		NavItem,
-		NavLink,
-		Navbar,
-		NavbarBrand,
-		NavbarToggler,
-		Table
-	} from '@sveltestrap/sveltestrap';
+	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
+	import Toast from '$lib/components/Toast.svelte';
+	import Container from '$lib/components/Container.svelte';
+	import Content from '$lib/components/Content.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
+	import SideBar from '$lib/components/SideBar.svelte';
 
 	import type { PageData } from './$types';
-	import ImageViewer from './ImageViewer.svelte';
-	import PageScroll from './PageScroll.svelte';
+	import ImageViewer from './Viewer.svelte';
+
+	import { Icon } from 'svelte-icon';
+	import informationOutline from '@mdi/svg/svg/information-outline.svg?raw';
+	import downloadBox from '@mdi/svg/svg/download-box.svg?raw';
+	import downloadBoxOutline from '@mdi/svg/svg/download-box-outline.svg?raw';
+	import cropPortrait from '@mdi/svg/svg/crop-portrait.svg?raw';
+	import tools from '@mdi/svg/svg/tools.svg?raw';
 
 	let current = $state(0);
 	let viewer: ImageViewer;
@@ -54,14 +46,14 @@
 
 		return output;
 	}
-	
+
 	function downloadManga() {
 		const url = new URL('/api/manga/download', page.url.origin);
 		url.searchParams.set('name', name);
 
 		download(url.toString());
 	}
-	
+
 	function downloadPage() {
 		const url = new URL('/api/manga/page_image', page.url.origin);
 		url.searchParams.set('name', name);
@@ -79,30 +71,30 @@
 		const json = await resp.json();
 
 		if (json.favorite) {
-			toast.show('Favorite', 'The current manga is now your favorite.');
+			toast.add('The current item is now your favorite.', 'success');
 		} else {
-			toast.show('Favorite', 'The current manga is no longer your favorite.');
+			toast.add('The current item is no longer your favorite.', 'success');
 		}
 
 		favorite = json.favorite;
 	}
-	
+
 	async function fixMetaData() {
 		const url = new URL('/api/manga/repair', page.url.origin);
-		url.searchParams.set("name", name)
+		url.searchParams.set('name', name);
 
 		const resp = await fetch(url);
 		const json = await resp.json();
 
 		if (json.isSuccess) {
-			toast.show('Fix metadata', 'The metadata has been updated.');
+			toast.add('The item metadata has been updated.', 'success');
 			invalidateAll();
 		} else {
-			toast.show('Fix metadata', 'The metadata updates fails.');
+			toast.add('The item metadata updates fails.', 'error');
 		}
 	}
 
-	async function updateCover() {
+	async function changeThumbnail() {
 		const url = new URL('/view/thumb_edit', page.url.origin);
 		url.searchParams.set('index', `${current}`);
 		url.searchParams.set('name', name);
@@ -124,133 +116,107 @@
 		current = i;
 	}
 
-	function onValueChange(n: number) {
-		viewer.advance(n);
-	}
-
-	let navbarToggleOpen = $state(false);
-	function handleUpdate(event: CustomEvent<boolean>) {
-		navbarToggleOpen = event.detail;
-	}
-
-	let aboutOpen = $state(false);
-	const aboutToggle = () => {
-		aboutOpen = !aboutOpen;
-	};
+	let showMenu = $state(false);
+	let aboutDialog: HTMLDialogElement;
 </script>
 
 <svelte:head>
 	<title>View: {name}</title>
 </svelte:head>
 
-<PageScroll PageCount={pageCount} {onValueChange} Current={current} />
-
-<div class="fullscreen" style="padding-top:80px;">
-	<ImageViewer
-		imageURLs={createImageUrls(name, pageCount)}
-		{onIndexChange}
-		bind:this={viewer}
-		startIndex={data.response.currentPage}
-	/>
-</div>
-
-<Navbar color="dark" dark expand="md" sticky={'top'}>
-	<NavbarBrand href="/">View</NavbarBrand>
-	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
-	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
-		<Nav navbar>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Browse</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem onclick={() => goto(browseURL(page.url.origin))}>
-						<Icon name="list-ul" class="me-3" />
-						All items
-					</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem header>Tags</DropdownItem>
-					{#each tags as tag}
-						<DropdownItem onclick={() => goto(browseURL(page.url.origin, { tag: tag.name }))}>
-							{#if tag.isFavorite}
-								<Icon name="star-fill" class="me-3" />
-							{:else}
-								<Icon name="tag" class="me-3" />
-							{/if}
-							{tag.name}
-						</DropdownItem>
-					{/each}
-				</DropdownMenu>
-			</Dropdown>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Tools</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem header>Download</DropdownItem>
-					<DropdownItem onclick={() => downloadPage()}>
-						<Icon name="download" class="me-3" />
-						Download Current Page
-					</DropdownItem>
-					<DropdownItem onclick={() => downloadManga()}>
-						<Icon name="download" class="me-3" />
-						Download Manga
-					</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem header>Maintenance</DropdownItem>
-					<DropdownItem onclick={() => updateCover()}>
-						<Icon name="journal-arrow-up" class="me-3" />
-						Replace Cover
-					</DropdownItem>
-					
-					<DropdownItem onclick={() => fixMetaData()}>
-						<Icon name="tools" class="me-3" />
-						Fix the manga
-					</DropdownItem>
-					
-				</DropdownMenu>
-			</Dropdown>
-			<NavItem>
-				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={()=> goto(userURL(page.url.origin))}>User</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
-			</NavItem>
-		</Nav>
-		<Nav navbar class="ms-auto">
-			<NavItem class="me-3 d-none d-md-block">
-				<NavLink onclick={aboutToggle}>
-					{name.length > 40 ? `${name.substring(0, 35)}...` : name}
-					<Icon name="info-circle" />
-				</NavLink>
-			</NavItem>
-			<NavItem class="me-3">
+<Container bind:showMenu>
+	<Content>
+		<NavBar bind:showMenu title="View"></NavBar>
+		<div class="fixed top-18 bottom-0 start-0 end-0">
+			<ImageViewer
+				imageURLs={createImageUrls(name, pageCount)}
+				{onIndexChange}
+				bind:this={viewer}
+				startIndex={data.response.currentPage}
+			/>
+		</div>
+	</Content>
+	<SideBar bind:showMenu>
+		<ul class="menu">
+			<li class="text">
+				<div class="tooltip tooltip-left" data-tip={name}>
+					<div class="h-20 overflow-hidden">
+						{name.length > 60 ? `${name.substring(0, 55)}...` : name}
+					</div>
+				</div>
+			</li>
+			<li>
+				<button
+					onclick={() => {
+						showMenu = false;
+						aboutDialog.showModal();
+					}}
+				>
+					<Icon data={informationOutline} /> Information
+				</button>
+			</li>
+			<li>
 				<FavoriteButton onclick={() => toggleFavorite()} isFavorite={favorite}>
 					Favorite
 				</FavoriteButton>
-			</NavItem>
-		</Nav>
-	</Collapse>
-</Navbar>
+			</li>
 
-<Modal body header="Information" isOpen={aboutOpen} toggle={aboutToggle}>
-	<Table>
-		<tr>
-			<th>Title</th>
-			<td>{name}</td>
-		</tr>
-		<tr>
-			<th>Tags</th>
-			<td>{tags.map((t) => t.name).join(', ')}</td>
-		</tr>
-		<tr>
-			<th>Page Count</th>
-			<td>{pageCount}</td>
-		</tr>
-		<tr>
-			<th>Favorite ?</th>
-			<td>{favorite ? 'Yes' : 'No'}</td>
-		</tr>
-	</Table>
-</Modal>
+			<li class="menu-title">Tools</li>
+			<li>
+				<button onclick={() => downloadPage()}>
+					<Icon data={downloadBoxOutline} /> Download current page
+				</button>
+			</li>
+
+			<li>
+				<button onclick={() => downloadManga()}>
+					<Icon data={downloadBox} /> Download
+				</button>
+			</li>
+
+			<li>
+				<button onclick={() => changeThumbnail()}>
+					<Icon data={cropPortrait} /> Change thumbnail
+				</button>
+			</li>
+
+			<li>
+				<button onclick={() => fixMetaData()}>
+					<Icon data={tools} />
+					Fix the manga
+				</button>
+			</li>
+		</ul>
+	</SideBar>
+</Container>
+
+<dialog class="modal" bind:this={aboutDialog}>
+	<div class="modal-box w-full max-w-[1024px] mx-auto">
+		<h3 class="text-lg font-bold">Information</h3>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Title</th>
+					<td>{name}</td>
+				</tr>
+				<tr>
+					<th>Tags</th>
+					<td>{tags.map((t) => t.name).join(', ')}</td>
+				</tr>
+				<tr>
+					<th>Page Count</th>
+					<td>{pageCount}</td>
+				</tr>
+				<tr>
+					<th>Favorite ?</th>
+					<td>{favorite ? 'Yes' : 'No'}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
+	</form>
+</dialog>
 
 <Toast bind:this={toast} />

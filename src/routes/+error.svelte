@@ -1,63 +1,35 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-	import {
-		Alert,
-		Collapse,
-		Container,
-		Dropdown,
-		DropdownItem,
-		DropdownMenu,
-		DropdownToggle,
-		Icon,
-		Nav,
-		NavItem,
-		NavLink,
-		Navbar,
-		NavbarBrand,
-		NavbarToggler,
-	} from '@sveltestrap/sveltestrap';
-	import { aboutURL, browseURL, tagURL } from '$lib/routes';
 
-	let navbarToggleOpen = $state(false);
-	
-	function handleUpdate(event: CustomEvent<boolean>) {
-		navbarToggleOpen = event.detail;
-	}
+	import SideBar from '$lib/components/SideBar.svelte';
+	import Container from '$lib/components/Container.svelte';
+	import Content from '$lib/components/Content.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
+
+	import { Icon } from 'svelte-icon';
+	import alertCircle from '@mdi/svg/svg/alert-circle.svg?raw';
+
+	let showMenu = $state(false);
 </script>
 
-<Navbar color="dark" dark expand="md" sticky={'top'}>
-	<NavbarBrand>Error</NavbarBrand>
-	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
-	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
-		<Nav navbar>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Browse</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem onclick={() => goto(browseURL(page.url.origin))}>
-						<Icon name="list-ul" class="me-3" />
-						All items
-					</DropdownItem>
-					<DropdownItem onclick={() => goto(tagURL(page.url.origin))}>
-						<Icon name="tags-fill" class="me-3" />
-						Tag list
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-			<NavItem>
-				<NavLink onclick={() => window.location.reload()}
-					><Icon name="arrow-clockwise" />&nbsp;Reload</NavLink
-				>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
-			</NavItem>
-		</Nav>
-	</Collapse>
-</Navbar>
-<Container class="mt-3">
-	<Alert color="danger" heading="Something went wrong">
-		<b>Status {page.status}</b>
-		{page.error.message ?? ''}
-	</Alert>
+<Container bind:showMenu>
+	<Content>
+		<NavBar title="Error" bind:showMenu />
+		<div class="container mx-auto prose max-w-[1024px] mt-4">
+			<div role="alert" class="alert alert-error">
+				<Icon data={alertCircle} />&nbsp;An error has occured.
+			</div>
+
+			<h2>Status {page.status}</h2>
+			<p>
+				{page.error?.message ?? ''}
+			</p>
+
+			<p>
+				Please use the sidebar menu on the right to navigate, or using <strong>back button</strong> on
+				the browse to go back.
+			</p>
+		</div>
+	</Content>
+	<SideBar bind:showMenu></SideBar>
 </Container>

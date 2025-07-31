@@ -1,36 +1,32 @@
 <script lang="ts">
-	import { afterNavigate, beforeNavigate, goto, onNavigate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import FavoriteButton from '$lib/FavoriteButton.svelte';
-	import MoveToTop from '$lib/MoveToTop.svelte';
-	import Pagination from '$lib/Pagination.svelte';
-	import Toast from '$lib/Toast.svelte';
-	import { aboutURL, browseURL, historyURL, tagURL, userURL, viewURL } from '$lib/routes';
-
-	import {
-		Button,
-		Collapse,
-		Dropdown,
-		DropdownItem,
-		DropdownMenu,
-		DropdownToggle,
-		Icon,
-		Input,
-		InputGroup,
-		Nav,
-		NavItem,
-		NavLink,
-		Navbar,
-		NavbarBrand,
-		NavbarToggler
-	} from '@sveltestrap/sveltestrap';
+	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
+	import MoveToTop from '$lib/components/MoveToTop.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
+	import Toast from '$lib/components/Toast.svelte';
+	import { browseURL, viewURL } from '$lib/routes';
 
 	import type { PageData } from './$types';
-	import ItemCard from '$lib/ItemCard.svelte';
+	import ItemCard from '$lib/components/ItemCard.svelte';
 	import { ITEM_PER_PAGE } from '$lib/constants';
-	import PlaceholderCard from '$lib/PlaceholderCard.svelte';
-	import LoadingDialog from '$lib/LoadingDialog.svelte';
+	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
+	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
+	import Container from '$lib/components/Container.svelte';
+	import Content from '$lib/components/Content.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
+	import SideBar from '$lib/components/SideBar.svelte';
+
+	import { Icon } from 'svelte-icon';
+	import title from '@mdi/svg/svg/format-title.svg?raw';
+	import calendar_clock from '@mdi/svg/svg/calendar-clock.svg?raw';
+	import file_multiple from '@mdi/svg/svg/file-multiple.svg?raw';
+	import sortAscending from '@mdi/svg/svg/sort-ascending.svg?raw';
+	import sortDescending from '@mdi/svg/svg/sort-descending.svg?raw';
+	import fileStar from '@mdi/svg/svg/file-star.svg?raw';
+	import tagMultiple from '@mdi/svg/svg/tag-multiple.svg?raw';
+	import cancel from '@mdi/svg/svg/cancel.svg?raw';
 
 	let toast: Toast;
 
@@ -52,6 +48,15 @@
 	let totalPage = $derived(data.response.totalPage);
 
 	let updated = $state(false);
+	let loadingDlg: LoadingDialog;
+
+	$effect(() => {
+		if (updated) {
+			loadingDlg.close();
+		} else {
+			loadingDlg.show();
+		}
+	});
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
@@ -140,9 +145,9 @@
 		const json = await resp.json();
 
 		if (json.favorite) {
-			toast.show('Favorite', `The tag "${tag}" is now your favorite.`);
+			toast.add(`The tag "${tag}" is now your favorite.`, 'success');
 		} else {
-			toast.show('Favorite', `The tag "${tag}" is no longer your favorite.`);
+			toast.add(`The tag "${tag}" is no longer your favorite.`, 'success');
 		}
 
 		tag_favorite = json.favorite;
@@ -159,150 +164,29 @@
 
 		return u;
 	}
+
+	let showMenu = $state(false);
 </script>
 
 <svelte:head>
 	<title>Browse: {tag}</title>
 </svelte:head>
 
-<Navbar color="dark" dark expand="md" sticky={'top'}>
-	<NavbarBrand href="/">
-		{data.request.tag == '' ? 'Browse' : `Browse: ${data.request.tag}`}
-	</NavbarBrand>
+<Container bind:showMenu>
+	<Content>
+		<NavBar
+			bind:showMenu
+			title={data.request.tag == '' ? 'Browse' : `Browse: ${data.request.tag}`}
+		/>
 
-	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
-
-	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
-		<Nav navbar>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Browse</DropdownToggle>
-				<DropdownMenu end>
-					<DropdownItem onclick={() => goto(browseURL(page.url.origin))}>
-						<Icon name="list-ul" class="me-3" />
-						All items
-					</DropdownItem>
-					<DropdownItem onclick={() => goto(tagURL(page.url.origin))}>
-						<Icon name="tags-fill" class="me-3" />
-						Tag list
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Sort By</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem
-						active={sort == SortField.NAME}
-						onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
-					>
-						<Icon name="type" class="me-3" /> Name
-					</DropdownItem>
-					<DropdownItem
-						active={sort == SortField.CREATION_TIME}
-						onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
-					>
-						<Icon name="clock" class="me-3" /> Create time
-					</DropdownItem>
-					<DropdownItem
-						active={sort == SortField.PAGECOUNT}
-						onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
-					>
-						<Icon name="file-earmark" class="me-3" /> Page count
-					</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem
-						active={order == SortOrder.ASCENDING}
-						onclick={() => goto(createBrowseURL({ order: SortOrder.ASCENDING }))}
-					>
-						<Icon name="sort-down-alt" class="me-3" />Ascending
-					</DropdownItem>
-					<DropdownItem
-						active={order == SortOrder.DESCENDING}
-						onclick={() => goto(createBrowseURL({ order: SortOrder.DESCENDING }))}
-					>
-						<Icon name="sort-up-alt" class="me-3" /> Descending
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>
-					{#if filter == Filter.UNKNOWN}
-						<Icon name="funnel" class="me-1" />
-					{:else}
-						<Icon name="check" class="me-1" />
-					{/if}&nbsp;Filter
-				</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem
-						active={filter == Filter.FAVORITE_ITEMS}
-						onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
-					>
-						<Icon name="star" class="me-3" /> Favorite items
-					</DropdownItem>
-					<DropdownItem
-						active={filter == Filter.FAVORITE_TAGS}
-						disabled={tag != ''}
-						onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
-					>
-						<Icon name="tag-fill" class="me-3" /> Items with favorite Tags
-					</DropdownItem>
-					<DropdownItem divider />
-					<DropdownItem onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
-						><Icon name="x-circle-fill" class="me-3" /> Clear</DropdownItem
-					>
-				</DropdownMenu>
-			</Dropdown>
-			<NavItem>
-				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(userURL(page.url.origin))}>User</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
-			</NavItem>
-		</Nav>
-		<Nav class="ms-auto me-3" navbar>
-			<NavItem hidden={tag == '' ? true : undefined}>
-				<FavoriteButton onclick={() => onTagFavorite()} isFavorite={tag_favorite}>
-					Favorite tag
-				</FavoriteButton>
-			</NavItem>
-		</Nav>
-		<Nav navbar>
-			<NavItem>
-				<InputGroup>
-					<Input
-						type="text"
-						bind:value={search}
-						onkeyup={(e) => {
-							if (e.key == 'Enter') {
-								goto(browseURL(page.url.origin, { search: search }));
-							}
-						}}
-					/>
-					<Button onclick={() => (search = '')}><Icon name="x" /></Button>
-					<Button onclick={() => goto(browseURL(page.url.origin, { search: search }))}>
-						<div class="d-lg-none"><Icon name="search" class="me-3" /></div>
-						<div class="d-none d-lg-block"><Icon name="search" class="me-3" />Search</div>
-					</Button>
-				</InputGroup>
-			</NavItem>
-		</Nav>
-	</Collapse>
-</Navbar>
-
-<div class="container-fluid" style="padding-top:30px;">
-	<div class="grid-container">
-		<div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-3">
-			{#if !updated}
-				{#each { length: ITEM_PER_PAGE } as _}
-					<div class="col">
+		<div class="container mx-auto prose max-w-[1024px] mt-4">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				{#if !updated}
+					{#each { length: ITEM_PER_PAGE } as _}
 						<PlaceholderCard />
-					</div>
-				{/each}
-			{:else}
-				{#each items as item}
-					<div class="col">
+					{/each}
+				{:else}
+					{#each items as item}
 						<ItemCard
 							favorite={item.isFavorite}
 							isRead={item.isRead}
@@ -314,27 +198,115 @@
 							linkUrl={viewURL(page.url, item.name)}
 							currentPage={item.currentPage}
 						/>
-					</div>
-				{/each}
-				{#each { length: ITEM_PER_PAGE - items.length } as _, i}
-					<div class="col">
+					{/each}
+					{#each { length: ITEM_PER_PAGE - items.length } as _, i}
 						<ItemCard placeholder={true} />
-					</div>
-				{/each}
-			{/if}
+					{/each}
+				{/if}
+			</div>
 		</div>
-	</div>
-</div>
 
-{#if !updated}
-	<LoadingDialog />
-{/if}
+		<div style="height: 100px;"></div>
+	</Content>
+	<SideBar bind:showMenu>
+		<ul class="menu">
+			<li hidden={tag == '' ? true : undefined}>
+				<FavoriteButton onclick={() => onTagFavorite()} isFavorite={tag_favorite}>
+					Favorite tag
+				</FavoriteButton>
+			</li>
 
-<div style="height: 100px;"></div>
+			<li class="menu-title">Search</li>
+			<li>
+				<div class="join">
+					<input class="input join-item" placeholder="Search" bind:value={search} />
+					<button
+						class="btn join-item"
+						onclick={() => goto(browseURL(page.url.origin, { search: search }))}>Search</button
+					>
+				</div>
+			</li>
 
-<div aria-label="Page navigation" class="position-fixed bottom-0 start-50 p-3 translate-middle-x">
-	<Pagination currentPage={pageIndex} {totalPage} />
-</div>
+			<li class="menu-title">Sort By</li>
+			<li>
+				<button
+					class={sort == SortField.NAME ? 'menu-active' : ''}
+					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
+				>
+					<Icon data={title} /> Name
+				</button>
+			</li>
+
+			<li>
+				<button
+					class={sort == SortField.CREATION_TIME ? 'menu-active' : ''}
+					onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
+				>
+					<Icon data={calendar_clock} /> Create time
+				</button>
+			</li>
+
+			<li>
+				<button
+					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
+					onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
+				>
+					<Icon data={file_multiple} /> Page Count
+				</button>
+			</li>
+
+			<li class="menu-title">Order</li>
+			<li>
+				<button
+					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
+					onclick={() => goto(createSortBrowseURL({ order: SortOrder.ASCENDING }))}
+				>
+					<Icon data={sortAscending} /> Ascending
+				</button>
+			</li>
+
+			<li>
+				<button
+					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
+					onclick={() => goto(createSortBrowseURL({ order: SortOrder.DESCENDING }))}
+				>
+					<Icon data={sortDescending} /> Descending
+				</button>
+			</li>
+
+			<li class="menu-title">Filter</li>
+			<li>
+				<button
+					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
+					onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
+				>
+					<Icon data={cancel} /> None
+				</button>
+			</li>
+			<li>
+				<button
+					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
+					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
+				>
+					<Icon data={fileStar} /> Favorite items
+				</button>
+			</li>
+
+			<li>
+				<button
+					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
+					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
+				>
+					<Icon data={tagMultiple} /> Items with favorite tags
+				</button>
+			</li>
+		</ul>
+	</SideBar>
+</Container>
+
+<LoadingDialog bind:this={loadingDlg} />
+
+<Pagination currentPage={pageIndex} {totalPage} />
 
 <Toast bind:this={toast} />
 

@@ -47,5 +47,5 @@ function getUserDetailCF(request: Request): {
 } {
 
     const email = request.headers.get("Cf-Access-Authenticated-User-Email") ?? DEFAULT_EMAIL
-    return { email, name: "Cloudflare User" }
+    return { email, name: "An User" }
 }

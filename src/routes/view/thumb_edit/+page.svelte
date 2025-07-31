@@ -1,34 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-	import { browseURL, aboutURL, tagURL, historyURL } from '$lib/routes';
-	import {
-		Button,
-		Collapse,
-		Container,
-		Dropdown,
-		DropdownItem,
-		DropdownMenu,
-		DropdownToggle,
-		FormGroup,
-		Icon,
-		Input,
-		Label,
-		Nav,
-		Navbar,
-		NavbarBrand,
-		NavbarToggler,
-		NavItem,
-		NavLink
-	} from '@sveltestrap/sveltestrap';
 
 	import Cropper, { type CropArea, type OnCropCompleteEvent } from 'svelte-easy-crop';
-	import MessageDialog from '$lib/MessageDialog.svelte';
+	import Container from '$lib/components/Container.svelte';
+	import Content from '$lib/components/Content.svelte';
+	import SideBar from '$lib/components/SideBar.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 
-	let navbarToggleOpen = $state(false);
-	function handleUpdate(event: CustomEvent<boolean>) {
-		navbarToggleOpen = event.detail;
-	}
+	import {Icon} from 'svelte-icon'
+	import bookOpen from '@mdi/svg/svg/book-open.svg?raw'
+	import { goto } from '$app/navigation';
+	import { viewURL } from '$lib/routes';
 
 	function createImageUrl(name: string, page: number, base: string | URL): URL {
 		const url = new URL('/api/manga/page_image', base);
@@ -57,7 +40,6 @@
 		cropDetails = e.pixels;
 	}
 
-	let dialog: MessageDialog;
 	async function updateCover() {
 		const url = new URL('/api/manga/update_cover', page.url.origin);
 
@@ -72,68 +54,56 @@
 		const json = await resp.json();
 
 		if (json.success) {
-			dialog.show('Update Cover', 'The cover image is updated successfully.');
+			toast.add('The thumbnail is updated successfully.', 'success');
 		} else {
-			dialog.show('Update Cover', 'The cover is not updated.');
+			toast.add('The thumbnail is not updated.', 'error');
 		}
 	}
+
+	let showMenu = $state(false);
+	let toast: Toast;
 </script>
 
-<Navbar color="dark" dark expand="md" sticky={'top'}>
-	<NavbarBrand href="/">Thumbnail Edit</NavbarBrand>
-	<NavbarToggler onclick={() => (navbarToggleOpen = !navbarToggleOpen)} />
-	<Collapse isOpen={navbarToggleOpen} navbar expand="md" on:update={handleUpdate}>
-		<Nav navbar>
-			<Dropdown nav inNavbar>
-				<DropdownToggle nav caret>Browse</DropdownToggle>
-				<DropdownMenu>
-					<DropdownItem onclick={() => goto(browseURL(page.url.origin))}>
-						<Icon name="list-ul" class="me-3" />
-						All items
-					</DropdownItem>
-					<DropdownItem onclick={() => goto(tagURL(page.url.origin))}>
-						<Icon name="tags-fill" class="me-3" />
-						Tag list
-					</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-			<NavItem>
-				<NavLink onclick={() => goto(historyURL(page.url.origin))}>History</NavLink>
-			</NavItem>
-			<NavItem>
-				<NavLink onclick={() => goto(aboutURL(page.url.origin))}>About</NavLink>
-			</NavItem>
-		</Nav>
-		<Nav navbar class="ms-auto">
-			<NavItem class="me-3 d-none d-md-block">
-				<NavLink>
-					{#if name != null}
-						{name?.length > 40 ? `${name.substring(0, 35)}...` : name}
-					{/if}
-				</NavLink>
-			</NavItem>
-		</Nav>
-	</Collapse>
-</Navbar>
+<Container bind:showMenu>
+	<Content>
+		<NavBar bind:showMenu title="Edit thumbnail"></NavBar>
+		<div class="container mx-auto prose max-w-[1024px] mt-4">
+			<h2>{name}</h2>
+			<div>
+				<label class="input">
+					<span class="label">Use thumbnail from page</span>
+					<input
+						class="input join-input"
+						type="number"
+						bind:value={index}
+						min="0"
+						max={pageCount}
+					/>
+				</label>
+			</div>
+			<div class="my-5" style="position: relative; width:100%; height:500px;">
+				<Cropper {image} bind:crop bind:zoom {aspect} oncropcomplete={onCropComplete} />
+			</div>
 
-<Container>
-	<div class="my-5" style="position: relative; width:100%; height:500px;">
-		<Cropper {image} bind:crop bind:zoom {aspect} oncropcomplete={onCropComplete} />
-	</div>
+			<button class="btn btn-primary btn-wide" onclick={() => updateCover()}>Save</button>
 
-	<FormGroup>
-		<Label for="pageIndex">Page</Label>
-		<Input
-			type="number"
-			name="number"
-			id="pageIndex"
-			placeholder="pageIndex"
-			bind:value={index}
-			min="0"
-			max={pageCount}
-		/>
-	</FormGroup>
-	<Button onclick={() => updateCover()}>Save</Button>
+			<h3>Instruction</h3>
+			<ol>
+				<li>Select the page that contains the desired thumbnail.</li>
+				<li>Move the image inside the editor to highlight the desired area.</li>
+				<li>Press <strong>Save</strong> button to commit.</li>
+			</ol>
+		</div>
+	</Content>
+	<SideBar bind:showMenu>
+		<ul class="menu">
+		<li>
+			<button onclick={() => goto(viewURL(page.url, name))}>
+				<Icon data={bookOpen} /> View current item.
+			</button>
+		</li>
+		</ul>
+	</SideBar>
 </Container>
 
-<MessageDialog bind:this={dialog}></MessageDialog>
+<Toast bind:this={toast} />

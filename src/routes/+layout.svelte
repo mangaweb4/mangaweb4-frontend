@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$lib/custom.scss';
+	import '$lib/app.css';
 
 	import { pwaInfo } from 'virtual:pwa-info';
 	import { pwaAssetsHead } from 'virtual:pwa-assets/head';
@@ -25,3 +25,4 @@
 </svelte:head>
 
 {@render children?.()}
+
