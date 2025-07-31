@@ -2,7 +2,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
-	import Toast from '$lib/Toast.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';

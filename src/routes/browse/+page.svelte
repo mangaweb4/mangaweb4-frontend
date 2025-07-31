@@ -4,7 +4,7 @@
 	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
 	import MoveToTop from '$lib/components/MoveToTop.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
-	import Toast from '$lib/Toast.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 	import { browseURL, viewURL } from '$lib/routes';
 
 	import type { PageData } from './$types';
@@ -50,13 +50,13 @@
 	let updated = $state(false);
 	let loadingDlg: LoadingDialog;
 
-	$effect(()=>{
-		if(updated){
+	$effect(() => {
+		if (updated) {
 			loadingDlg.close();
 		} else {
 			loadingDlg.show();
 		}
-	})
+	});
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
@@ -145,9 +145,9 @@
 		const json = await resp.json();
 
 		if (json.favorite) {
-			toast.show('Favorite', `The tag "${tag}" is now your favorite.`);
+			toast.add(`The tag "${tag}" is now your favorite.`);
 		} else {
-			toast.show('Favorite', `The tag "${tag}" is no longer your favorite.`);
+			toast.add(`The tag "${tag}" is no longer your favorite.`);
 		}
 
 		tag_favorite = json.favorite;
@@ -207,12 +207,6 @@
 		</div>
 
 		<div style="height: 100px;"></div>
-
-		<Pagination currentPage={pageIndex} {totalPage} />
-
-		<Toast bind:this={toast} />
-
-		<MoveToTop />
 	</Content>
 	<SideBar bind:showMenu>
 		<ul class="menu">
@@ -310,4 +304,10 @@
 	</SideBar>
 </Container>
 
-<LoadingDialog bind:this={loadingDlg}/>
+<LoadingDialog bind:this={loadingDlg} />
+
+<Pagination currentPage={pageIndex} {totalPage} />
+
+<Toast bind:this={toast} />
+
+<MoveToTop />
