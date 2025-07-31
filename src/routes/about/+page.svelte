@@ -24,11 +24,11 @@
 	let confirm: ConfirmDialog;
 
 	function confirmUpdateLibrary() {
-		/*confirm.show(
+		confirm.show(
 			'Update library',
 			'The library will be updated. This will take sometime. Do you still wants to perform?',
 			updateLibrary
-		);*/
+		);
 	}
 
 	async function updateLibrary() {
@@ -42,11 +42,11 @@
 	}
 
 	function confirmPurgeCache() {
-		/*confirm.show(
+		confirm.show(
 			'Purge cache',
 			'Cache will be purged. This will take sometime. Do you still wants to perform?',
 			purgeCache
-		);*/
+		);
 	}
 
 	async function purgeCache() {
@@ -180,6 +180,6 @@
 	<SideBar bind:showMenu />
 </Container>
 
-<!--ConfirmDialog bind:this={confirm} />
+<ConfirmDialog bind:this={confirm} />
 
-<Toast bind:this={toast} /-->
+<!--Toast bind:this={toast} /-->

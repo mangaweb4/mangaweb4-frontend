@@ -15,9 +15,9 @@
 
 <dialog class="modal" bind:this={dialog}>
 	<div class="modal-box">
-		<h3 class="text-lg font-bold">Now Loading</h3>
+		<h3 class="text-lg font-bold">{headerStr}</h3>
 		<p class="py-4">
-			<span class="loading loading-spinner"></span>&nbsp;Please wait.
+			{bodyStr}
 		</p>
 		<div class="modal-action">
 			<form method="dialog">
@@ -30,7 +30,7 @@
 				>
 					OK
 				</button>
-				<button class="btn btn-secondary" onclick={() => dialog.close()}> Cancel </button>
+				<button class="btn" onclick={() => dialog.close()}> Cancel </button>
 			</form>
 		</div>
 	</div>
