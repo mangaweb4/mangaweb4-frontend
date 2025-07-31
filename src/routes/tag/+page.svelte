@@ -3,35 +3,18 @@
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import type { PageData } from './$types';
 	import MoveToTop from '$lib/components/MoveToTop.svelte';
-	import {
-		Button,
-		Input,
-		InputGroup,
-		Collapse,
-		Navbar,
-		NavbarToggler,
-		NavbarBrand,
-		Nav,
-		NavItem,
-		NavLink,
-		Dropdown,
-		DropdownToggle,
-		DropdownMenu,
-		DropdownItem
-	} from '@sveltestrap/sveltestrap';
+	
 	import Pagination from '$lib/components/Pagination.svelte';
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
-	import { aboutURL, tagURL, browseURL, historyURL, userURL } from '$lib/routes';
+	import { tagURL, browseURL } from '$lib/routes';
 	import { ITEM_PER_PAGE } from '$lib/constants';
 	import LoadingDialog from '$lib/LoadingDialog.svelte';
 	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
-	import NavigationMenu from '$lib/components/NavigationMenu.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
-	import FavoriteButton from '$lib/FavoriteButton.svelte';
 
 	import { Icon } from 'svelte-icon';
 	import title from '@mdi/svg/svg/format-title.svg?raw';
@@ -39,7 +22,6 @@
 	import sortAscending from '@mdi/svg/svg/sort-ascending.svg?raw';
 	import sortDescending from '@mdi/svg/svg/sort-descending.svg?raw';
 	import fileStar from '@mdi/svg/svg/file-star.svg?raw';
-	import tagMultiple from '@mdi/svg/svg/tag-multiple.svg?raw';
 	import cancel from '@mdi/svg/svg/cancel.svg?raw';
 
 	interface Props {
