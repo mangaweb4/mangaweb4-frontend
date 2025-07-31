@@ -7,7 +7,7 @@
 	import insert_drive_file from '@mdi/svg/svg/file.svg?raw';
 	import library_books from '@mdi/svg/svg/bookshelf.svg?raw';
 	import warning from '@mdi/svg/svg/alert-box.svg?raw';
-	import photo from '@mdi/svg/svg/image.svg?raw';
+	import photo from '@mdi/svg/svg/minus-box.svg?raw';
 
 	import { Icon } from 'svelte-icon';
 
@@ -69,7 +69,14 @@
 	<figure class="mt-0 mb-0">
 		{#if placeholder}
 			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
-				<Icon class="card-img-top h-full" data={photo} color="gray" width="210" height="210" />
+				<Icon
+					class="card-img-top h-full"
+					data={photo}
+					color="gray"
+					width="359"
+					height="510"
+					viewBox="0 -8 24 48"
+				/>
 			</div>
 		{:else}
 			<a href={linkUrl?.toString()} aria-label={name} style="display:block; aspect-ratio: 1/1.414">
@@ -97,11 +104,11 @@
 		{/if}
 	</figure>
 	<div class="card-body">
-		<div style="height: 4em; overflow:hidden;">
+		<div class="h-[4em] overflow-hidden">
 			<a href={placeholder == true ? '' : linkUrl?.toString()}>{name}</a>
 		</div>
 		{#if accessTime != ''}
-			<div style="height: 2em; overflow:hidden;">
+			<div class="h-[2em] overflow-hidden">
 				{Intl.DateTimeFormat('en', {
 					year: 'numeric',
 					month: 'long',
@@ -115,7 +122,7 @@
 		{/if}
 
 		{#if !placeholder}
-			<div style="height: 2em; overflow:hidden;">
+			<div class="h-[2em] overflow-hidden">
 				{#if favorite}
 					<div class="badge p-2 bg-pink-200 text-pink-800">
 						<Icon data={star} /> Favorite

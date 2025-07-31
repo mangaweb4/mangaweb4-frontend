@@ -1,38 +1,41 @@
 <script lang="ts">
-	import { Card, CardBody, CardFooter, Icon } from '@sveltestrap/sveltestrap';
-
+	import photo from '@mdi/svg/svg/timer-sand.svg?raw';
+	import { Icon } from 'svelte-icon';
 	interface Props {
 		accessTime?: boolean;
 	}
 
-	const LOADING_IMAGE = `data:image/svg+xml;utf8,
-    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" fill="gray" class="bi bi-hourglass-split" viewBox="-8 -8 32 32">
-  		<path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"/>
-	</svg>`;
-
 	let { accessTime }: Props = $props();
 </script>
 
-<Card class="h-100">
-	<img
-		class="card-img-top"
-		alt="loading"
-		src={LOADING_IMAGE}
-		style="height: 300px; object-fit: cover;"
-	/>
-	<CardBody style="height: 8em; overflow:hidden;">
-		<span class="placeholder col-7"></span>
-		<span class="placeholder col-4"></span>
-		<span class="placeholder col-4"></span>
-	</CardBody>
-	{#if accessTime}
-		<CardFooter style="height: 4em; overflow:hidden;">
-			<span class="placeholder col-4"></span>
-			<span class="placeholder col-6"></span>
-			<span class="placeholder col-8"></span>
-		</CardFooter>
-	{/if}
-	<CardFooter style="height: 3em; overflow:hidden;">
-		<span class="placeholder col-4"></span>
-	</CardFooter>
-</Card>
+<div class="card bg-base-100 h-full shadow-xl">
+	<figure class="mt-0 mb-0">
+		<div style="display:block; aspect-ratio: 1/1.414">
+			<Icon
+				class="card-img-top h-full"
+				data={photo}
+				color="gray"
+				width="359"
+				height="510"
+				viewBox="0 -8 24 48"
+			/>
+		</div>
+	</figure>
+	<div class="card-body">
+		<div class="h-[4em] overflow-hidden">
+			<div class="skeleton h-4 w-20"></div>
+			<div class="skeleton h-4 w-28"></div>
+		</div>
+
+		{#if accessTime}
+			<div class="h-[2em] overflow-hidden">
+				<div class="skeleton h-4 w-20"></div>
+			</div>
+		{/if}
+
+		<div class="h-[2em] overflow-hidden">
+			<div class="skeleton h-4 w-20"></div>
+			<div class="skeleton h-4 w-28"></div>
+		</div>
+	</div>
+</div>
