@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { Icon } from 'svelte-icon';
+	import check from '@mdi/svg/svg/check.svg?raw';
+	import cancel from '@mdi/svg/svg/cancel.svg?raw';
+
 	let dialog: HTMLDialogElement;
 
 	let headerStr = $state('');
@@ -28,9 +32,11 @@
 						dialog.close();
 					}}
 				>
-					OK
+					<Icon data={check}/>&nbsp;OK
 				</button>
-				<button class="btn" onclick={() => dialog.close()}> Cancel </button>
+				<button class="btn" onclick={() => dialog.close()}> 
+					<Icon data={cancel}/>&nbsp;Cancel 
+				</button>
 			</form>
 		</div>
 	</div>
