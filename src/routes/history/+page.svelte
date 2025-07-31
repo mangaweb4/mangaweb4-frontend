@@ -8,7 +8,7 @@
 	import type { PageData } from './$types';
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import { ITEM_PER_PAGE } from '$lib/constants';
-	import LoadingDialog from '$lib/LoadingDialog.svelte';
+	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import { Timestamp } from '$lib/grpc/google/protobuf/timestamp';
 	import NavBar from '$lib/components/NavBar.svelte';
@@ -27,6 +27,15 @@
 	let totalPage = $derived(data.response.totalPage);
 
 	let updated = $state(false);
+	let loadingDlg: LoadingDialog;
+
+	$effect(()=>{
+		if(updated){
+			loadingDlg.close();
+		} else {
+			loadingDlg.show();
+		}
+	})
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
@@ -76,10 +85,6 @@
 		</div>
 		<div style="height: 100px;"></div>
 
-		{#if !updated}
-			<LoadingDialog />
-		{/if}
-
 		<div
 			aria-label="Page navigation"
 			class="position-fixed bottom-0 start-50 p-3 translate-middle-x"
@@ -91,3 +96,5 @@
 	</Content>
 	<SideBar bind:showMenu />
 </Container>
+
+<LoadingDialog bind:this={loadingDlg} />

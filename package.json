@@ -65,11 +65,9 @@
 		"md5": "^2.3.0",
 		"pino": "^9.7.0",
 		"pino-pretty": "^13.0.0",
-		"sass": "^1.89.2",
 		"svelte-easy-crop": "^4.0.1",
 		"svelte-eslint-parser": "^1.1.2",
 		"svelte-icon": "^2.1.1",
-		"swiper": "^8.4.7",
 		"tailwindcss": "^4.1.11",
 		"ts-enum-util": "^4.1.0"
 	}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
-	import FavoriteButton from '$lib/FavoriteButton.svelte';
+	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
 	import Toast from '$lib/Toast.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';

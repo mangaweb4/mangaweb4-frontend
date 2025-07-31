@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import type { PageData } from './$types';
 	import Toast from '$lib/Toast.svelte';
-	import ConfirmDialog from '$lib/ConfirmDialog.svelte';
+	import ConfirmDialog from '$lib/components/ConfirmDialog.svelte';
 
 	import { Icon } from 'svelte-icon';
 	import play_circle from '@mdi/svg/svg/play-circle.svg?raw';

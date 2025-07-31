@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import FavoriteButton from '$lib/FavoriteButton.svelte';
+	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
 	import MoveToTop from '$lib/components/MoveToTop.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Toast from '$lib/Toast.svelte';
@@ -11,7 +11,7 @@
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import { ITEM_PER_PAGE } from '$lib/constants';
 	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
-	import LoadingDialog from '$lib/LoadingDialog.svelte';
+	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
@@ -48,6 +48,15 @@
 	let totalPage = $derived(data.response.totalPage);
 
 	let updated = $state(false);
+	let loadingDlg: LoadingDialog;
+
+	$effect(()=>{
+		if(updated){
+			loadingDlg.close();
+		} else {
+			loadingDlg.show();
+		}
+	})
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
@@ -197,10 +206,6 @@
 			</div>
 		</div>
 
-		{#if !updated}
-			<LoadingDialog />
-		{/if}
-
 		<div style="height: 100px;"></div>
 
 		<Pagination currentPage={pageIndex} {totalPage} />
@@ -304,3 +309,5 @@
 		</ul>
 	</SideBar>
 </Container>
+
+<LoadingDialog bind:this={loadingDlg}/>
