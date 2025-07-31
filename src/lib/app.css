@@ -2,24 +2,3 @@
 
 @plugin "@tailwindcss/typography";
 @plugin "daisyui";
-
-/*
-.fullscreen {
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: auto;
-    grid-gap: 1rem;
-}
-
-#carouselControl {
-    height: 90vh;
-    max-height: 100%;
-}
-*/
