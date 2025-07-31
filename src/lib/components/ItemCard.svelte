@@ -78,8 +78,9 @@
 						class="card-img-top h-full"
 						data={warning}
 						color="yellow"
-						width="210"
-						height="210"
+						width="359"
+						height="510"
+						viewBox="0 -8 24 48"
 					/>
 				{:else}
 					<img
