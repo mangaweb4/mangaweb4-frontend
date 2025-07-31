@@ -106,27 +106,3 @@
 		<button>close</button>
 	</form>
 </dialog>
-
-<!-- Offcanvas
-	isOpen={customOpen}
-	toggle={() => (customOpen = !customOpen)}
-	header="Go to page"
-	placement="bottom"
->
-	<Container class="ms-auto me-auto" style="min-width: 10em; max-width: 50em;">
-		<InputGroup>
-			<Button onclick={() => (customPage = 0)}>0</Button>
-			<Input
-				type="number"
-				bind:value={customPage}
-				placeholder="page #"
-				max={totalPage - 1}
-				min={0}
-			/>
-			<Button onclick={() => (customPage = totalPage - 1)}>{totalPage - 1}</Button>
-			<Button onclick={() => gotoPage(customPage)}>
-				<Icon data={arrow_forward}></Icon>
-			</Button>
-		</InputGroup>
-	</Container>
-</Offcanvas -->
