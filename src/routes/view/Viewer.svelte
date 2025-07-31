@@ -43,17 +43,17 @@
 </script>
 
 <button
-	class="btn text-gray-500/50 hover:text-gray-500 bg-transparent border-transparent shadow-none fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
+	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
 	onclick={() => emblaApi?.scrollPrev()}
 >
-	<Icon data={chevronLeft}></Icon>
+	<Icon data={chevronLeft} class="mx-auto"></Icon>
 </button>
 
 <button
-	class="btn text-gray-500/50 hover:text-gray-500 bg-transparent border-transparent shadow-none fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
+	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
 	onclick={() => emblaApi?.scrollNext()}
 >
-	<Icon data={chevronRight}></Icon>
+	<Icon data={chevronRight} class="mx-auto"></Icon>
 </button>
 
 <div
@@ -71,9 +71,11 @@
 </div>
 
 <button
-	class="btn text-gray-500/50 hover:text-gray-500 bg-transparent border-transparent shadow-none fixed inset-x-1/2 -translate-x-1/2 w-1/2 z-10 h-20 bottom-2"
-	onclick={() => pageScroll.showModal()}><Icon data={chevronUp}></Icon></button
+	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-x-1/2 -translate-x-1/2 w-1/2 z-10 h-20 bottom-2"
+	onclick={() => pageScroll.showModal()}
 >
+	<Icon data={chevronUp} class="mx-auto"></Icon>
+</button>
 
 <dialog class="modal modal-bottom" bind:this={pageScroll}>
 	<div class="modal-box w-full max-w-[1024px] mx-auto">
