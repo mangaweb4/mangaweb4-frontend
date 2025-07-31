@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { showMenu = $bindable(), children } = $props();
+	let { showMenu = $bindable(false), children } = $props();
 </script>
 
 <div class="drawer drawer-end">

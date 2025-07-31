@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { Container, Button } from '@sveltestrap/sveltestrap';
+	import Container from '$lib/components/Container.svelte';
+	import Content from '$lib/components/Content.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
 	import { browseURL, loginUrl } from '$lib/routes';
 </script>
 
@@ -9,10 +11,19 @@
 </svelte:head>
 
 <Container>
-	<h1 class="text-center mt-5">MangaWeb 4</h1>
-	<p class="fluid text-center mt-5">Login using OpenID Connect.</p>
+	<Content>
+		<NavBar title="Login"></NavBar>
+		<div class="container mx-auto prose max-w-[1024px] mt-4">
+			<h2>Login using OpenID Connect.</h2>
 
-	<div class="fluid text-center">
-		<Button color="primary" size="lg" href={loginUrl(page.url.origin, browseURL(page.url.origin)).toString()}>Login</Button>
-	</div>
+			<div>
+				<a
+					class="btn btn-primary btn-wide"
+					href={loginUrl(page.url.origin, browseURL(page.url.origin)).toString()}
+				>
+					Login
+				</a>
+			</div>
+		</div>
+	</Content>
 </Container>
