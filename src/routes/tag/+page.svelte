@@ -8,7 +8,7 @@
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { tagURL, browseURL } from '$lib/routes';
 	import { ITEM_PER_PAGE } from '$lib/constants';
-	import LoadingDialog from '$lib/LoadingDialog.svelte';
+	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 	import Container from '$lib/components/Container.svelte';
@@ -43,6 +43,15 @@
 	let navbarToggleOpen = $state(false);
 
 	let updated = $state(false);
+	let loadingDlg: LoadingDialog;
+
+	$effect(()=>{
+		if(updated){
+			loadingDlg.close();
+		} else {
+			loadingDlg.show();
+		}
+	})
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
@@ -215,10 +224,6 @@
 	</SideBar>
 </Container>
 
-{#if !updated}
-	<LoadingDialog />
-{/if}
-
 <div style="height: 100px;"></div>
 
 <div aria-label="Page navigation" class="position-fixed bottom-0 start-50 p-3 translate-middle-x">
@@ -226,3 +231,5 @@
 </div>
 
 <MoveToTop />
+
+<LoadingDialog bind:this={loadingDlg}/>
