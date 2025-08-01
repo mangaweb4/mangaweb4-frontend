@@ -23,19 +23,18 @@
 	</div>
 	<div class="card-body">
 		<div class="h-[4em] overflow-hidden">
-			<div class="skeleton h-4 w-20"></div>
+			<div class="skeleton h-4 w-70 mb-1"></div>
 			<div class="skeleton h-4 w-28"></div>
 		</div>
 
 		{#if accessTime}
 			<div class="h-[2em] overflow-hidden">
-				<div class="skeleton h-4 w-20"></div>
+				<div class="skeleton h-4 w-50"></div>
 			</div>
 		{/if}
 
 		<div class="h-[2em] overflow-hidden">
-			<div class="skeleton h-4 w-20"></div>
-			<div class="skeleton h-4 w-28"></div>
+			<div class="skeleton h-4 w-50 mb-1"></div>
 		</div>
 	</div>
 </div>
