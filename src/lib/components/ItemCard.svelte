@@ -66,7 +66,7 @@
 </script>
 
 <div class="{borderCls} card bg-base-100 h-full shadow-xl" id={id.toString()}>
-	<figure class="mt-0 mb-0">
+	<div class="mt-0 mb-0">
 		{#if placeholder}
 			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
 				<Icon
@@ -102,7 +102,7 @@
 				{/if}
 			</a>
 		{/if}
-	</figure>
+	</div>
 	<div class="card-body">
 		<div class="h-[4em] overflow-hidden">
 			<a href={placeholder == true ? '' : linkUrl?.toString()}>{name}</a>
