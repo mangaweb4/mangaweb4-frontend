@@ -6,9 +6,10 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Manga } from "./manga";
 import type { MangaDownloadResponse } from "./manga";
 import type { MangaDownloadRequest } from "./manga";
-import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { MangaRepairResponse } from "./manga";
 import type { MangaRepairRequest } from "./manga";
+import type { MangaPageImageStreamResponse } from "./manga";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { MangaPageImageResponse } from "./manga";
 import type { MangaPageImageRequest } from "./manga";
 import type { MangaUpdateCoverResponse } from "./manga";
@@ -49,9 +50,14 @@ export interface IMangaClient {
      */
     updateCover(input: MangaUpdateCoverRequest, options?: RpcOptions): UnaryCall<MangaUpdateCoverRequest, MangaUpdateCoverResponse>;
     /**
+     * @deprecated
      * @generated from protobuf rpc: PageImage
      */
     pageImage(input: MangaPageImageRequest, options?: RpcOptions): UnaryCall<MangaPageImageRequest, MangaPageImageResponse>;
+    /**
+     * @generated from protobuf rpc: PageImageStream
+     */
+    pageImageStream(input: MangaPageImageRequest, options?: RpcOptions): ServerStreamingCall<MangaPageImageRequest, MangaPageImageStreamResponse>;
     /**
      * @generated from protobuf rpc: Repair
      */
@@ -106,6 +112,7 @@ export class MangaClient implements IMangaClient, ServiceInfo {
         return stackIntercept<MangaUpdateCoverRequest, MangaUpdateCoverResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @deprecated
      * @generated from protobuf rpc: PageImage
      */
     pageImage(input: MangaPageImageRequest, options?: RpcOptions): UnaryCall<MangaPageImageRequest, MangaPageImageResponse> {
@@ -113,17 +120,24 @@ export class MangaClient implements IMangaClient, ServiceInfo {
         return stackIntercept<MangaPageImageRequest, MangaPageImageResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: PageImageStream
+     */
+    pageImageStream(input: MangaPageImageRequest, options?: RpcOptions): ServerStreamingCall<MangaPageImageRequest, MangaPageImageStreamResponse> {
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        return stackIntercept<MangaPageImageRequest, MangaPageImageStreamResponse>("serverStreaming", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: Repair
      */
     repair(input: MangaRepairRequest, options?: RpcOptions): UnaryCall<MangaRepairRequest, MangaRepairResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<MangaRepairRequest, MangaRepairResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Download
      */
     download(input: MangaDownloadRequest, options?: RpcOptions): ServerStreamingCall<MangaDownloadRequest, MangaDownloadResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
         return stackIntercept<MangaDownloadRequest, MangaDownloadResponse>("serverStreaming", this._transport, method, opt, input);
     }
 }
