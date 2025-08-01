@@ -19,15 +19,15 @@
 	import SideBar from '$lib/components/SideBar.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import title from '@mdi/svg/svg/format-title.svg?raw';
-	import calendar_clock from '@mdi/svg/svg/calendar-clock.svg?raw';
-	import file_multiple from '@mdi/svg/svg/file-multiple.svg?raw';
-	import sortAscending from '@mdi/svg/svg/sort-ascending.svg?raw';
-	import sortDescending from '@mdi/svg/svg/sort-descending.svg?raw';
-	import star from '@mdi/svg/svg/star.svg?raw';
-	import tagMultiple from '@mdi/svg/svg/tag-multiple.svg?raw';
-	import cancel from '@mdi/svg/svg/cancel.svg?raw';
-	import magnify from '@mdi/svg/svg/magnify.svg?raw';
+	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
+	import creationTimeIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
+	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
+	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
+	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/star.svg?raw';
+	import favoriteTagsIcon from '@mdi/svg/svg/tag-multiple.svg?raw';
+	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
+	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
 
 	let toast: Toast;
 
@@ -154,11 +154,6 @@
 		tag_favorite = json.favorite;
 	}
 
-	let navbarToggleOpen = $state(false);
-	function handleUpdate(event: CustomEvent<boolean>) {
-		navbarToggleOpen = event.detail;
-	}
-
 	function createThumbnailUrl(name: string): URL {
 		const u = new URL('/api/manga/thumbnail', page.url);
 		u.searchParams.set('name', name);
@@ -225,7 +220,7 @@
 						class="btn join-item"
 						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
 					>
-						<Icon data={magnify} />
+						<Icon data={searchIcon} />
 					</button>
 				</div>
 			</li>
@@ -236,7 +231,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
 				>
-					<Icon data={title} /> Name
+					<Icon data={nameIcon} /> Name
 				</button>
 			</li>
 
@@ -245,7 +240,7 @@
 					class={sort == SortField.CREATION_TIME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
 				>
-					<Icon data={calendar_clock} /> Create time
+					<Icon data={creationTimeIcon} /> Creation time
 				</button>
 			</li>
 
@@ -254,7 +249,7 @@
 					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
 				>
-					<Icon data={file_multiple} /> Page Count
+					<Icon data={pageCountIcon} /> Page Count
 				</button>
 			</li>
 
@@ -264,7 +259,7 @@
 					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.ASCENDING }))}
 				>
-					<Icon data={sortAscending} /> Ascending
+					<Icon data={ascendingIcon} /> Ascending
 				</button>
 			</li>
 
@@ -273,7 +268,7 @@
 					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={sortDescending} /> Descending
+					<Icon data={descendingIcon} /> Descending
 				</button>
 			</li>
 
@@ -283,7 +278,7 @@
 					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
 				>
-					<Icon data={cancel} /> None
+					<Icon data={noneIcon} /> None
 				</button>
 			</li>
 			<li>
@@ -291,7 +286,7 @@
 					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
 				>
-					<Icon data={star} /> Favorite items
+					<Icon data={favoriteIcon} /> Favorite items
 				</button>
 			</li>
 
@@ -300,7 +295,7 @@
 					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
 				>
-					<Icon data={tagMultiple} /> Items with favorite tags
+					<Icon data={favoriteTagsIcon} /> Items with favorite tags
 				</button>
 			</li>
 		</ul>

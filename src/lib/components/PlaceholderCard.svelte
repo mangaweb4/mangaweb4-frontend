@@ -1,5 +1,5 @@
 <script lang="ts">
-	import photo from '@mdi/svg/svg/timer-sand.svg?raw';
+	import placeholderThumbnail from '@mdi/svg/svg/timer-sand.svg?raw';
 	import { Icon } from 'svelte-icon';
 	interface Props {
 		accessTime?: boolean;
@@ -13,7 +13,7 @@
 		<div style="display:block; aspect-ratio: 1/1.414">
 			<Icon
 				class="card-img-top h-full"
-				data={photo}
+				data={placeholderThumbnail}
 				color="gray"
 				width="359"
 				height="510"

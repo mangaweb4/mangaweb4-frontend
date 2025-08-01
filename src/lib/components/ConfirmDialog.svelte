@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Icon } from 'svelte-icon';
-	import check from '@mdi/svg/svg/check.svg?raw';
-	import cancel from '@mdi/svg/svg/cancel.svg?raw';
+	import okIcon from '@mdi/svg/svg/check.svg?raw';
+	import cancelIcon from '@mdi/svg/svg/cancel.svg?raw';
 
 	let dialog: HTMLDialogElement;
 
@@ -32,10 +32,10 @@
 						dialog.close();
 					}}
 				>
-					<Icon data={check}/>&nbsp;OK
+					<Icon data={okIcon} />&nbsp;OK
 				</button>
-				<button class="btn" onclick={() => dialog.close()}> 
-					<Icon data={cancel}/>&nbsp;Cancel 
+				<button class="btn" onclick={() => dialog.close()}>
+					<Icon data={cancelIcon} />&nbsp;Cancel
 				</button>
 			</form>
 		</div>

@@ -5,8 +5,8 @@
 	import ConfirmDialog from '$lib/components/ConfirmDialog.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import play_circle from '@mdi/svg/svg/play-circle.svg?raw';
-	import github from '@mdi/svg/svg/github.svg?raw';
+	import goIcon from '@mdi/svg/svg/play-circle.svg?raw';
+	import githubIcon from '@mdi/svg/svg/github.svg?raw';
 
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Container from '$lib/components/Container.svelte';
@@ -67,7 +67,7 @@
 			<h1>MangaWeb 4</h1>
 
 			<a class="btn" href="https://github.com/mangaweb4">
-				<Icon data={github} />&nbsp;Github
+				<Icon data={githubIcon} />&nbsp;Github
 			</a>
 
 			<div class="mt-4">
@@ -111,7 +111,7 @@
 							<td class="align-middle"> Update library </td>
 							<td>
 								<button class="btn btn-warning" onclick={() => confirmUpdateLibrary()}>
-									<Icon data={play_circle} />&nbsp;Run
+									<Icon data={goIcon} />&nbsp;Run
 								</button>
 							</td>
 						</tr>
@@ -119,7 +119,7 @@
 							<td class="align-middle"> Purge caches </td>
 							<td>
 								<button class="btn btn-warning" onclick={() => confirmPurgeCache()}>
-									<Icon data={play_circle} />&nbsp;Run
+									<Icon data={goIcon} />&nbsp;Run
 								</button>
 							</td>
 						</tr>

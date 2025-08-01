@@ -2,10 +2,10 @@
 	import { page } from '$app/state';
 
 	import { Icon } from 'svelte-icon';
-	import page_first from '@mdi/svg/svg/page-first.svg?raw';
-	import page_last from '@mdi/svg/svg/page-last.svg?raw';
-	import arrowRight from '@mdi/svg/svg/arrow-right-circle.svg?raw';
-	import dotsVertical from '@mdi/svg/svg/dots-vertical.svg?raw';
+	import firstPageIcon from '@mdi/svg/svg/page-first.svg?raw';
+	import lastPageIcon from '@mdi/svg/svg/page-last.svg?raw';
+	import goIcon from '@mdi/svg/svg/arrow-right-circle.svg?raw';
+	import customPageIcon from '@mdi/svg/svg/dots-vertical.svg?raw';
 	import { goto } from '$app/navigation';
 
 	interface Props {
@@ -54,10 +54,10 @@
 	let customInput: HTMLDialogElement;
 </script>
 
-<div class="fixed bottom-20 inset-x-1/2 ">
+<div class="fixed bottom-20 inset-x-1/2">
 	<div class="join shadow-xl -translate-x-1/2">
 		<button class="join-item btn" onclick={() => goto(createLink(first).toString())}>
-			<Icon data={page_first} />
+			<Icon data={firstPageIcon} />
 		</button>
 
 		{#each pageNumbers as i}
@@ -70,11 +70,11 @@
 		{/each}
 
 		<button class="join-item btn" onclick={() => customInput.showModal()}>
-			<Icon data={dotsVertical} />
+			<Icon data={customPageIcon} />
 		</button>
 
 		<button class="join-item btn" onclick={() => goto(createLink(last).toString())}>
-			<Icon data={page_last} />
+			<Icon data={lastPageIcon} />
 		</button>
 	</div>
 </div>
@@ -97,7 +97,7 @@
 					>{totalPage - 1}</button
 				>
 				<button class="join-item btn" onclick={() => gotoPage(customPage)}>
-					<Icon data={arrowRight}></Icon>
+					<Icon data={goIcon}></Icon>
 				</button>
 			</div>
 		</div>

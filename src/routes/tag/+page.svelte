@@ -3,7 +3,7 @@
 	import ItemCard from '$lib/components/ItemCard.svelte';
 	import type { PageData } from './$types';
 	import MoveToTop from '$lib/components/MoveToTop.svelte';
-	
+
 	import Pagination from '$lib/components/Pagination.svelte';
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { tagURL, browseURL } from '$lib/routes';
@@ -17,12 +17,12 @@
 	import SideBar from '$lib/components/SideBar.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import title from '@mdi/svg/svg/format-title.svg?raw';
-	import file_multiple from '@mdi/svg/svg/file-multiple.svg?raw';
-	import sortAscending from '@mdi/svg/svg/sort-ascending.svg?raw';
-	import sortDescending from '@mdi/svg/svg/sort-descending.svg?raw';
-	import fileStar from '@mdi/svg/svg/file-star.svg?raw';
-	import cancel from '@mdi/svg/svg/cancel.svg?raw';
+	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
+	import itemCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
+	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
+	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/file-star.svg?raw';
+	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 
 	interface Props {
 		data: PageData;
@@ -45,13 +45,13 @@
 	let updated = $state(false);
 	let loadingDlg: LoadingDialog;
 
-	$effect(()=>{
-		if(updated){
+	$effect(() => {
+		if (updated) {
 			loadingDlg.close();
 		} else {
 			loadingDlg.show();
 		}
-	})
+	});
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
@@ -170,7 +170,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ sort: SortField.NAME }))}
 				>
-					<Icon data={title} /> Name
+					<Icon data={nameIcon} /> Name
 				</button>
 			</li>
 
@@ -179,7 +179,7 @@
 					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ sort: SortField.ITEMCOUNT }))}
 				>
-					<Icon data={file_multiple} /> Item count
+					<Icon data={itemCountIcon} /> Item count
 				</button>
 			</li>
 
@@ -189,7 +189,7 @@
 					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ order: SortOrder.ASCENDING }))}
 				>
-					<Icon data={sortAscending} /> Ascending
+					<Icon data={ascendingIcon} /> Ascending
 				</button>
 			</li>
 
@@ -198,7 +198,7 @@
 					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={sortDescending} /> Descending
+					<Icon data={descendingIcon} /> Descending
 				</button>
 			</li>
 
@@ -208,7 +208,7 @@
 					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
 					onclick={() => goto(tagURL(page.url, { filter: Filter.UNKNOWN }))}
 				>
-					<Icon data={cancel} /> None
+					<Icon data={noneIcon} /> None
 				</button>
 			</li>
 
@@ -217,7 +217,7 @@
 					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
 					onclick={() => goto(tagURL(page.url, { filter: Filter.FAVORITE_TAGS }))}
 				>
-					<Icon data={fileStar} /> Favorite tags
+					<Icon data={favoriteIcon} /> Favorite tags
 				</button>
 			</li>
 		</ul>
@@ -232,4 +232,4 @@
 
 <MoveToTop />
 
-<LoadingDialog bind:this={loadingDlg}/>
+<LoadingDialog bind:this={loadingDlg} />

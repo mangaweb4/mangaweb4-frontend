@@ -7,7 +7,7 @@
 	import NavBar from '$lib/components/NavBar.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import alertCircle from '@mdi/svg/svg/alert-circle.svg?raw';
+	import icon from '@mdi/svg/svg/alert-circle.svg?raw';
 
 	let showMenu = $state(false);
 </script>
@@ -17,7 +17,7 @@
 		<NavBar title="Error" bind:showMenu />
 		<div class="container mx-auto prose max-w-[1024px] mt-4">
 			<div role="alert" class="alert alert-error">
-				<Icon data={alertCircle} />&nbsp;An error has occured.
+				<Icon data={icon} />&nbsp;An error has occured.
 			</div>
 
 			<h2>Status {page.status}</h2>

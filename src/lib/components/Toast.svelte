@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Icon } from 'svelte-icon';
-	import informationOutline from '@mdi/svg/svg/information-outline.svg?raw';
-	import check from '@mdi/svg/svg/check.svg?raw';
-	import alertCircleOutline from '@mdi/svg/svg/alert-circle-outline.svg?raw';
-	import alertCircle from '@mdi/svg/svg/alert-circle.svg?raw';
+	import infoIcon from '@mdi/svg/svg/information-outline.svg?raw';
+	import successIcon from '@mdi/svg/svg/check.svg?raw';
+	import warningIcon from '@mdi/svg/svg/alert-circle-outline.svg?raw';
+	import errorIcon from '@mdi/svg/svg/alert-circle.svg?raw';
 
 	let messages: {
 		body: string;
@@ -27,13 +27,13 @@
 			class:alert-error={m.type == 'error'}
 		>
 			{#if m.type == 'info'}
-				<Icon data={informationOutline} />
+				<Icon data={infoIcon} />
 			{:else if m.type == 'success'}
-				<Icon data={check} />
+				<Icon data={successIcon} />
 			{:else if m.type == 'warning'}
-				<Icon data={alertCircleOutline} />
+				<Icon data={warningIcon} />
 			{:else if m.type == 'error'}
-				<Icon data={alertCircle} />
+				<Icon data={errorIcon} />
 			{/if}
 			<span>{m.body}</span>
 		</div>

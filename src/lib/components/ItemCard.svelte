@@ -1,13 +1,13 @@
 <script lang="ts">
-	import star from '@mdi/svg/svg/star.svg?raw';
-	import tag from '@mdi/svg/svg/tag.svg?raw';
-	import new_releases from '@mdi/svg/svg/alert-decagram.svg?raw';
-	import menu_book from '@mdi/svg/svg/book-open-variant.svg?raw';
-	import check from '@mdi/svg/svg/check.svg?raw';
-	import insert_drive_file from '@mdi/svg/svg/file.svg?raw';
-	import library_books from '@mdi/svg/svg/bookshelf.svg?raw';
-	import warning from '@mdi/svg/svg/alert-box.svg?raw';
-	import photo from '@mdi/svg/svg/minus-box.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/star.svg?raw';
+	import favoriteTagIcon from '@mdi/svg/svg/tag.svg?raw';
+	import newIcon from '@mdi/svg/svg/alert-decagram.svg?raw';
+	import readingIcon from '@mdi/svg/svg/book-open-variant.svg?raw';
+	import readIcon from '@mdi/svg/svg/check.svg?raw';
+	import pageCountIcon from '@mdi/svg/svg/file.svg?raw';
+	import itemCountIcon from '@mdi/svg/svg/bookshelf.svg?raw';
+	import errorThumbnail from '@mdi/svg/svg/alert-box.svg?raw';
+	import placeholderThumbnail from '@mdi/svg/svg/minus-box.svg?raw';
 
 	import { Icon } from 'svelte-icon';
 
@@ -71,7 +71,7 @@
 			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
 				<Icon
 					class="card-img-top h-full"
-					data={photo}
+					data={placeholderThumbnail}
 					color="gray"
 					width="359"
 					height="510"
@@ -83,7 +83,7 @@
 				{#if imageLoadErr}
 					<Icon
 						class="card-img-top h-full"
-						data={warning}
+						data={errorThumbnail}
 						color="yellow"
 						width="359"
 						height="510"
@@ -125,38 +125,38 @@
 			<div class="h-[2em] overflow-hidden">
 				{#if favorite}
 					<div class="badge p-2 bg-pink-200 text-pink-800">
-						<Icon data={star} /> Favorite
+						<Icon data={favoriteIcon} /> Favorite
 					</div>
 				{/if}
 
 				{#if favoriteTag}
 					<div class="badge p-2 bg-purple-200 text-purple-800">
-						<Icon data={tag} /> Favorite Tag
+						<Icon data={favoriteTagIcon} /> Favorite Tag
 					</div>
 				{/if}
 
 				{#if !isRead}
 					<div class="badge p-2 bg-yellow-200 text-yellow-800">
-						<Icon data={new_releases} /> New
+						<Icon data={newIcon} /> New
 					</div>
 				{:else}
 					<div class="badge p-2 bg-emerald-200 text-emerald-800">
 						{#if progressPercent < READ_THRESHOLD}
-							<Icon data={menu_book} /> {Math.round(progressPercent)}%
+							<Icon data={readingIcon} /> {Math.round(progressPercent)}%
 						{:else}
-							<Icon data={check} /> Read
+							<Icon data={readIcon} /> Read
 						{/if}
 					</div>
 				{/if}
 				{#if pageCount}
 					<div class="badge p-2 bg-blue-200 text-blue-800">
-						<Icon data={insert_drive_file} />
+						<Icon data={pageCountIcon} />
 						{pageCount}p
 					</div>
 				{/if}
 				{#if itemCount}
 					<div class="badge p-2 bg-blue-200 text-blue-800">
-						<Icon data={library_books} />
+						<Icon data={itemCountIcon} />
 						{itemCount}
 					</div>
 				{/if}
