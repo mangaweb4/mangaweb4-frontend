@@ -293,6 +293,27 @@ export interface MangaPageImageResponse {
     data: Uint8Array;
 }
 /**
+ * @generated from protobuf message MangaPageImageStreamResponse
+ */
+export interface MangaPageImageStreamResponse {
+    /**
+     * @generated from protobuf field: string Filename = 1
+     */
+    filename: string;
+    /**
+     * @generated from protobuf field: string ContentType = 2
+     */
+    contentType: string;
+    /**
+     * @generated from protobuf field: bytes Data = 3
+     */
+    data: Uint8Array;
+    /**
+     * @generated from protobuf field: int32 Size = 4
+     */
+    size: number;
+}
+/**
  * @generated from protobuf message MangaRepairRequest
  */
 export interface MangaRepairRequest {
@@ -1307,6 +1328,77 @@ class MangaPageImageResponse$Type extends MessageType<MangaPageImageResponse> {
  */
 export const MangaPageImageResponse = new MangaPageImageResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class MangaPageImageStreamResponse$Type extends MessageType<MangaPageImageStreamResponse> {
+    constructor() {
+        super("MangaPageImageStreamResponse", [
+            { no: 1, name: "Filename", kind: "scalar", jsonName: "Filename", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "ContentType", kind: "scalar", jsonName: "ContentType", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "Data", kind: "scalar", jsonName: "Data", T: 12 /*ScalarType.BYTES*/ },
+            { no: 4, name: "Size", kind: "scalar", jsonName: "Size", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<MangaPageImageStreamResponse>): MangaPageImageStreamResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.filename = "";
+        message.contentType = "";
+        message.data = new Uint8Array(0);
+        message.size = 0;
+        if (value !== undefined)
+            reflectionMergePartial<MangaPageImageStreamResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MangaPageImageStreamResponse): MangaPageImageStreamResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string Filename */ 1:
+                    message.filename = reader.string();
+                    break;
+                case /* string ContentType */ 2:
+                    message.contentType = reader.string();
+                    break;
+                case /* bytes Data */ 3:
+                    message.data = reader.bytes();
+                    break;
+                case /* int32 Size */ 4:
+                    message.size = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MangaPageImageStreamResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string Filename = 1; */
+        if (message.filename !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.filename);
+        /* string ContentType = 2; */
+        if (message.contentType !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.contentType);
+        /* bytes Data = 3; */
+        if (message.data.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.data);
+        /* int32 Size = 4; */
+        if (message.size !== 0)
+            writer.tag(4, WireType.Varint).int32(message.size);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message MangaPageImageStreamResponse
+ */
+export const MangaPageImageStreamResponse = new MangaPageImageStreamResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class MangaRepairRequest$Type extends MessageType<MangaRepairRequest> {
     constructor() {
         super("MangaRepairRequest", [
@@ -1536,6 +1628,7 @@ export const Manga = new ServiceType("Manga", [
     { name: "SetFavorite", options: {}, I: MangaSetFavoriteRequest, O: MangaSetFavoriteResponse },
     { name: "UpdateCover", options: {}, I: MangaUpdateCoverRequest, O: MangaUpdateCoverResponse },
     { name: "PageImage", options: {}, I: MangaPageImageRequest, O: MangaPageImageResponse },
+    { name: "PageImageStream", serverStreaming: true, options: {}, I: MangaPageImageRequest, O: MangaPageImageStreamResponse },
     { name: "Repair", options: {}, I: MangaRepairRequest, O: MangaRepairResponse },
     { name: "Download", serverStreaming: true, options: {}, I: MangaDownloadRequest, O: MangaDownloadResponse }
 ]);
