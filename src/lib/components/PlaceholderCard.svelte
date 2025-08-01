@@ -9,7 +9,7 @@
 </script>
 
 <div class="card bg-base-100 h-full shadow-xl">
-	<figure class="mt-0 mb-0">
+	<div class="mt-0 mb-0">
 		<div style="display:block; aspect-ratio: 1/1.414">
 			<Icon
 				class="card-img-top h-full"
@@ -20,7 +20,7 @@
 				viewBox="0 -8 24 48"
 			/>
 		</div>
-	</figure>
+	</div>
 	<div class="card-body">
 		<div class="h-[4em] overflow-hidden">
 			<div class="skeleton h-4 w-20"></div>
