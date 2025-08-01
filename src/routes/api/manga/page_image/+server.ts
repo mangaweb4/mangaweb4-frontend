@@ -12,9 +12,6 @@ export const GET: RequestHandler = async ({ request, cookies }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
-        clientOptions: {
-            "grpc.max_receive_message_length": 2 * 1024 * 1024 * 1024
-        }
     })
 
     let client = new MangaClient(transport)
