@@ -24,9 +24,10 @@
 	import file_multiple from '@mdi/svg/svg/file-multiple.svg?raw';
 	import sortAscending from '@mdi/svg/svg/sort-ascending.svg?raw';
 	import sortDescending from '@mdi/svg/svg/sort-descending.svg?raw';
-	import fileStar from '@mdi/svg/svg/file-star.svg?raw';
+	import star from '@mdi/svg/svg/star.svg?raw';
 	import tagMultiple from '@mdi/svg/svg/tag-multiple.svg?raw';
 	import cancel from '@mdi/svg/svg/cancel.svg?raw';
+	import magnify from '@mdi/svg/svg/magnify.svg?raw';
 
 	let toast: Toast;
 
@@ -219,11 +220,13 @@
 			<li class="menu-title">Search</li>
 			<li>
 				<div class="join">
-					<input class="input join-item" placeholder="Search" bind:value={search} />
+					<input class="input join-item" placeholder="name, author" bind:value={search} />
 					<button
 						class="btn join-item"
-						onclick={() => goto(browseURL(page.url.origin, { search: search }))}>Search</button
+						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
 					>
+						<Icon data={magnify} />
+					</button>
 				</div>
 			</li>
 
@@ -288,7 +291,7 @@
 					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
 				>
-					<Icon data={fileStar} /> Favorite items
+					<Icon data={star} /> Favorite items
 				</button>
 			</li>
 
