@@ -12,11 +12,11 @@
 	import ImageViewer from './Viewer.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import informationOutline from '@mdi/svg/svg/information-outline.svg?raw';
-	import downloadBox from '@mdi/svg/svg/download-box.svg?raw';
-	import downloadBoxOutline from '@mdi/svg/svg/download-box-outline.svg?raw';
-	import cropPortrait from '@mdi/svg/svg/crop-portrait.svg?raw';
-	import tools from '@mdi/svg/svg/tools.svg?raw';
+	import infoIcon from '@mdi/svg/svg/information-outline.svg?raw';
+	import downloadIcon from '@mdi/svg/svg/download-box.svg?raw';
+	import downloadPageIcon from '@mdi/svg/svg/download-box-outline.svg?raw';
+	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
+	import fixIcon from '@mdi/svg/svg/tools.svg?raw';
 
 	let current = $state(0);
 	let viewer: ImageViewer;
@@ -152,7 +152,7 @@
 						aboutDialog.showModal();
 					}}
 				>
-					<Icon data={informationOutline} /> Information
+					<Icon data={infoIcon} /> Information
 				</button>
 			</li>
 			<li>
@@ -164,26 +164,25 @@
 			<li class="menu-title">Tools</li>
 			<li>
 				<button onclick={() => downloadPage()}>
-					<Icon data={downloadBoxOutline} /> Download current page
+					<Icon data={downloadPageIcon} /> Download current page
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => downloadManga()}>
-					<Icon data={downloadBox} /> Download
+					<Icon data={downloadIcon} /> Download
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => changeThumbnail()}>
-					<Icon data={cropPortrait} /> Change thumbnail
+					<Icon data={thumbnailIcon} /> Change thumbnail
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => fixMetaData()}>
-					<Icon data={tools} />
-					Fix the manga
+					<Icon data={fixIcon} /> Fix the manga
 				</button>
 			</li>
 		</ul>

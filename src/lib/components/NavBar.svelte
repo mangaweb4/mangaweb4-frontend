@@ -4,7 +4,7 @@
 	import logo from '$lib/logo.svg?raw';
 	import { browseURL } from '$lib/routes';
 	import { page } from '$app/state';
-	let { title, showMenu = $bindable(), hasmenu=true } = $props();
+	let { title, showMenu = $bindable(), hasmenu = true } = $props();
 </script>
 
 <div class="navbar bg-base-100 shadow-sm sticky top-0 z-1">
@@ -17,9 +17,9 @@
 		</div>
 		<div class="flex-none">
 			{#if hasmenu}
-			<button class="btn btn-square btn-ghost" onclick={() => (showMenu = true)}>
-				<Icon data={menu} />
-			</button>
+				<button class="btn btn-square btn-ghost" onclick={() => (showMenu = true)}>
+					<Icon data={menu} />
+				</button>
 			{/if}
 		</div>
 	</div>

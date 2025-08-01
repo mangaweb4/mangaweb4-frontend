@@ -3,9 +3,9 @@
 	import type { EmblaCarouselType, EmblaEventType } from 'embla-carousel';
 
 	import { Icon } from 'svelte-icon';
-	import chevronLeft from '@mdi/svg/svg/chevron-left.svg?raw';
-	import chevronRight from '@mdi/svg/svg/chevron-right.svg?raw';
-	import chevronUp from '@mdi/svg/svg/chevron-up.svg?raw';
+	import prevIcon from '@mdi/svg/svg/chevron-left.svg?raw';
+	import nextIcon from '@mdi/svg/svg/chevron-right.svg?raw';
+	import pageScrollIcon from '@mdi/svg/svg/chevron-up.svg?raw';
 
 	import Page from './Page.svelte';
 
@@ -46,14 +46,14 @@
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
 	onclick={() => emblaApi?.scrollPrev()}
 >
-	<Icon data={chevronLeft} class="mx-auto"></Icon>
+	<Icon data={prevIcon} class="mx-auto"></Icon>
 </button>
 
 <button
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
 	onclick={() => emblaApi?.scrollNext()}
 >
-	<Icon data={chevronRight} class="mx-auto"></Icon>
+	<Icon data={nextIcon} class="mx-auto"></Icon>
 </button>
 
 <div
@@ -74,7 +74,7 @@
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-x-1/2 -translate-x-1/2 w-1/2 z-10 h-20 bottom-2"
 	onclick={() => pageScroll.showModal()}
 >
-	<Icon data={chevronUp} class="mx-auto"></Icon>
+	<Icon data={pageScrollIcon} class="mx-auto"></Icon>
 </button>
 
 <dialog class="modal modal-bottom" bind:this={pageScroll}>

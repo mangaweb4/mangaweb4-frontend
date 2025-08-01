@@ -8,8 +8,8 @@
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 
-	import {Icon} from 'svelte-icon'
-	import bookOpen from '@mdi/svg/svg/book-open.svg?raw'
+	import { Icon } from 'svelte-icon';
+	import viewIcon from '@mdi/svg/svg/book-open.svg?raw';
 	import { goto } from '$app/navigation';
 	import { viewURL } from '$lib/routes';
 
@@ -97,11 +97,11 @@
 	</Content>
 	<SideBar bind:showMenu>
 		<ul class="menu">
-		<li>
-			<button onclick={() => goto(viewURL(page.url, name))}>
-				<Icon data={bookOpen} /> View current item.
-			</button>
-		</li>
+			<li>
+				<button onclick={() => goto(viewURL(page.url, name))}>
+					<Icon data={viewIcon} /> View current item.
+				</button>
+			</li>
 		</ul>
 	</SideBar>
 </Container>

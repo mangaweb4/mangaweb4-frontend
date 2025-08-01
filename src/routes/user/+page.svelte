@@ -10,7 +10,7 @@
 	import md5 from 'md5';
 
 	import { Icon } from 'svelte-icon';
-	import logout from '@mdi/svg/svg/logout.svg?raw';
+	import logoutIcon from '@mdi/svg/svg/logout.svg?raw';
 
 	let { email, name } = page.data;
 	let showMenu = $state(false);
@@ -37,7 +37,7 @@
 				class="mt-4 btn btn-primary btn-wide"
 				onclick={() => goto(logoutURL(page.url.origin))}
 			>
-				<Icon data={logout} />&nbsp;Logout
+				<Icon data={logoutIcon} />&nbsp;Logout
 			</button>
 
 			<div class="mt-4 mb-4">
