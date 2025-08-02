@@ -16,29 +16,14 @@
 
 	let { currentPage = 0, totalPage = 1, pageToShow = 5 }: Props = $props();
 
-	let first = $state(0);
-	let last = $derived(totalPage - 1);
+	let first = $derived.by(() => Math.max(0, currentPage - Math.floor(pageToShow / 2)));
+	let last = $derived.by(() => Math.min(totalPage - 1, first + pageToShow - 1));
+
+	let pageNumbers: number[] = $derived.by(() =>
+		Array.from({ length: last - first + 1 }, (_, i) => first + i)
+	);
 
 	let customPage = $state(currentPage);
-
-	let pageNumbers: number[] = $state([]);
-	$effect(() => {
-		if (totalPage != 0) {
-			let pages: number[] = [];
-
-			const halfCount = Math.floor(pageToShow / 2);
-
-			const startPage = currentPage - halfCount;
-			const endPage = startPage + pageToShow;
-
-			for (let i = startPage; i < endPage; i++) {
-				if (i < 0 || i >= totalPage) continue;
-				pages = [...pages, i];
-			}
-
-			pageNumbers = pages;
-		}
-	});
 
 	function gotoPage(i: number) {
 		goto(createLink(i));
