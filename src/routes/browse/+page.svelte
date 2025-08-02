@@ -1,32 +1,33 @@
 <script lang="ts">
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
-	import MoveToTop from '$lib/components/MoveToTop.svelte';
-	import Pagination from '$lib/components/Pagination.svelte';
-	import Toast from '$lib/components/Toast.svelte';
 	import { browseURL, viewURL } from '$lib/routes';
-
 	import type { PageData } from './$types';
-	import ItemCard from '$lib/components/ItemCard.svelte';
 	import { ITEM_PER_PAGE } from '$lib/constants';
-	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
-	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
+
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
+
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
+	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
+	import ItemCard from '$lib/components/ItemCard.svelte';
+	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
+	import MoveToTop from '$lib/components/MoveToTop.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
+	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
-	import creationTimeIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
-	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
 	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
+	import creationTimeIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
 	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
 	import favoriteIcon from '@mdi/svg/svg/star.svg?raw';
 	import favoriteTagsIcon from '@mdi/svg/svg/tag-multiple.svg?raw';
+	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
+	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
 
 	let toast: Toast;
@@ -214,7 +215,7 @@
 
 			<li class="menu-title">Search</li>
 			<li>
-				<div class="join">
+				<div class="join gap-0">
 					<input class="input join-item" placeholder="name, author" bind:value={search} />
 					<button
 						class="btn join-item"
