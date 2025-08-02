@@ -155,7 +155,7 @@
 		<ul class="menu">
 			<li class="menu-title">Search</li>
 			<li>
-				<div class="join">
+				<div class="join gap-0">
 					<input class="input join-item" placeholder="Search" bind:value={search} />
 					<button
 						class="btn join-item"
