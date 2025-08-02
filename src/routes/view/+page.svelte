@@ -1,22 +1,24 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/state';
-	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
-	import Toast from '$lib/components/Toast.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
+	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
+	import ImageViewer from './Viewer.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
+	import Toast from '$lib/components/Toast.svelte';
 
+	import { browseURL } from '$lib/routes';
+	import { goto, invalidateAll } from '$app/navigation';
+	import { page } from '$app/state';
 	import type { PageData } from './$types';
-	import ImageViewer from './Viewer.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import infoIcon from '@mdi/svg/svg/information-outline.svg?raw';
-	import downloadIcon from '@mdi/svg/svg/download-box.svg?raw';
-	import downloadPageIcon from '@mdi/svg/svg/download-box-outline.svg?raw';
-	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
+	import downloadIcon from '@mdi/svg/svg/download.svg?raw';
+	import downloadPageIcon from '@mdi/svg/svg/download-box.svg?raw';
 	import fixIcon from '@mdi/svg/svg/tools.svg?raw';
+	import infoIcon from '@mdi/svg/svg/information-outline.svg?raw';
+	import tagIcon from '@mdi/svg/svg/tag.svg?raw';
+	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
 
 	let current = $state(0);
 	let viewer: ImageViewer;
@@ -161,6 +163,16 @@
 				</FavoriteButton>
 			</li>
 
+			<li class="menu-title">Tags</li>
+			{#each tags as t}
+				<li>
+					<button onclick={() => goto(browseURL(page.url, { tag: t.name }))}>
+						<Icon data={tagIcon} />
+						{t.name}
+					</button>
+				</li>
+			{/each}
+
 			<li class="menu-title">Tools</li>
 			<li>
 				<button onclick={() => downloadPage()}>
@@ -182,7 +194,7 @@
 
 			<li>
 				<button onclick={() => fixMetaData()}>
-					<Icon data={fixIcon} /> Fix the manga
+					<Icon data={fixIcon} /> Fix item metadata
 				</button>
 			</li>
 		</ul>
