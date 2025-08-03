@@ -39,7 +39,7 @@
 	let customInput: HTMLDialogElement;
 </script>
 
-<div class="fixed bottom-20 inset-x-1/2">
+<div class="fixed bottom-10 inset-x-1/2 hidden md:flex">
 	<div class="join shadow-xl -translate-x-1/2">
 		<button class="join-item btn" onclick={() => goto(createLink(first).toString())}>
 			<Icon data={firstPageIcon} />

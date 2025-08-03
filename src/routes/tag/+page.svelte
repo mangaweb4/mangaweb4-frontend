@@ -23,6 +23,7 @@
 	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
 	import favoriteIcon from '@mdi/svg/svg/file-star.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
+	import BottomNav from '$lib/components/BottomNav.svelte';
 
 	interface Props {
 		data: PageData;
@@ -226,10 +227,9 @@
 
 <div style="height: 100px;"></div>
 
-<div aria-label="Page navigation" class="position-fixed bottom-0 start-50 p-3 translate-middle-x">
-	<Pagination currentPage={current_page} totalPage={total_page} />
-</div>
-
+<Pagination currentPage={current_page} totalPage={total_page} />
 <MoveToTop />
+
+<BottomNav currentPage={current_page} totalPage={total_page} />
 
 <LoadingDialog bind:this={loadingDlg} />

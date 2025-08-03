@@ -15,6 +15,7 @@
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
+	import BottomNav from '$lib/components/BottomNav.svelte';
 
 	interface Props {
 		data: PageData;
@@ -29,13 +30,13 @@
 	let updated = $state(false);
 	let loadingDlg: LoadingDialog;
 
-	$effect(()=>{
-		if(updated){
+	$effect(() => {
+		if (updated) {
 			loadingDlg.close();
 		} else {
 			loadingDlg.show();
 		}
-	})
+	});
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
@@ -84,17 +85,12 @@
 			</div>
 		</div>
 		<div style="height: 100px;"></div>
-
-		<div
-			aria-label="Page navigation"
-			class="position-fixed bottom-0 start-50 p-3 translate-middle-x"
-		>
-			<Pagination currentPage={pageIndex} {totalPage} />
-		</div>
-
-		<MoveToTop />
 	</Content>
 	<SideBar bind:showMenu />
 </Container>
 
 <LoadingDialog bind:this={loadingDlg} />
+
+<Pagination currentPage={pageIndex} {totalPage} />
+<MoveToTop />
+<BottomNav currentPage={pageIndex} {totalPage} />

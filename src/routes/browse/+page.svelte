@@ -29,6 +29,7 @@
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
+	import BottomNav from '$lib/components/BottomNav.svelte';
 
 	let toast: Toast;
 
@@ -307,6 +308,10 @@
 
 <Pagination currentPage={pageIndex} {totalPage} />
 
+<MoveToTop />
+
+<BottomNav currentPage={pageIndex} {totalPage}/>
+
 <Toast bind:this={toast} />
 
-<MoveToTop />
+
