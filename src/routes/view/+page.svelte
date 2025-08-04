@@ -19,6 +19,7 @@
 	import infoIcon from '@mdi/svg/svg/information-outline.svg?raw';
 	import tagIcon from '@mdi/svg/svg/tag.svg?raw';
 	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
+	import logger from '$lib/logger';
 
 	let current = $state(0);
 	let viewer: ImageViewer;
@@ -116,6 +117,17 @@
 
 	function onIndexChange(i: number) {
 		current = i;
+
+		const url = new URL('/api/manga/set_progress', page.url.origin);
+		url.searchParams.set('page', `${current}`);
+		url.searchParams.set('name', name);
+
+		try {
+			fetch(url)
+		} catch(err: any) {
+			logger.error(err, "error during update progress.")
+		}
+
 	}
 
 	let showMenu = $state(false);
