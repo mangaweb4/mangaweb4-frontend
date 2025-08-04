@@ -217,6 +217,44 @@ export interface MangaSetFavoriteResponse {
     favorite: boolean;
 }
 /**
+ * @generated from protobuf message MangaSetProgressRequest
+ */
+export interface MangaSetProgressRequest {
+    /**
+     * @generated from protobuf field: string User = 1
+     */
+    user: string;
+    /**
+     * @generated from protobuf field: string Name = 2
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: int32 Page = 3
+     */
+    page: number;
+}
+/**
+ * @generated from protobuf message MangaSetProgressResponse
+ */
+export interface MangaSetProgressResponse {
+    /**
+     * @generated from protobuf field: string User = 1
+     */
+    user: string;
+    /**
+     * @generated from protobuf field: string Name = 2
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: int32 Page = 3
+     */
+    page: number;
+    /**
+     * @generated from protobuf field: bool Succeed = 4
+     */
+    succeed: boolean;
+}
+/**
  * @generated from protobuf message MangaUpdateCoverRequest
  */
 export interface MangaUpdateCoverRequest {
@@ -1060,6 +1098,140 @@ class MangaSetFavoriteResponse$Type extends MessageType<MangaSetFavoriteResponse
  */
 export const MangaSetFavoriteResponse = new MangaSetFavoriteResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class MangaSetProgressRequest$Type extends MessageType<MangaSetProgressRequest> {
+    constructor() {
+        super("MangaSetProgressRequest", [
+            { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "Page", kind: "scalar", jsonName: "Page", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<MangaSetProgressRequest>): MangaSetProgressRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.user = "";
+        message.name = "";
+        message.page = 0;
+        if (value !== undefined)
+            reflectionMergePartial<MangaSetProgressRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MangaSetProgressRequest): MangaSetProgressRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string User */ 1:
+                    message.user = reader.string();
+                    break;
+                case /* string Name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* int32 Page */ 3:
+                    message.page = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MangaSetProgressRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string User = 1; */
+        if (message.user !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.user);
+        /* string Name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* int32 Page = 3; */
+        if (message.page !== 0)
+            writer.tag(3, WireType.Varint).int32(message.page);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message MangaSetProgressRequest
+ */
+export const MangaSetProgressRequest = new MangaSetProgressRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MangaSetProgressResponse$Type extends MessageType<MangaSetProgressResponse> {
+    constructor() {
+        super("MangaSetProgressResponse", [
+            { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "Page", kind: "scalar", jsonName: "Page", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "Succeed", kind: "scalar", jsonName: "Succeed", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<MangaSetProgressResponse>): MangaSetProgressResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.user = "";
+        message.name = "";
+        message.page = 0;
+        message.succeed = false;
+        if (value !== undefined)
+            reflectionMergePartial<MangaSetProgressResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MangaSetProgressResponse): MangaSetProgressResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string User */ 1:
+                    message.user = reader.string();
+                    break;
+                case /* string Name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* int32 Page */ 3:
+                    message.page = reader.int32();
+                    break;
+                case /* bool Succeed */ 4:
+                    message.succeed = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MangaSetProgressResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string User = 1; */
+        if (message.user !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.user);
+        /* string Name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* int32 Page = 3; */
+        if (message.page !== 0)
+            writer.tag(3, WireType.Varint).int32(message.page);
+        /* bool Succeed = 4; */
+        if (message.succeed !== false)
+            writer.tag(4, WireType.Varint).bool(message.succeed);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message MangaSetProgressResponse
+ */
+export const MangaSetProgressResponse = new MangaSetProgressResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> {
     constructor() {
         super("MangaUpdateCoverRequest", [
@@ -1626,6 +1798,7 @@ export const Manga = new ServiceType("Manga", [
     { name: "Detail", options: {}, I: MangaDetailRequest, O: MangaDetailResponse },
     { name: "Thumbnail", options: {}, I: MangaThumbnailRequest, O: MangaThumbnailResponse },
     { name: "SetFavorite", options: {}, I: MangaSetFavoriteRequest, O: MangaSetFavoriteResponse },
+    { name: "SetProgress", options: {}, I: MangaSetProgressRequest, O: MangaSetProgressResponse },
     { name: "UpdateCover", options: {}, I: MangaUpdateCoverRequest, O: MangaUpdateCoverResponse },
     { name: "PageImage", options: {}, I: MangaPageImageRequest, O: MangaPageImageResponse },
     { name: "PageImageStream", serverStreaming: true, options: {}, I: MangaPageImageRequest, O: MangaPageImageStreamResponse },

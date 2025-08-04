@@ -14,6 +14,8 @@ import type { MangaPageImageResponse } from "./manga";
 import type { MangaPageImageRequest } from "./manga";
 import type { MangaUpdateCoverResponse } from "./manga";
 import type { MangaUpdateCoverRequest } from "./manga";
+import type { MangaSetProgressResponse } from "./manga";
+import type { MangaSetProgressRequest } from "./manga";
 import type { MangaSetFavoriteResponse } from "./manga";
 import type { MangaSetFavoriteRequest } from "./manga";
 import type { MangaThumbnailResponse } from "./manga";
@@ -45,6 +47,10 @@ export interface IMangaClient {
      * @generated from protobuf rpc: SetFavorite
      */
     setFavorite(input: MangaSetFavoriteRequest, options?: RpcOptions): UnaryCall<MangaSetFavoriteRequest, MangaSetFavoriteResponse>;
+    /**
+     * @generated from protobuf rpc: SetProgress
+     */
+    setProgress(input: MangaSetProgressRequest, options?: RpcOptions): UnaryCall<MangaSetProgressRequest, MangaSetProgressResponse>;
     /**
      * @generated from protobuf rpc: UpdateCover
      */
@@ -105,10 +111,17 @@ export class MangaClient implements IMangaClient, ServiceInfo {
         return stackIntercept<MangaSetFavoriteRequest, MangaSetFavoriteResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: SetProgress
+     */
+    setProgress(input: MangaSetProgressRequest, options?: RpcOptions): UnaryCall<MangaSetProgressRequest, MangaSetProgressResponse> {
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        return stackIntercept<MangaSetProgressRequest, MangaSetProgressResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: UpdateCover
      */
     updateCover(input: MangaUpdateCoverRequest, options?: RpcOptions): UnaryCall<MangaUpdateCoverRequest, MangaUpdateCoverResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<MangaUpdateCoverRequest, MangaUpdateCoverResponse>("unary", this._transport, method, opt, input);
     }
     /**
@@ -116,28 +129,28 @@ export class MangaClient implements IMangaClient, ServiceInfo {
      * @generated from protobuf rpc: PageImage
      */
     pageImage(input: MangaPageImageRequest, options?: RpcOptions): UnaryCall<MangaPageImageRequest, MangaPageImageResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<MangaPageImageRequest, MangaPageImageResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: PageImageStream
      */
     pageImageStream(input: MangaPageImageRequest, options?: RpcOptions): ServerStreamingCall<MangaPageImageRequest, MangaPageImageStreamResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
         return stackIntercept<MangaPageImageRequest, MangaPageImageStreamResponse>("serverStreaming", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Repair
      */
     repair(input: MangaRepairRequest, options?: RpcOptions): UnaryCall<MangaRepairRequest, MangaRepairResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        const method = this.methods[8], opt = this._transport.mergeOptions(options);
         return stackIntercept<MangaRepairRequest, MangaRepairResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: Download
      */
     download(input: MangaDownloadRequest, options?: RpcOptions): ServerStreamingCall<MangaDownloadRequest, MangaDownloadResponse> {
-        const method = this.methods[8], opt = this._transport.mergeOptions(options);
+        const method = this.methods[9], opt = this._transport.mergeOptions(options);
         return stackIntercept<MangaDownloadRequest, MangaDownloadResponse>("serverStreaming", this._transport, method, opt, input);
     }
 }
