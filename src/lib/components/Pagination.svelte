@@ -41,7 +41,7 @@
 
 <div class="fixed bottom-10 inset-x-1/2 hidden md:flex">
 	<div class="join shadow-xl -translate-x-1/2">
-		<button class="join-item btn" onclick={() => goto(createLink(first).toString())}>
+		<button class="join-item btn" onclick={() => goto(createLink(0).toString())}>
 			<Icon data={firstPageIcon} />
 		</button>
 
@@ -58,7 +58,7 @@
 			<Icon data={customPageIcon} />
 		</button>
 
-		<button class="join-item btn" onclick={() => goto(createLink(last).toString())}>
+		<button class="join-item btn" onclick={() => goto(createLink(totalPage-1).toString())}>
 			<Icon data={lastPageIcon} />
 		</button>
 	</div>
