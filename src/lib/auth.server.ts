@@ -1,13 +1,13 @@
 import * as jose from 'jose'
 import { redirect, type Cookies } from '@sveltejs/kit'
-import { browseURL, loginUrl } from './routes'
+import { loginUrl } from './routes'
 import { variables } from './variables.server'
 import logger from '$lib/logger'
 
 const JWKS = variables.oidcEnable ? jose.createRemoteJWKSet(new URL(variables.oidcJWKS)) : null
 
 export async function validateSessionWithHeader(url: URL, request: Request) {
-    if(!variables.oidcEnable) {
+    if (!variables.oidcEnable) {
         return;
     }
 
@@ -22,7 +22,7 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
 
     const parts = authorization.split(' ')
     if (parts.length != 2) {
-        throw Error ("invalid authorization error")
+        throw Error("invalid authorization error")
     }
 
     const method = parts[0].trim()
@@ -38,6 +38,8 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
             audience: variables.oidcClient,
         })
 
+        logger.debug({ payload, protectedHeader }, "verify JWT token")
+
     } catch (err: any) {
         throw Error("invalid access token")
     }
@@ -46,19 +48,23 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
 
 export async function validateSession(url: URL, cookies: Cookies) {
     if (!variables.oidcEnable) {
+        logger.debug("OIDC not enable.")
         return;
     }
 
     if (!JWKS) {
+        logger.error("JWKS is missing")
         return
     }
+
+    logger.debug({ url, cookies }, "validate session")
 
     const idToken = cookies.get("idToken")
     const accessToken = cookies.get("accessToken")
 
     if (idToken == null || accessToken == null) {
-        logger.debug('token missing.')
-        
+        logger.debug({ idToken, accessToken }, 'token missing.')
+
         redirect(307, loginUrl(url.origin, "/"))
     }
 
@@ -68,6 +74,7 @@ export async function validateSession(url: URL, cookies: Cookies) {
             audience: variables.oidcClient,
         })
 
+        logger.debug({ payload, protectedHeader }, "verify JWT token")
     } catch (err: any) {
         logger.debug(err, 'validate JWT error')
         redirect(307, loginUrl(url.origin, url))
