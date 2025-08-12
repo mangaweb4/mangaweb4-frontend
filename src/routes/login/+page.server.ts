@@ -5,11 +5,11 @@ import { browseURL } from "$lib/routes";
 import logger from "$lib/logger";
 
 export const load: PageServerLoad = async ({ url, fetch }) => {
-    const target = url.searchParams.get('target')
+    const target = url.searchParams.get('target') ?? browseURL(url.origin).toString()
 
     if (!variables.oidcEnable) {
-        logger.debug("oidc not enable. redirect to browse page")
-        redirect(307, target ?? browseURL(url.origin))
+        logger.debug("OIDC not enable. redirect to browse page")
+        redirect(307, target)
     }
 
     const oidpUrl = new URL(variables.oidcAuth)
@@ -19,5 +19,6 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
     oidpUrl.searchParams.set('redirect_uri', new URL("/login/callback", url.origin).toString())
     oidpUrl.searchParams.set('state', target ?? browseURL(url.origin).toString())
 
+    logger.debug(oidpUrl, "OIDC login")
     redirect(307, oidpUrl)
 }
