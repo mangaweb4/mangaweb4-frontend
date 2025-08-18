@@ -37,6 +37,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
           flavor: |
             latest=true
+            prefix=bun,onlatest=true
 
       - name: Find Tag
         if: ${{ github.event_name == 'release' }}
