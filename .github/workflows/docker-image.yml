@@ -1,11 +1,11 @@
 # This is a basic workflow to help you get started with Actions
-name: docker-image
+name: docker-bun-image
 on:
   release:
     types: [published]
 
   push:
-    # branches: ["master"]
+    branches: ["master"]
 
 jobs:
   push_to_registry:
