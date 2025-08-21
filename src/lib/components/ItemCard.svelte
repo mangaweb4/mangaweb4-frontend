@@ -66,7 +66,7 @@
 	const READ_THRESHOLD = 95; // 5%
 </script>
 
-<div class="{borderCls} card bg-base-100 h-full shadow-xl" id={id.toString()}>
+<div class="{borderCls} card card-border border-2 bg-base-100 h-full shadow-xl" id={id.toString()}>
 	<div class="mt-0 mb-0">
 		{#if placeholder}
 			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
@@ -79,7 +79,8 @@
 				/>
 			</div>
 		{:else}
-			<a href={linkUrl?.toString()} aria-label={name} style="display:block; aspect-ratio: 1/1.414">
+			<a href={linkUrl?.toString()} aria-label={name}>
+			<div class="aspect-[1/1.414] relative">
 				{#if imageLoadErr}
 					<Icon
 						class="absolute place-self-center inset-1/2 fill-yellow-400 stroke-yellow-800"
@@ -90,7 +91,7 @@
 				{:else}
 					<img
 						bind:this={img}
-						class="h-full w-full"
+						class="h-full w-full rounded-t-[5px]"
 						alt={name}
 						loading="lazy"
 						src={imageUrl.toString()}
@@ -98,6 +99,7 @@
 						onerror={() => onImageError()}
 					/>
 				{/if}
+				</div>
 			</a>
 
 			<div class="absolute top-4 -right-2 grid grid-cols-1 gap-2 place-items-end">
