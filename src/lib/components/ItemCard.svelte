@@ -58,8 +58,13 @@
 
 	let img: HTMLImageElement | undefined = $state();
 	let imageLoadErr = $state(false);
+	let imageLoad = $state(false);
 	function onImageError() {
 		imageLoadErr = true;
+	}
+
+	function onImageLoad() {
+		imageLoad = true;
 	}
 
 	let progressPercent = $derived(((currentPage ?? 0) / (pageCount ?? 1)) * 100);
@@ -69,7 +74,7 @@
 <div class="{borderCls} card card-border border-2 bg-base-100 h-full shadow-xl" id={id.toString()}>
 	<div class="mt-0 mb-0">
 		{#if placeholder}
-			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
+			<div aria-label={name} class="aspect-ratio-[1/1.414]">
 				<Icon
 					class="absolute place-self-center inset-1/2"
 					data={placeholderThumbnail}
@@ -80,63 +85,66 @@
 			</div>
 		{:else}
 			<a href={linkUrl?.toString()} aria-label={name}>
-			<div class="aspect-[1/1.414] relative">
-				{#if imageLoadErr}
-					<Icon
-						class="absolute place-self-center inset-1/2 fill-yellow-400 stroke-yellow-800"
-						data={errorThumbnail}
-						width="180"
-						height="180"
-					/>
-				{:else}
+				<div class="aspect-[1/1.414] relative">
+					{#if imageLoadErr}
+						<Icon
+							class="absolute place-self-center inset-1/2 fill-yellow-400 stroke-yellow-800"
+							data={errorThumbnail}
+							width="180"
+							height="180"
+						/>
+					{:else if !imageLoad}
+						<div class="absolute place-self-center inset-1/2">
+							<span class="loading loading-bars loading-xl mx-auto my-auto"></span>
+						</div>
+					{/if}
 					<img
 						bind:this={img}
-						class="h-full w-full rounded-t-[5px]"
+						class="h-full w-full rounded-t-[5px] object-cover object-[25%_top]"
 						alt={name}
 						loading="lazy"
 						src={imageUrl.toString()}
-						style="object-fit: cover; object-position: 25% top"
 						onerror={() => onImageError()}
+						onload={() => onImageLoad()}
 					/>
-				{/if}
 				</div>
 			</a>
 
 			<div class="absolute top-4 -right-2 grid grid-cols-1 gap-2 place-items-end">
 				{#if favorite}
 					<div class="badge p-2 bg-pink-200 text-pink-800 border-pink-800">
-						<Icon data={favoriteIcon} class="fill-pink-400"/> Favorite
+						<Icon data={favoriteIcon} class="fill-pink-400" /> Favorite
 					</div>
 				{/if}
 
 				{#if favoriteTag}
 					<div class="badge p-2 bg-purple-200 text-purple-800 border-purple-800">
-						<Icon data={favoriteTagIcon} class="fill-purple-400"/> Favorite Tag
+						<Icon data={favoriteTagIcon} class="fill-purple-400" /> Favorite Tag
 					</div>
 				{/if}
 
 				{#if !isRead}
 					<div class="badge p-2 bg-yellow-200 text-yellow-800 border-yellow-800">
-						<Icon data={newIcon} class="fill-yellow-400"/> New
+						<Icon data={newIcon} class="fill-yellow-400" /> New
 					</div>
 				{:else}
 					<div class="badge p-2 bg-emerald-200 text-emerald-800 border-emerald-800">
 						{#if progressPercent < READ_THRESHOLD}
-							<Icon data={readingIcon} class="fill-emerald-400"/> {Math.round(progressPercent)}%
+							<Icon data={readingIcon} class="fill-emerald-400" /> {Math.round(progressPercent)}%
 						{:else}
-							<Icon data={readIcon} class="fill-emerald-400"/> Read
+							<Icon data={readIcon} class="fill-emerald-400" /> Read
 						{/if}
 					</div>
 				{/if}
 				{#if pageCount}
-					<div class="badge p-2 bg-blue-200 text-blue-800 border-blue-800 ">
-						<Icon data={pageCountIcon} class="fill-blue-400"/>
+					<div class="badge p-2 bg-blue-200 text-blue-800 border-blue-800">
+						<Icon data={pageCountIcon} class="fill-blue-400" />
 						{pageCount}p
 					</div>
 				{/if}
 				{#if itemCount}
-					<div class="badge p-2 bg-blue-200 text-blue-800 border-blue-800 ">
-						<Icon data={itemCountIcon} class="fill-blue-400"/>
+					<div class="badge p-2 bg-blue-200 text-blue-800 border-blue-800">
+						<Icon data={itemCountIcon} class="fill-blue-400" />
 						{itemCount}
 					</div>
 				{/if}
@@ -164,7 +172,7 @@
 			</div>
 		</div>
 		{#if accessTime != ''}
-			<div class="divider">Access time </div>
+			<div class="divider">Access time</div>
 			<div class="h-[2em] overflow-hidden">
 				{Intl.DateTimeFormat('en', {
 					year: 'numeric',
