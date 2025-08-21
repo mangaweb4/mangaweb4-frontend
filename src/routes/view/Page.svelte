@@ -1,31 +1,57 @@
 <script lang="ts">
+	import { Icon } from 'svelte-icon';
+	import errorIcon from '@mdi/svg/svg/alert-circle.svg?raw';
+
 	let { alt, src } = $props();
 
 	let img: HTMLImageElement;
 	let loading: 'lazy' | 'eager' = $state('lazy');
+	let loaded = $state(false);
+	let error = $state(false);
 	let retry = 0;
+
+	const MAX_RETRY = 10;
 
 	export function forceLoad() {
 		loading = 'eager';
 	}
 
 	function onImageError() {
-		setTimeout(() => {
-			let url = new URL(src);
-			url.searchParams.append('retry', retry.toString());
+		if (retry <= MAX_RETRY) {
+			setTimeout(() => {
+				let url = new URL(src);
+				url.searchParams.append('retry', retry.toString());
 
-			img.src = url.toString();
-			retry++;
-		}, 500);
+				img.src = url.toString();
+				retry++;
+			}, 500);
+		} else {
+			error = true;
+		}
+	}
+
+	function onImageLoad() {
+		loaded = true;
 	}
 </script>
 
-<img
-	class="w-full h-full"
-	{loading}
-	{alt}
-	src={src.toString()}
-	style="object-fit:contain;max-width:100%;max-height:100%"
-	onerror={() => onImageError()}
-	bind:this={img}
-/>
+<div class="relative w-full h-full">
+	<img
+		class="absolute w-full h-full object-contain max-w-full max-h-full"
+		{loading}
+		{alt}
+		src={src.toString()}
+		onerror={() => onImageError()}
+		onload={() => onImageLoad()}
+		bind:this={img}
+	/>
+	{#if !loaded}
+		<div class="absolute place-self-center inset-1/2">
+			<span class="loading loading-bars loading-xl mx-auto my-auto"></span>
+		</div>
+	{:else if error}
+		<div class="absolute place-self-center inset-1/2">
+			<Icon data={errorIcon} width="64" height="64" class="fill-error stroke-error" />
+		</div>
+	{/if}
+</div>
