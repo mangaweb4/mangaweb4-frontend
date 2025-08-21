@@ -41,8 +41,6 @@
 
 	let search = $state(data.request.search);
 
-	let navbarToggleOpen = $state(false);
-
 	let updated = $state(false);
 	let loadingDlg: LoadingDialog;
 
@@ -56,10 +54,6 @@
 
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
-
-	function handleUpdate(event: CustomEvent<boolean>) {
-		navbarToggleOpen = event.detail;
-	}
 
 	function createThumbnailUrl(name: string) {
 		const output = new URL('/api/tag/thumbnail', page.url.origin);
@@ -128,7 +122,7 @@
 	<Content>
 		<NavBar bind:showMenu title="Tag List" />
 
-		<div class="container mx-auto prose max-w-[1024px] mt-4">
+		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 				{#if !updated}
 					{#each { length: ITEM_PER_PAGE } as _, i}
@@ -224,8 +218,6 @@
 		</ul>
 	</SideBar>
 </Container>
-
-<div style="height: 100px;"></div>
 
 <Pagination currentPage={current_page} totalPage={total_page} />
 <MoveToTop />

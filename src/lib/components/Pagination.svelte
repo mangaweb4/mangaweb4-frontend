@@ -47,7 +47,9 @@
 
 		{#each pageNumbers as i}
 			<button
-				class="join-item btn {currentPage === i ? 'btn-active' : undefined}"
+				class="join-item btn"
+				class:btn-active={currentPage == i}
+				class:btn-primary={currentPage == i}
 				onclick={() => goto(createLink(i).toString())}
 			>
 				{i}

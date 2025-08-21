@@ -81,7 +81,7 @@
 					/>
 				</label>
 			</div>
-			<div class="my-5" style="position: relative; width:100%; height:500px;">
+			<div class="my-5 relative width-full h-[500px]">
 				<Cropper {image} bind:crop bind:zoom {aspect} oncropcomplete={onCropComplete} />
 			</div>
 
