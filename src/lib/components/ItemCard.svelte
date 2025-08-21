@@ -71,29 +71,26 @@
 		{#if placeholder}
 			<div aria-label={name} style="display:block; aspect-ratio: 1/1.414">
 				<Icon
-					class="card-img-top h-full"
+					class="absolute place-self-center inset-1/2"
 					data={placeholderThumbnail}
 					color="gray"
-					width="359"
-					height="510"
-					viewBox="0 -8 24 48"
+					width="180"
+					height="180"
 				/>
 			</div>
 		{:else}
 			<a href={linkUrl?.toString()} aria-label={name} style="display:block; aspect-ratio: 1/1.414">
 				{#if imageLoadErr}
 					<Icon
-						class="card-img-top h-full"
+						class="absolute place-self-center inset-1/2 fill-yellow-400 stroke-yellow-800"
 						data={errorThumbnail}
-						color="yellow"
-						width="359"
-						height="510"
-						viewBox="0 -8 24 48"
+						width="180"
+						height="180"
 					/>
 				{:else}
 					<img
 						bind:this={img}
-						class="card-img-top h-full mt-0 mb-0"
+						class="h-full w-full"
 						alt={name}
 						loading="lazy"
 						src={imageUrl.toString()}
@@ -118,7 +115,7 @@
 
 				{#if !isRead}
 					<div class="badge p-2 bg-yellow-200 text-yellow-800 border-yellow-800">
-						<Icon data={newIcon} /> New
+						<Icon data={newIcon} class="fill-yellow-400"/> New
 					</div>
 				{:else}
 					<div class="badge p-2 bg-emerald-200 text-emerald-800 border-emerald-800">
