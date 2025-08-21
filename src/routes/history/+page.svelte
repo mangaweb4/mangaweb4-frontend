@@ -58,7 +58,7 @@
 	<Content>
 		<NavBar bind:showMenu title="History"></NavBar>
 
-		<div class="container mx-auto prose max-w-[1024px] mt-4">
+		<div class="container mx-auto max-w-[1024px] mt-4">
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 				{#if !updated}
 					{#each { length: ITEM_PER_PAGE } as _, i}
