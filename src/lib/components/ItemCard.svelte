@@ -10,6 +10,7 @@
 	import placeholderThumbnail from '@mdi/svg/svg/minus-box.svg?raw';
 
 	import { Icon } from 'svelte-icon';
+	import { goto } from '$app/navigation';
 
 	interface Props {
 		favorite?: boolean;
@@ -104,8 +105,24 @@
 		{/if}
 	</div>
 	<div class="card-body">
-		<div class="h-[4em] overflow-hidden">
-			<a href={placeholder == true ? '' : linkUrl?.toString()}>{name}</a>
+		<div class="tooltip">
+			<div class="tooltip-content mono">
+				{name}
+			</div>
+			<div class="h-[4em] overflow-hidden">
+				<div>
+					<button
+						class="link link-hover"
+						onclick={() => {
+							if (!placeholder && linkUrl) goto(linkUrl);
+						}}
+					>
+						<div class="w-full h-full">
+							{name}
+						</div>
+					</button>
+				</div>
+			</div>
 		</div>
 		{#if accessTime != ''}
 			<div class="h-[2em] overflow-hidden">
