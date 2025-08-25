@@ -39,6 +39,20 @@ export interface MaintenanceUpdateLibraryResponse {
      */
     isSuccess: boolean;
 }
+/**
+ * @generated from protobuf message MaintenancePopulateTagsRequest
+ */
+export interface MaintenancePopulateTagsRequest {
+}
+/**
+ * @generated from protobuf message MaintenancePopulateTagsResponse
+ */
+export interface MaintenancePopulateTagsResponse {
+    /**
+     * @generated from protobuf field: bool IsSuccess = 1
+     */
+    isSuccess: boolean;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class MaintenancePurgeCacheRequest$Type extends MessageType<MaintenancePurgeCacheRequest> {
     constructor() {
@@ -209,10 +223,96 @@ class MaintenanceUpdateLibraryResponse$Type extends MessageType<MaintenanceUpdat
  * @generated MessageType for protobuf message MaintenanceUpdateLibraryResponse
  */
 export const MaintenanceUpdateLibraryResponse = new MaintenanceUpdateLibraryResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MaintenancePopulateTagsRequest$Type extends MessageType<MaintenancePopulateTagsRequest> {
+    constructor() {
+        super("MaintenancePopulateTagsRequest", []);
+    }
+    create(value?: PartialMessage<MaintenancePopulateTagsRequest>): MaintenancePopulateTagsRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<MaintenancePopulateTagsRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MaintenancePopulateTagsRequest): MaintenancePopulateTagsRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MaintenancePopulateTagsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message MaintenancePopulateTagsRequest
+ */
+export const MaintenancePopulateTagsRequest = new MaintenancePopulateTagsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MaintenancePopulateTagsResponse$Type extends MessageType<MaintenancePopulateTagsResponse> {
+    constructor() {
+        super("MaintenancePopulateTagsResponse", [
+            { no: 1, name: "IsSuccess", kind: "scalar", jsonName: "IsSuccess", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<MaintenancePopulateTagsResponse>): MaintenancePopulateTagsResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.isSuccess = false;
+        if (value !== undefined)
+            reflectionMergePartial<MaintenancePopulateTagsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MaintenancePopulateTagsResponse): MaintenancePopulateTagsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool IsSuccess */ 1:
+                    message.isSuccess = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MaintenancePopulateTagsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool IsSuccess = 1; */
+        if (message.isSuccess !== false)
+            writer.tag(1, WireType.Varint).bool(message.isSuccess);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message MaintenancePopulateTagsResponse
+ */
+export const MaintenancePopulateTagsResponse = new MaintenancePopulateTagsResponse$Type();
 /**
  * @generated ServiceType for protobuf service Maintenance
  */
 export const Maintenance = new ServiceType("Maintenance", [
     { name: "PurgeCache", options: {}, I: MaintenancePurgeCacheRequest, O: MaintenancePurgeCacheResponse },
-    { name: "UpdateLibrary", options: {}, I: MaintenanceUpdateLibraryRequest, O: MaintenanceUpdateLibraryResponse }
+    { name: "UpdateLibrary", options: {}, I: MaintenanceUpdateLibraryRequest, O: MaintenanceUpdateLibraryResponse },
+    { name: "PopulateTags", options: {}, I: MaintenancePopulateTagsRequest, O: MaintenancePopulateTagsResponse }
 ]);
