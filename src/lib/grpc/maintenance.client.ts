@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { Maintenance } from "./maintenance";
+import type { MaintenancePopulateTagsResponse } from "./maintenance";
+import type { MaintenancePopulateTagsRequest } from "./maintenance";
 import type { MaintenanceUpdateLibraryResponse } from "./maintenance";
 import type { MaintenanceUpdateLibraryRequest } from "./maintenance";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -23,6 +25,10 @@ export interface IMaintenanceClient {
      * @generated from protobuf rpc: UpdateLibrary
      */
     updateLibrary(input: MaintenanceUpdateLibraryRequest, options?: RpcOptions): UnaryCall<MaintenanceUpdateLibraryRequest, MaintenanceUpdateLibraryResponse>;
+    /**
+     * @generated from protobuf rpc: PopulateTags
+     */
+    populateTags(input: MaintenancePopulateTagsRequest, options?: RpcOptions): UnaryCall<MaintenancePopulateTagsRequest, MaintenancePopulateTagsResponse>;
 }
 /**
  * @generated from protobuf service Maintenance
@@ -46,5 +52,12 @@ export class MaintenanceClient implements IMaintenanceClient, ServiceInfo {
     updateLibrary(input: MaintenanceUpdateLibraryRequest, options?: RpcOptions): UnaryCall<MaintenanceUpdateLibraryRequest, MaintenanceUpdateLibraryResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
         return stackIntercept<MaintenanceUpdateLibraryRequest, MaintenanceUpdateLibraryResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: PopulateTags
+     */
+    populateTags(input: MaintenancePopulateTagsRequest, options?: RpcOptions): UnaryCall<MaintenancePopulateTagsRequest, MaintenancePopulateTagsResponse> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        return stackIntercept<MaintenancePopulateTagsRequest, MaintenancePopulateTagsResponse>("unary", this._transport, method, opt, input);
     }
 }

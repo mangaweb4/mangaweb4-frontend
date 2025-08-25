@@ -52,6 +52,20 @@
 		toast.add('Purging cache in progress. Please refresh after a few minutes.', 'info');
 	}
 
+	function confirmPopulateTags() {
+		confirm.show(
+			'Repopulate tags',
+			'Tags list will be updated. This will take sometime. Do you still wants to perform?',
+			populateTags
+		);
+	}
+
+	async function populateTags() {
+		const url = new URL('/api/maintenance/populate_tags', page.url.origin);
+		await fetch(url);
+		toast.add('Re-populate tags in progress. Please refresh after a few minutes.', 'info');
+	}
+
 	let showMenu = $state(false);
 </script>
 
@@ -111,7 +125,15 @@
 							<td class="align-middle"> Update library </td>
 							<td>
 								<button class="btn btn-warning" onclick={() => confirmUpdateLibrary()}>
-									<Icon data={goIcon} />&nbsp;Run
+									<Icon data={goIcon} class="fill-red-400 stroke-red-800" />&nbsp;Run
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td class="align-middle"> Repopulate tags </td>
+							<td>
+								<button class="btn btn-warning" onclick={() => confirmPopulateTags()}>
+									<Icon data={goIcon} class="fill-red-400 stroke-red-800" />&nbsp;Run
 								</button>
 							</td>
 						</tr>
@@ -119,7 +141,7 @@
 							<td class="align-middle"> Purge caches </td>
 							<td>
 								<button class="btn btn-warning" onclick={() => confirmPurgeCache()}>
-									<Icon data={goIcon} />&nbsp;Run
+									<Icon data={goIcon} class="fill-red-400 stroke-red-800" />&nbsp;Run
 								</button>
 							</td>
 						</tr>
