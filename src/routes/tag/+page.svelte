@@ -23,6 +23,8 @@
 	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
 	import favoriteIcon from '@mdi/svg/svg/file-star.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
+	import lastUpdateIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
+
 	import BottomNav from '$lib/components/BottomNav.svelte';
 
 	interface Props {
@@ -65,7 +67,7 @@
 	function createTagListUrl(options?: {
 		filter?: Filter.UNKNOWN | Filter.FAVORITE_TAGS;
 		order?: SortOrder;
-		sort?: SortField.NAME | SortField.ITEMCOUNT;
+		sort?: SortField.NAME | SortField.ITEMCOUNT | SortField.LAST_UPDATE;
 		search?: string;
 		page?: number;
 		item_per_page?: number;
@@ -172,9 +174,18 @@
 			<li>
 				<button
 					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
-					onclick={() => goto(createTagListUrl({ sort: SortField.ITEMCOUNT }))}
+					onclick={() => goto(createTagListUrl({ sort: SortField.ITEMCOUNT, order: SortOrder.DESCENDING }))}
 				>
 					<Icon data={itemCountIcon} /> Item count
+				</button>
+			</li>
+
+			<li>
+				<button
+					class={sort == SortField.LAST_UPDATE ? 'menu-active' : ''}
+					onclick={() => goto(createTagListUrl({ sort: SortField.LAST_UPDATE, order: SortOrder.DESCENDING }))}
+				>
+					<Icon data={lastUpdateIcon} /> Last update
 				</button>
 			</li>
 
