@@ -9,7 +9,7 @@
 <div class="card bg-base-100 h-full shadow-xl">
 	<div class="mt-0 mb-0">
 		<div class="aspect-[1/1.414] relative">
-			<div class="absolute place-self-center inset-1/2 skeleton h-4 w-full h-full"></div>
+			<div class="absolute place-self-center skeleton top-0 start-0 w-full h-full"></div>
 		</div>
 	</div>
 	<div class="card-body">
