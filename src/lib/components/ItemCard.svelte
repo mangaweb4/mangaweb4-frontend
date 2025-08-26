@@ -7,7 +7,7 @@
 	import pageCountIcon from '@mdi/svg/svg/file.svg?raw';
 	import itemCountIcon from '@mdi/svg/svg/bookshelf.svg?raw';
 	import errorThumbnail from '@mdi/svg/svg/alert-box.svg?raw';
-	import placeholderThumbnail from '@mdi/svg/svg/minus-box.svg?raw';
+	import dummyThumbnail from '@mdi/svg/svg/minus-box.svg?raw';
 
 	import { Icon } from 'svelte-icon';
 	import { goto } from '$app/navigation';
@@ -22,43 +22,42 @@
 		itemCount?: number;
 		linkUrl?: string | URL;
 		imageUrl?: string | URL;
-		accessTime?: number | string | Date;
-		placeholder?: boolean;
+		accessTime?: number | boolean | string | Date;
+		dummy?: boolean;
 		currentPage?: number;
 	}
 
 	let {
 		favorite = false,
-		isRead = false,
+		isRead = true,
 		favoriteTag = false,
 		id = '',
 		name = '',
-		pageCount,
-		itemCount,
-		linkUrl,
+		pageCount = 0,
+		itemCount = 0,
+		linkUrl = '',
 		imageUrl = '',
-		accessTime = '',
-		placeholder,
-		currentPage
+		accessTime = false,
+		dummy = false,
+		currentPage = 0
 	}: Props = $props();
 
-	let borderCls = $state('');
-
-	if (placeholder) {
-		borderCls = '';
-	} else if (!isRead) {
-		borderCls = 'border border-2 border-yellow-500';
-	} else if (favorite) {
-		borderCls = 'border border-2 border-pink-500';
-	} else if (favoriteTag) {
-		borderCls = 'border border-2 border-purple-500';
-	} else {
-		borderCls = '';
-	}
+	let borderCls = $derived.by(() => {
+		if (!isRead) {
+			return 'border border-2 border-yellow-500';
+		} else if (favorite) {
+			return 'border border-2 border-pink-500';
+		} else if (favoriteTag) {
+			return 'border border-2 border-purple-500';
+		} else {
+			return '';
+		}
+	});
 
 	let img: HTMLImageElement | undefined = $state();
 	let imageLoadErr = $state(false);
 	let imageLoad = $state(false);
+	
 	function onImageError() {
 		imageLoadErr = true;
 	}
@@ -72,18 +71,34 @@
 </script>
 
 <div class="{borderCls} card card-border border-2 bg-base-100 h-full shadow-xl" id={id.toString()}>
-	<div class="mt-0 mb-0">
-		{#if placeholder}
+	{#if dummy}
+		<div class="mt-0 mb-0 h-full">
 			<div aria-label={name} class="aspect-ratio-[1/1.414]">
-				<Icon
-					class="absolute place-self-center inset-1/2"
-					data={placeholderThumbnail}
-					color="gray"
-					width="180"
-					height="180"
-				/>
+				<Icon class="mx-auto mt-18" data={dummyThumbnail} color="gray" width="180" height="180" />
 			</div>
-		{:else}
+		</div>
+		<div class="card-body">
+			<div class="h-32">
+				<div>
+					<button
+						class="link link-hover"
+						onclick={() => {
+							if (!dummy && linkUrl) goto(linkUrl);
+						}}
+					>
+						<div class="w-full h-full">
+							{name}
+						</div>
+					</button>
+				</div>
+			</div>
+			{#if accessTime == true}
+				<div class="divider"></div>
+				<div class="h-[2em] overflow-hidden"></div>
+			{/if}
+		</div>
+	{:else}
+		<div class="mt-0 mb-0">
 			<a href={linkUrl?.toString()} aria-label={name}>
 				<div class="aspect-[1/1.414] relative">
 					{#if imageLoadErr}
@@ -127,7 +142,7 @@
 					<div class="badge p-2 bg-yellow-200 text-yellow-800 border-yellow-800">
 						<Icon data={newIcon} class="fill-yellow-400" /> New
 					</div>
-				{:else}
+				{:else if pageCount != 0}
 					<div class="badge p-2 bg-emerald-200 text-emerald-800 border-emerald-800">
 						{#if progressPercent < READ_THRESHOLD}
 							<Icon data={readingIcon} class="fill-emerald-400" /> {Math.round(progressPercent)}%
@@ -149,41 +164,41 @@
 					</div>
 				{/if}
 			</div>
-		{/if}
-	</div>
-	<div class="card-body">
-		<div class="tooltip">
-			<div class="tooltip-content">
-				{name}
-			</div>
-			<div class="h-32 overflow-hidden">
-				<div>
-					<button
-						class="link link-hover"
-						onclick={() => {
-							if (!placeholder && linkUrl) goto(linkUrl);
-						}}
-					>
-						<div class="w-full h-full">
-							{name}
-						</div>
-					</button>
+		</div>
+		<div class="card-body">
+			<div class="tooltip">
+				<div class="tooltip-content">
+					{name}
+				</div>
+				<div class="h-32 overflow-hidden">
+					<div>
+						<button
+							class="link link-hover"
+							onclick={() => {
+								if (!dummy && linkUrl) goto(linkUrl);
+							}}
+						>
+							<div class="w-full h-full">
+								{name}
+							</div>
+						</button>
+					</div>
 				</div>
 			</div>
+			{#if typeof accessTime != 'boolean'}
+				<div class="divider">Access time</div>
+				<div class="h-[2em] overflow-hidden">
+					{Intl.DateTimeFormat('en', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric',
+						hour: 'numeric',
+						minute: 'numeric',
+						second: 'numeric',
+						timeZoneName: 'short'
+					}).format(new Date(accessTime))}
+				</div>
+			{/if}
 		</div>
-		{#if accessTime != ''}
-			<div class="divider">Access time</div>
-			<div class="h-[2em] overflow-hidden">
-				{Intl.DateTimeFormat('en', {
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric',
-					hour: 'numeric',
-					minute: 'numeric',
-					second: 'numeric',
-					timeZoneName: 'short'
-				}).format(new Date(accessTime))}
-			</div>
-		{/if}
-	</div>
+	{/if}
 </div>
