@@ -198,7 +198,7 @@
 						/>
 					{/each}
 					{#each { length: ITEM_PER_PAGE - items.length } as _, i}
-						<ItemCard placeholder={true} />
+						<ItemCard dummy={true} />
 					{/each}
 				{/if}
 			</div>
