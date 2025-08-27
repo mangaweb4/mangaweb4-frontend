@@ -14,7 +14,7 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar title="Error" bind:showMenu />
+		<NavBar bind:showMenu><div class="text-xl">Error</div></NavBar>
 		<div class="container mx-auto prose max-w-[1024px] mt-4">
 			<div role="alert" class="alert alert-error">
 				<Icon data={icon} />&nbsp;An error has occured.

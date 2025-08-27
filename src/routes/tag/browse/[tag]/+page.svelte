@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { browseURL, viewURL } from '$lib/routes';
+	import { browseTagURL, browseURL, viewURL } from '$lib/routes';
 	import type { PageData } from './$types';
 
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
@@ -25,9 +25,12 @@
 	import favoriteTagsIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
-	import pageCountIcon from '@mdi/svg/svg/book-open-page-variant.svg?raw';
+	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
-	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw'
+	import isTagFavoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
+	import isTagNotFavoriteIcon from '@mdi/svg/svg/tag-heart-outline.svg?raw';
+	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw';
+
 
 	let toast: Toast;
 
@@ -37,7 +40,11 @@
 
 	let { data }: Props = $props();
 
-	let filter = $derived(data.request.filter);
+	let { order, page: pageIndex, search, sort, tag, filter } = $derived(data.request);
+
+	let favoriteTag = $state(data.response.tagFavorite);
+	let totalPage = $derived(data.response.totalPage);
+
 	let items = $derived.by(() =>
 		data.response.items.map((i) => {
 			return {
@@ -46,19 +53,13 @@
 				id: i.id,
 				name: i.name,
 				pageCount: i.pageCount,
-				favoriteTag: i.hasFavoriteTag,
+				favoriteTag: i.hasFavoriteTag || favoriteTag,
 				imageUrl: createThumbnailUrl(i.name),
 				linkUrl: viewURL(page.url, i.name),
 				currentPage: i.currentPage
 			};
 		})
 	);
-	let order = $derived(data.request.order);
-	let pageIndex = $derived(data.request.page);
-	let search = $state(data.request.search);
-	let sort = $derived(data.request.sort);
-
-	let totalPage = $derived(data.response.totalPage);
 
 	let updated = $state(false);
 	let loadingDlg: LoadingDialog;
@@ -94,7 +95,7 @@
 			tag: data.request.tag
 		};
 		if (options != null) {
-			const { filter, item_per_page, order, page, search, sort } = options;
+			const { filter, item_per_page, order, page, search, sort, tag } = options;
 			if (filter != null) {
 				callOptions.filter = filter;
 			}
@@ -114,6 +115,9 @@
 
 			if (sort != null) {
 				callOptions.sort = sort;
+			}
+			if (tag != null) {
+				callOptions.tag = tag;
 			}
 		}
 
@@ -145,6 +149,24 @@
 		return createBrowseURL(options);
 	}
 
+	async function onTagFavorite() {
+		const url = new URL('/api/tag/set_favorite', page.url.origin);
+
+		url.searchParams.set('name', tag);
+		url.searchParams.set('favorite', !favoriteTag ? 'true' : 'false');
+
+		const resp = await fetch(url, { method: 'GET' });
+		const json = await resp.json();
+
+		if (json.favorite) {
+			toast.add(`The tag "${tag}" is now your favorite.`, 'success');
+		} else {
+			toast.add(`The tag "${tag}" is no longer your favorite.`, 'success');
+		}
+
+		favoriteTag = json.favorite;
+	}
+
 	function createThumbnailUrl(name: string): URL {
 		const u = new URL('/api/manga/thumbnail', page.url);
 		u.searchParams.set('name', name);
@@ -156,21 +178,44 @@
 </script>
 
 <svelte:head>
-	<title>Browse</title>
+	<title>Tag: {tag}</title>
 </svelte:head>
 
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
-			<div class="text-xl">Browse</div>
+			<div class="text-xl hidden md:inline">
+				<div class="whitespace-nowrap">Tag: {tag}</div>
+			</div>
 		</NavBar>
-
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
 			<ItemCardGrid bind:items bind:updated />
 		</div>
 	</Content>
 	<SideBar bind:showMenu>
 		<ul class="menu">
+			<li class="text">
+				<div class="tooltip tooltip-left mb-2" data-tip={tag}>
+					<div class="h-20 overflow-hidden text-xl">
+						{tag}
+					</div>
+				</div>
+			</li>
+			<li>
+				<button
+					class="btn btn-soft"
+					class:bg-purple-200={favoriteTag}
+					class:text-purple-800={favoriteTag}
+					onclick={() => onTagFavorite()}
+				>
+					{#if favoriteTag}
+						<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" /> Favorite
+					{:else}
+						<Icon data={isTagNotFavoriteIcon} /> Favorite
+					{/if}
+				</button>
+			</li>
+
 			<li class="menu-title">Search</li>
 			<li>
 				<div class="join gap-0">
@@ -179,14 +224,14 @@
 						class="btn join-item"
 						onclick={() => {
 							search = '';
-							goto(browseURL(page.url.origin));
+							goto(browseTagURL(page.url.origin, tag));
 						}}
 					>
 						<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
 					</button>
 					<button
 						class="btn join-item"
-						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
+						onclick={() => goto(browseTagURL(page.url.origin, tag, { search: search }))}
 					>
 						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
 					</button>

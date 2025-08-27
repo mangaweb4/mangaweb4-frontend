@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '$lib/app.css';
+	import '$lib/assets/app.css';
 
 	import { pwaInfo } from 'virtual:pwa-info';
 	import { pwaAssetsHead } from 'virtual:pwa-assets/head';

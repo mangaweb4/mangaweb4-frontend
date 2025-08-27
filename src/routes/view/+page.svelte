@@ -1,13 +1,12 @@
 <script lang="ts">
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
-	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
 	import ImageViewer from './Viewer.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 
-	import { browseURL } from '$lib/routes';
+	import { browseTagURL } from '$lib/routes';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import type { PageData } from './$types';
@@ -20,6 +19,9 @@
 	import tagIcon from '@mdi/svg/svg/tag.svg?raw';
 	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
 	import logger from '$lib/logger';
+	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
+	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
+	import path from 'path-browserify';
 
 	let current = $state(0);
 	let viewer: ImageViewer;
@@ -123,11 +125,10 @@
 		url.searchParams.set('name', name);
 
 		try {
-			fetch(url)
-		} catch(err: any) {
-			logger.error(err, "error during update progress.")
+			fetch(url);
+		} catch (err: any) {
+			logger.error(err, 'error during update progress.');
 		}
-
 	}
 
 	let showMenu = $state(false);
@@ -140,7 +141,11 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu title="View"></NavBar>
+		<NavBar bind:showMenu>
+			<div class="text-xl hidden md:inline">
+				<div class=" whitespace-nowrap">{path.basename(name)}</div>
+			</div>
+		</NavBar>
 		<div class="fixed top-18 bottom-0 start-0 end-0">
 			<ImageViewer
 				imageURLs={createImageUrls(name, pageCount)}
@@ -155,7 +160,7 @@
 			<li class="text">
 				<div class="tooltip tooltip-left" data-tip={name}>
 					<div class="h-20 overflow-hidden">
-						{name.length > 60 ? `${name.substring(0, 55)}...` : name}
+						{name}
 					</div>
 				</div>
 			</li>
@@ -166,20 +171,29 @@
 						aboutDialog.showModal();
 					}}
 				>
-					<Icon data={infoIcon} /> Information
+					<Icon data={infoIcon} class="fill-slate-400 stroke-slate-800" /> Information
 				</button>
 			</li>
 			<li>
-				<FavoriteButton onclick={() => toggleFavorite()} isFavorite={favorite}>
-					Favorite
-				</FavoriteButton>
+				<button
+					class="btn btn-soft"
+					class:bg-pink-200={favorite}
+					class:text-pink-800={favorite}
+					onclick={() => toggleFavorite()}
+				>
+					{#if favorite}
+						<Icon data={isFavoriteIcon} class="stroke-pink-800 fill-pink-400"/> Favorite
+					{:else}
+						<Icon data={isNotFavoriteIcon} /> Favorite
+					{/if}
+				</button>
 			</li>
 
 			<li class="menu-title">Tags</li>
 			{#each tags as t}
 				<li>
-					<button onclick={() => goto(browseURL(page.url, { tag: t.name }))}>
-						<Icon data={tagIcon} />
+					<button onclick={() => goto(browseTagURL(page.url, t.name))}>
+						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
 						{t.name}
 					</button>
 				</li>
@@ -188,25 +202,25 @@
 			<li class="menu-title">Tools</li>
 			<li>
 				<button onclick={() => downloadPage()}>
-					<Icon data={downloadPageIcon} /> Download current page
+					<Icon data={downloadPageIcon} class="fill-slate-400 stroke-slate-800" /> Download current page
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => downloadManga()}>
-					<Icon data={downloadIcon} /> Download
+					<Icon data={downloadIcon} class="fill-slate-400 stroke-slate-800" /> Download
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => changeThumbnail()}>
-					<Icon data={thumbnailIcon} /> Change thumbnail
+					<Icon data={thumbnailIcon} class="fill-slate-400 stroke-slate-800" /> Change thumbnail
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => fixMetaData()}>
-					<Icon data={fixIcon} /> Fix item metadata
+					<Icon data={fixIcon} class="fill-slate-400 stroke-slate-800" /> Fix item metadata
 				</button>
 			</li>
 		</ul>

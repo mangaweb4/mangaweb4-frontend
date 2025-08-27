@@ -1,10 +1,10 @@
 <script lang="ts">
-	import favoriteIcon from '@mdi/svg/svg/star.svg?raw';
-	import favoriteTagIcon from '@mdi/svg/svg/tag.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/heart.svg?raw';
+	import favoriteTagIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import newIcon from '@mdi/svg/svg/alert-decagram.svg?raw';
 	import readingIcon from '@mdi/svg/svg/book-open-variant.svg?raw';
 	import readIcon from '@mdi/svg/svg/check.svg?raw';
-	import pageCountIcon from '@mdi/svg/svg/file.svg?raw';
+	import pageCountIcon from '@mdi/svg/svg/book-open-page-variant.svg?raw';
 	import itemCountIcon from '@mdi/svg/svg/bookshelf.svg?raw';
 	import errorThumbnail from '@mdi/svg/svg/alert-box.svg?raw';
 	import dummyThumbnail from '@mdi/svg/svg/minus-box.svg?raw';

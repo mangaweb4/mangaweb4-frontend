@@ -2,7 +2,7 @@
 	let { showMenu = $bindable(false), children } = $props();
 </script>
 
-<div class="drawer drawer-end">
+<div class="drawer-end">
 	<input type="checkbox" class="drawer-toggle" bind:checked={showMenu} />
 	{@render children?.()}
 </div>

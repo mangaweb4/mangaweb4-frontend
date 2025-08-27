@@ -106,6 +106,46 @@ export function browseURL(base: URL | string, options?: {
     return output;
 }
 
+
+export function browseTagURL(base: URL | string, tag: string, options?: {
+    user?: string;
+    filter?: Filter;
+    item_per_page?: number;
+    order?: SortOrder;
+    page?: number;
+    search?: string;
+    sort?: SortField;
+}): URL {
+    const output = new URL(`/tag/browse/${encodeURIComponent(tag)}`, base);
+
+    if (options != null) {
+        const { filter, item_per_page, order, page, search, sort } = options;
+
+        if (filter != null) {
+            output.searchParams.set('filter', $enum(Filter).getKeyOrDefault(filter, "UNKNOWN"));
+        }
+        if (item_per_page != null) {
+            output.searchParams.set('item_per_page', `${item_per_page}`);
+        }
+        if (order != null) {
+            output.searchParams.set('order', $enum(SortOrder).getKeyOrDefault(order, "ASCENDING"));
+        }
+        if (page != null) {
+            output.searchParams.set('page', `${page}`);
+        }
+
+        if (search != null) {
+            output.searchParams.set('search', search);
+        }
+
+        if (sort != null) {
+            output.searchParams.set('sort', $enum(SortField).getKeyOrDefault(sort, "NAME"));
+        }
+    }
+
+    return output;
+}
+
 export function loginUrl(baseUrl: URL | string, targetUrl: URL | string) {
     const target = targetUrl.toString().substring(baseUrl.toString().length + 1)
 
