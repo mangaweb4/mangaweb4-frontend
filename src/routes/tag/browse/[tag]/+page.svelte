@@ -38,6 +38,11 @@
 
 	let { data }: Props = $props();
 
+	let { order, page: pageIndex, search, sort, tag, filter } = $derived(data.request);
+
+	let favoriteTag = $state(data.response.tagFavorite);
+	let totalPage = $derived(data.response.totalPage);
+
 	let items = $derived.by(() =>
 		data.response.items.map((i) => {
 			return {
@@ -46,17 +51,13 @@
 				id: i.id,
 				name: i.name,
 				pageCount: i.pageCount,
-				favoriteTag: i.hasFavoriteTag,
+				favoriteTag: i.hasFavoriteTag || favoriteTag,
 				imageUrl: createThumbnailUrl(i.name),
 				linkUrl: viewURL(page.url, i.name),
 				currentPage: i.currentPage
 			};
 		})
 	);
-	let { order, page: pageIndex, search, sort, tag, filter } = $derived(data.request);
-
-	let tag_favorite = $state(data.response.tagFavorite);
-	let totalPage = $derived(data.response.totalPage);
 
 	let updated = $state(false);
 	let loadingDlg: LoadingDialog;
@@ -150,7 +151,7 @@
 		const url = new URL('/api/tag/set_favorite', page.url.origin);
 
 		url.searchParams.set('name', tag);
-		url.searchParams.set('favorite', !tag_favorite ? 'true' : 'false');
+		url.searchParams.set('favorite', !favoriteTag ? 'true' : 'false');
 
 		const resp = await fetch(url, { method: 'GET' });
 		const json = await resp.json();
@@ -161,7 +162,7 @@
 			toast.add(`The tag "${tag}" is no longer your favorite.`, 'success');
 		}
 
-		tag_favorite = json.favorite;
+		favoriteTag = json.favorite;
 	}
 
 	function createThumbnailUrl(name: string): URL {
@@ -201,11 +202,11 @@
 			<li>
 				<button
 					class="btn btn-soft"
-					class:bg-purple-200={tag_favorite}
-					class:text-purple-800={tag_favorite}
+					class:bg-purple-200={favoriteTag}
+					class:text-purple-800={favoriteTag}
 					onclick={() => onTagFavorite()}
 				>
-					{#if tag_favorite}
+					{#if favoriteTag}
 						<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" /> Favorite
 					{:else}
 						<Icon data={isTagNotFavoriteIcon} /> Favorite
