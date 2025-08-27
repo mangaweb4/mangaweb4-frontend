@@ -22,7 +22,7 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar title="User" bind:showMenu />
+		<NavBar bind:showMenu ><div class="text-xl">User</div></NavBar>
 		<div class="container mx-auto prose max-w-[1024px] mt-4">
 			<div class="avatar">
 				<div class="rounded-full">

@@ -4,7 +4,7 @@
 	import logo from '$lib/assets/logo.svg?raw';
 	import { browseURL } from '$lib/routes';
 	import { page } from '$app/state';
-	let { title, showMenu = $bindable(), hasmenu = true } = $props();
+	let { children = undefined, showMenu = $bindable(), hasmenu = true } = $props();
 </script>
 
 <div class="navbar bg-base-100 shadow-sm sticky top-0 z-1">
@@ -13,7 +13,7 @@
 			<a href={browseURL(page.url).toString()}><Icon data={logo} width="128px" height="48px" /></a>
 		</div>
 		<div class="flex-1 m-2">
-			<div class="text-xl">{title}</div>
+			{@render children?.()}
 		</div>
 		<div class="flex-none">
 			{#if hasmenu}

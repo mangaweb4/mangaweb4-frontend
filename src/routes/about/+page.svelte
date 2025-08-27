@@ -75,7 +75,9 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar title="About" bind:showMenu />
+		<NavBar bind:showMenu >
+			<div class="text-xl">About</div>
+		</NavBar>
 
 		<div class="container mx-auto prose max-w-[1024px] mt-4">
 			<h1>MangaWeb 4</h1>

@@ -27,8 +27,8 @@
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
-	import isTagFavoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw'
-	import isTagNotFavoriteIcon from '@mdi/svg/svg/tag-heart-outline.svg?raw'
+	import isTagFavoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
+	import isTagNotFavoriteIcon from '@mdi/svg/svg/tag-heart-outline.svg?raw';
 
 	let toast: Toast;
 
@@ -180,7 +180,9 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu title="Tag: {tag.length > 60 ? `${tag.substring(0, 55)}...` : tag}" />
+		<NavBar bind:showMenu>
+			<div class="text-xl overflow">Tag: {tag}</div>
+		</NavBar>
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
 			<ItemCardGrid bind:items bind:updated />
 		</div>

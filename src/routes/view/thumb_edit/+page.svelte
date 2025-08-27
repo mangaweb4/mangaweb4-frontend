@@ -66,7 +66,7 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu title="Edit thumbnail"></NavBar>
+		<NavBar bind:showMenu><div class="text-xl">Edit thumbnail</div></NavBar>
 		<div class="container mx-auto prose max-w-[1024px] mt-4">
 			<h2>{name}</h2>
 			<div>

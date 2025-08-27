@@ -160,10 +160,9 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar
-			bind:showMenu
-			title="Browse"
-		/>
+		<NavBar bind:showMenu>
+			<div class="text-xl">Browse</div>
+		</NavBar>
 
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
 			<ItemCardGrid bind:items bind:updated />
@@ -179,7 +178,7 @@
 						class="btn join-item"
 						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
 					>
-						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800"/>
+						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
 					</button>
 				</div>
 			</li>
@@ -190,7 +189,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
 				>
-					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800"/> Title
+					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
 				</button>
 			</li>
 
@@ -199,7 +198,7 @@
 					class={sort == SortField.CREATION_TIME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
 				>
-					<Icon data={creationTimeIcon} class="fill-slate-400 stroke-slate-800"/> Creation time
+					<Icon data={creationTimeIcon} class="fill-slate-400 stroke-slate-800" /> Creation time
 				</button>
 			</li>
 
@@ -208,7 +207,7 @@
 					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
 				>
-					<Icon data={pageCountIcon} class="fill-slate-400 stroke-slate-800"/> Page Count
+					<Icon data={pageCountIcon} class="fill-slate-400 stroke-slate-800" /> Page Count
 				</button>
 			</li>
 
@@ -218,7 +217,7 @@
 					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.ASCENDING }))}
 				>
-					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800"/> Ascending
+					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800" /> Ascending
 				</button>
 			</li>
 
@@ -227,7 +226,7 @@
 					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800"/> Descending
+					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800" /> Descending
 				</button>
 			</li>
 
@@ -237,7 +236,7 @@
 					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
 				>
-					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800"/> None
+					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800" /> None
 				</button>
 			</li>
 			<li>
@@ -245,7 +244,7 @@
 					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
 				>
-					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800"/> Favorite items
+					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800" /> Favorite items
 				</button>
 			</li>
 
@@ -254,7 +253,8 @@
 					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
 				>
-					<Icon data={favoriteTagsIcon} class="fill-slate-400 stroke-slate-800"/> Items with favorite tags
+					<Icon data={favoriteTagsIcon} class="fill-slate-400 stroke-slate-800" /> Items with favorite
+					tags
 				</button>
 			</li>
 		</ul>

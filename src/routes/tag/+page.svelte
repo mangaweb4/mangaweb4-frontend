@@ -129,8 +129,9 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu title="Tag List" />
-
+		<NavBar bind:showMenu >
+			<div class="text-xl">Tag list</div>
+		</NavBar>
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
 			<ItemCardGrid bind:items bind:updated accessTime={true} />
 		</div>

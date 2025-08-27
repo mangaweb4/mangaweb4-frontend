@@ -141,7 +141,9 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu title={path.basename(name)}></NavBar>
+		<NavBar bind:showMenu>
+			<div class="text-xl overflow whitespace-nowrap">{path.basename(name)}</div>
+		</NavBar>
 		<div class="fixed top-18 bottom-0 start-0 end-0">
 			<ImageViewer
 				imageURLs={createImageUrls(name, pageCount)}
