@@ -21,11 +21,11 @@
 	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
 	import creationTimeIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
 	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
-	import favoriteIcon from '@mdi/svg/svg/star.svg?raw';
-	import favoriteTagsIcon from '@mdi/svg/svg/tag-multiple.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/heart.svg?raw';
+	import favoriteTagsIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
-	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
+	import pageCountIcon from '@mdi/svg/svg/book-open-page-variant.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
 
 	let toast: Toast;
@@ -56,7 +56,6 @@
 	let pageIndex = $derived(data.request.page);
 	let search = $state(data.request.search);
 	let sort = $derived(data.request.sort);
-	let tag_favorite = $state(data.response.tagFavorite);
 
 	let totalPage = $derived(data.response.totalPage);
 
@@ -175,7 +174,7 @@
 			<li class="menu-title">Search</li>
 			<li>
 				<div class="join gap-0">
-					<input class="input join-item" placeholder="name, author" bind:value={search} />
+					<input class="input join-item" placeholder="title, author" bind:value={search} />
 					<button
 						class="btn join-item"
 						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
@@ -191,7 +190,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
 				>
-					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800"/> Name
+					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800"/> Title
 				</button>
 			</li>
 

@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import type { PageData } from './$types';
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
-	import { tagURL, browseURL, browseTagURL } from '$lib/routes';
+	import { tagURL, browseTagURL } from '$lib/routes';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 
 	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
@@ -15,10 +15,10 @@
 
 	import { Icon } from 'svelte-icon';
 	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
-	import itemCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
+	import itemCountIcon from '@mdi/svg/svg/book-multiple.svg?raw';
 	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
 	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
-	import favoriteIcon from '@mdi/svg/svg/file-star.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import lastUpdateIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
 
@@ -155,7 +155,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ sort: SortField.NAME }))}
 				>
-					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Name
+					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
 				</button>
 			</li>
 

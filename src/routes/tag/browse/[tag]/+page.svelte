@@ -21,8 +21,8 @@
 	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
 	import creationTimeIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
 	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
-	import favoriteIcon from '@mdi/svg/svg/star.svg?raw';
-	import favoriteTagsIcon from '@mdi/svg/svg/tag-multiple.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/heart.svg?raw';
+	import favoriteTagsIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
@@ -190,17 +190,17 @@
 			<li class="text">
 				<div class="tooltip tooltip-left" data-tip={tag}>
 					<div class="h-20 overflow-hidden">
-						{tag.length > 60 ? `${tag.substring(0, 55)}...` : tag}
+						{tag}
 					</div>
 				</div>
 			</li>
 			<li>
 				<button
 					class="btn"
-					class:bg-pink-200={tag_favorite}
-					class:text-pink-800={tag_favorite}
-					class:border-pink-500={!tag_favorite}
-					class:text-pink-500={!tag_favorite}
+					class:bg-purple-200={tag_favorite}
+					class:text-purple-800={tag_favorite}
+					class:border-purple-500={!tag_favorite}
+					class:text-purple-500={!tag_favorite}
 					onclick={() => onTagFavorite()}
 				>
 					{#if tag_favorite}
@@ -214,7 +214,7 @@
 			<li class="menu-title">Search</li>
 			<li>
 				<div class="join gap-0">
-					<input class="input join-item" placeholder="name, author" bind:value={search} />
+					<input class="input join-item" placeholder="title, author" bind:value={search} />
 					<button
 						class="btn join-item"
 						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
@@ -230,7 +230,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
 				>
-					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Name
+					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
 				</button>
 			</li>
 
