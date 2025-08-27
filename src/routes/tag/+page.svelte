@@ -50,7 +50,7 @@
 	let search = $state(data.request.search);
 
 	let updated = $state(false);
-	
+
 	let loadingDlg: LoadingDialog;
 
 	$effect(() => {
@@ -155,7 +155,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ sort: SortField.NAME }))}
 				>
-					<Icon data={nameIcon} /> Name
+					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800"/> Name
 				</button>
 			</li>
 
@@ -165,7 +165,7 @@
 					onclick={() =>
 						goto(createTagListUrl({ sort: SortField.ITEMCOUNT, order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={itemCountIcon} /> Item count
+					<Icon data={itemCountIcon} class="fill-slate-400 stroke-slate-800"/> Item count
 				</button>
 			</li>
 
@@ -175,7 +175,7 @@
 					onclick={() =>
 						goto(createTagListUrl({ sort: SortField.LAST_UPDATE, order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={lastUpdateIcon} /> Last update
+					<Icon data={lastUpdateIcon} class="fill-slate-400 stroke-slate-800"/> Last update
 				</button>
 			</li>
 
@@ -185,7 +185,7 @@
 					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ order: SortOrder.ASCENDING }))}
 				>
-					<Icon data={ascendingIcon} /> Ascending
+					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800"/> Ascending
 				</button>
 			</li>
 
@@ -194,7 +194,7 @@
 					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={descendingIcon} /> Descending
+					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800"/> Descending
 				</button>
 			</li>
 
@@ -204,7 +204,7 @@
 					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
 					onclick={() => goto(tagURL(page.url, { filter: Filter.UNKNOWN }))}
 				>
-					<Icon data={noneIcon} /> None
+					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800"/> None
 				</button>
 			</li>
 
@@ -213,7 +213,7 @@
 					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
 					onclick={() => goto(tagURL(page.url, { filter: Filter.FAVORITE_TAGS }))}
 				>
-					<Icon data={favoriteIcon} /> Favorite tags
+					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800"/> Favorite tags
 				</button>
 			</li>
 		</ul>

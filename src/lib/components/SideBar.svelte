@@ -28,28 +28,28 @@
 		<ul class="list">
 			<li class="list-row">
 				<button onclick={() => goto(browseURL(page.url.origin))}>
-					<Icon data={browseIcon} />&nbsp;Browse items
+					<Icon data={browseIcon} class="fill-slate-400 stroke-slate-800"/>&nbsp;Browse items
 				</button>
 			</li>
 			<li class="list-row">
 				<button onclick={() => goto(tagURL(page.url.origin))}>
-					<Icon data={tagsIcon} />&nbsp;Tag list
+					<Icon data={tagsIcon} class="fill-slate-400 stroke-slate-800"/>&nbsp;Tag list
 				</button>
 			</li>
 
 			<li class="list-row">
 				<button onclick={() => goto(historyURL(page.url.origin))}>
-					<Icon data={historyIcon} />&nbsp;History
+					<Icon data={historyIcon} class="fill-slate-400 stroke-slate-800"/>&nbsp;History
 				</button>
 			</li>
 			<li class="list-row">
 				<button onclick={() => goto(userURL(page.url.origin))}>
-					<Icon data={userIcon} />User
+					<Icon data={userIcon} class="fill-slate-400 stroke-slate-800"/>User
 				</button>
 			</li>
 			<li class="list-row">
 				<button onclick={() => goto(aboutURL(page.url.origin))}>
-					<Icon data={aboutIcon} />About
+					<Icon data={aboutIcon} class="fill-slate-400 stroke-slate-800"/>About
 				</button>
 			</li>
 		</ul>

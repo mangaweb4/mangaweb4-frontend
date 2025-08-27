@@ -209,7 +209,7 @@
 						class="btn join-item"
 						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
 					>
-						<Icon data={searchIcon} />
+						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800"/>
 					</button>
 				</div>
 			</li>
@@ -220,7 +220,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
 				>
-					<Icon data={nameIcon} /> Name
+					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800"/> Name
 				</button>
 			</li>
 
@@ -229,7 +229,7 @@
 					class={sort == SortField.CREATION_TIME ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
 				>
-					<Icon data={creationTimeIcon} /> Creation time
+					<Icon data={creationTimeIcon} class="fill-slate-400 stroke-slate-800"/> Creation time
 				</button>
 			</li>
 
@@ -238,7 +238,7 @@
 					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
 				>
-					<Icon data={pageCountIcon} /> Page Count
+					<Icon data={pageCountIcon} class="fill-slate-400 stroke-slate-800"/> Page Count
 				</button>
 			</li>
 
@@ -248,7 +248,7 @@
 					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.ASCENDING }))}
 				>
-					<Icon data={ascendingIcon} /> Ascending
+					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800"/> Ascending
 				</button>
 			</li>
 
@@ -257,7 +257,7 @@
 					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createSortBrowseURL({ order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={descendingIcon} /> Descending
+					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800"/> Descending
 				</button>
 			</li>
 
@@ -267,7 +267,7 @@
 					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
 				>
-					<Icon data={noneIcon} /> None
+					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800"/> None
 				</button>
 			</li>
 			<li>
@@ -275,7 +275,7 @@
 					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
 				>
-					<Icon data={favoriteIcon} /> Favorite items
+					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800"/> Favorite items
 				</button>
 			</li>
 
@@ -284,7 +284,7 @@
 					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
 					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
 				>
-					<Icon data={favoriteTagsIcon} /> Items with favorite tags
+					<Icon data={favoriteTagsIcon} class="fill-slate-400 stroke-slate-800"/> Items with favorite tags
 				</button>
 			</li>
 		</ul>

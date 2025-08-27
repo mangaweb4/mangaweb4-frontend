@@ -18,7 +18,7 @@
 		<div class="flex-none">
 			{#if hasmenu}
 				<button class="btn btn-square btn-ghost" onclick={() => (showMenu = true)}>
-					<Icon data={menu} />
+					<Icon data={menu} class="fill-slate-400 stroke-slate-800"/>
 				</button>
 			{/if}
 		</div>

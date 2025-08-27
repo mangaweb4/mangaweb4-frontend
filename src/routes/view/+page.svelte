@@ -123,11 +123,10 @@
 		url.searchParams.set('name', name);
 
 		try {
-			fetch(url)
-		} catch(err: any) {
-			logger.error(err, "error during update progress.")
+			fetch(url);
+		} catch (err: any) {
+			logger.error(err, 'error during update progress.');
 		}
-
 	}
 
 	let showMenu = $state(false);
@@ -166,7 +165,7 @@
 						aboutDialog.showModal();
 					}}
 				>
-					<Icon data={infoIcon} /> Information
+					<Icon data={infoIcon} class="fill-slate-400 stroke-slate-800" /> Information
 				</button>
 			</li>
 			<li>
@@ -179,7 +178,7 @@
 			{#each tags as t}
 				<li>
 					<button onclick={() => goto(browseURL(page.url, { tag: t.name }))}>
-						<Icon data={tagIcon} />
+						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
 						{t.name}
 					</button>
 				</li>
@@ -188,25 +187,25 @@
 			<li class="menu-title">Tools</li>
 			<li>
 				<button onclick={() => downloadPage()}>
-					<Icon data={downloadPageIcon} /> Download current page
+					<Icon data={downloadPageIcon} class="fill-slate-400 stroke-slate-800" /> Download current page
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => downloadManga()}>
-					<Icon data={downloadIcon} /> Download
+					<Icon data={downloadIcon} class="fill-slate-400 stroke-slate-800" /> Download
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => changeThumbnail()}>
-					<Icon data={thumbnailIcon} /> Change thumbnail
+					<Icon data={thumbnailIcon} class="fill-slate-400 stroke-slate-800" /> Change thumbnail
 				</button>
 			</li>
 
 			<li>
 				<button onclick={() => fixMetaData()}>
-					<Icon data={fixIcon} /> Fix item metadata
+					<Icon data={fixIcon} class="fill-slate-400 stroke-slate-800" /> Fix item metadata
 				</button>
 			</li>
 		</ul>
