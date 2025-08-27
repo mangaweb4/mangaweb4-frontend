@@ -1,20 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import ItemCard from '$lib/components/ItemCard.svelte';
 	import type { PageData } from './$types';
-	import MoveToTop from '$lib/components/MoveToTop.svelte';
-
-	import Pagination from '$lib/components/Pagination.svelte';
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { tagURL, browseURL } from '$lib/routes';
-	import { ITEM_PER_PAGE } from '$lib/constants';
-	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
-	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
+
+	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
+	import Pagination from '$lib/components/Pagination.svelte';
+	import MoveToTop from '$lib/components/MoveToTop.svelte';
 
 	import { Icon } from 'svelte-icon';
 	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
@@ -26,6 +23,7 @@
 	import lastUpdateIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
 
 	import BottomNav from '$lib/components/BottomNav.svelte';
+	import ItemCardGrid from '$lib/components/ItemCardGrid.svelte';
 
 	interface Props {
 		data: PageData;
@@ -35,15 +33,24 @@
 
 	let current_page = $derived(data.request.page);
 	let filter = $derived(data.request.filter);
-	let tags = $derived(data.response.items);
+	let items = $derived.by(() =>
+		data.response.items.map((tag) => {
+			return {
+				name: tag.name,
+				linkUrl: browseURL(page.url, { tag: tag.name }),
+				imageUrl: createThumbnailUrl(tag.name),
+				favoriteTag: tag.isFavorite,
+				itemCount: tag.pageCount
+			};
+		})
+	);
 	let total_page = $derived(data.response.totalPage);
-
 	let order = $derived(data.request.order);
 	let sort = $derived(data.request.sort);
-
 	let search = $state(data.request.search);
 
 	let updated = $state(false);
+	
 	let loadingDlg: LoadingDialog;
 
 	$effect(() => {
@@ -125,26 +132,7 @@
 		<NavBar bind:showMenu title="Tag List" />
 
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-				{#if !updated}
-					{#each { length: ITEM_PER_PAGE } as _, i}
-						<PlaceholderCard />
-					{/each}
-				{:else}
-					{#each tags as tag}
-						<ItemCard
-							name={tag.name}
-							linkUrl={browseURL(page.url, { tag: tag.name })}
-							imageUrl={createThumbnailUrl(tag.name)}
-							favoriteTag={tag.isFavorite}
-							itemCount={tag.pageCount}
-						/>
-					{/each}
-					{#each { length: ITEM_PER_PAGE - tags.length } as _, i}
-						<ItemCard dummy={true} />
-					{/each}
-				{/if}
-			</div>
+			<ItemCardGrid bind:items bind:updated accessTime={true}/>
 		</div>
 	</Content>
 
@@ -174,7 +162,8 @@
 			<li>
 				<button
 					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
-					onclick={() => goto(createTagListUrl({ sort: SortField.ITEMCOUNT, order: SortOrder.DESCENDING }))}
+					onclick={() =>
+						goto(createTagListUrl({ sort: SortField.ITEMCOUNT, order: SortOrder.DESCENDING }))}
 				>
 					<Icon data={itemCountIcon} /> Item count
 				</button>
@@ -183,7 +172,8 @@
 			<li>
 				<button
 					class={sort == SortField.LAST_UPDATE ? 'menu-active' : ''}
-					onclick={() => goto(createTagListUrl({ sort: SortField.LAST_UPDATE, order: SortOrder.DESCENDING }))}
+					onclick={() =>
+						goto(createTagListUrl({ sort: SortField.LAST_UPDATE, order: SortOrder.DESCENDING }))}
 				>
 					<Icon data={lastUpdateIcon} /> Last update
 				</button>

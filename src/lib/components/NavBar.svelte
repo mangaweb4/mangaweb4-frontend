@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Icon } from 'svelte-icon';
 	import menu from '@mdi/svg/svg/menu.svg?raw';
-	import logo from '$lib/logo.svg?raw';
+	import logo from '$lib/assets/logo.svg?raw';
 	import { browseURL } from '$lib/routes';
 	import { page } from '$app/state';
 	let { title, showMenu = $bindable(), hasmenu = true } = $props();

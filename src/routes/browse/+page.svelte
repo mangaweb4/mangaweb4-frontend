@@ -3,21 +3,20 @@
 	import { page } from '$app/state';
 	import { browseURL, viewURL } from '$lib/routes';
 	import type { PageData } from './$types';
-	import { ITEM_PER_PAGE } from '$lib/constants';
 
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
 	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
-	import ItemCard from '$lib/components/ItemCard.svelte';
 	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import MoveToTop from '$lib/components/MoveToTop.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
-	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
+	import BottomNav from '$lib/components/BottomNav.svelte';
+	import ItemCardGrid from '$lib/components/ItemCardGrid.svelte';
 
 	import { Icon } from 'svelte-icon';
 	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
@@ -29,7 +28,6 @@
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
-	import BottomNav from '$lib/components/BottomNav.svelte';
 
 	let toast: Toast;
 
@@ -40,7 +38,21 @@
 	let { data }: Props = $props();
 
 	let filter = $derived(data.request.filter);
-	let items = $derived(data.response.items);
+	let items = $derived.by(() =>
+		data.response.items.map((i) => {
+			return {
+				favorite: i.isFavorite,
+				isRead: i.isRead,
+				id: i.id,
+				name: i.name,
+				pageCount: i.pageCount,
+				favoriteTag: i.hasFavoriteTag,
+				imageUrl: createThumbnailUrl(i.name),
+				linkUrl: viewURL(page.url, i.name),
+				currentPage: i.currentPage
+			};
+		})
+	);
 	let order = $derived(data.request.order);
 	let pageIndex = $derived(data.request.page);
 	let search = $state(data.request.search);
@@ -178,30 +190,7 @@
 		/>
 
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-				{#if !updated}
-					{#each { length: ITEM_PER_PAGE } as _}
-						<PlaceholderCard />
-					{/each}
-				{:else}
-					{#each items as item}
-						<ItemCard
-							favorite={item.isFavorite}
-							isRead={item.isRead}
-							id={item.id}
-							name={item.name}
-							pageCount={item.pageCount}
-							favoriteTag={item.hasFavoriteTag}
-							imageUrl={createThumbnailUrl(item.name)}
-							linkUrl={viewURL(page.url, item.name)}
-							currentPage={item.currentPage}
-						/>
-					{/each}
-					{#each { length: ITEM_PER_PAGE - items.length } as _, i}
-						<ItemCard dummy={true} />
-					{/each}
-				{/if}
-			</div>
+			<ItemCardGrid bind:items bind:updated />
 		</div>
 	</Content>
 	<SideBar bind:showMenu>
@@ -308,8 +297,6 @@
 
 <MoveToTop />
 
-<BottomNav currentPage={pageIndex} {totalPage}/>
+<BottomNav currentPage={pageIndex} {totalPage} />
 
 <Toast bind:this={toast} />
-
-

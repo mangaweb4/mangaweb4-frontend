@@ -6,16 +6,14 @@
 	import { viewURL } from '$lib/routes';
 
 	import type { PageData } from './$types';
-	import ItemCard from '$lib/components/ItemCard.svelte';
-	import { ITEM_PER_PAGE } from '$lib/constants';
 	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
-	import PlaceholderCard from '$lib/components/PlaceholderCard.svelte';
 	import { Timestamp } from '$lib/grpc/google/protobuf/timestamp';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 	import BottomNav from '$lib/components/BottomNav.svelte';
+	import ItemCardGrid from '$lib/components/ItemCardGrid.svelte';
 
 	interface Props {
 		data: PageData;
@@ -23,7 +21,21 @@
 
 	let { data }: Props = $props();
 
-	let items = $derived(data.response.items);
+	let items = $derived.by(() =>
+		data.response.items.map((item) => {
+			return {
+				favorite: item.isFavorite,
+				favoriteTag: item.hasFavoriteTag,
+				isRead: item.isRead,
+				id: item.id,
+				name: item.name,
+				pageCount: item.pageCount,
+				linkUrl: viewURL(page.url, item.name),
+				imageUrl: createThumbnailUrl(item.name),
+				accessTime: item.accessTime ? Timestamp.toDate(item.accessTime) : new Date()
+			};
+		})
+	);
 	let pageIndex = $derived(data.request.page);
 	let totalPage = $derived(data.response.totalPage);
 
@@ -57,32 +69,8 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu title="History"></NavBar>
-
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-				{#if !updated}
-					{#each { length: ITEM_PER_PAGE } as _, i}
-						<PlaceholderCard accessTime />
-					{/each}
-				{:else}
-					{#each items as item}
-						<ItemCard
-							favorite={item.isFavorite}
-							favoriteTag={item.hasFavoriteTag}
-							isRead={item.isRead}
-							id={item.id}
-							name={item.name}
-							pageCount={item.pageCount}
-							linkUrl={viewURL(page.url, item.name)}
-							imageUrl={createThumbnailUrl(item.name)}
-							accessTime={item.accessTime ? Timestamp.toDate(item.accessTime) : new Date()}
-						/>
-					{/each}
-					{#each { length: ITEM_PER_PAGE - items.length }}
-						<ItemCard dummy={true} accessTime={true}/>
-					{/each}
-				{/if}
-			</div>
+			<ItemCardGrid bind:items bind:updated accessTime={true}/>
 		</div>
 	</Content>
 	<SideBar bind:showMenu />
