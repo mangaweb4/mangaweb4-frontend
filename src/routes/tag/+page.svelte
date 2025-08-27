@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import type { PageData } from './$types';
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
-	import { tagURL, browseURL } from '$lib/routes';
+	import { tagURL, browseURL, browseTagURL } from '$lib/routes';
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 
 	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
@@ -37,7 +37,7 @@
 		data.response.items.map((tag) => {
 			return {
 				name: tag.name,
-				linkUrl: browseURL(page.url, { tag: tag.name }),
+				linkUrl: browseTagURL(page.url, tag.name),
 				imageUrl: createThumbnailUrl(tag.name),
 				favoriteTag: tag.isFavorite,
 				itemCount: tag.pageCount
@@ -132,7 +132,7 @@
 		<NavBar bind:showMenu title="Tag List" />
 
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
-			<ItemCardGrid bind:items bind:updated accessTime={true}/>
+			<ItemCardGrid bind:items bind:updated accessTime={true} />
 		</div>
 	</Content>
 
@@ -155,7 +155,7 @@
 					class={sort == SortField.NAME ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ sort: SortField.NAME }))}
 				>
-					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800"/> Name
+					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Name
 				</button>
 			</li>
 
@@ -165,7 +165,7 @@
 					onclick={() =>
 						goto(createTagListUrl({ sort: SortField.ITEMCOUNT, order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={itemCountIcon} class="fill-slate-400 stroke-slate-800"/> Item count
+					<Icon data={itemCountIcon} class="fill-slate-400 stroke-slate-800" /> Item count
 				</button>
 			</li>
 
@@ -175,7 +175,7 @@
 					onclick={() =>
 						goto(createTagListUrl({ sort: SortField.LAST_UPDATE, order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={lastUpdateIcon} class="fill-slate-400 stroke-slate-800"/> Last update
+					<Icon data={lastUpdateIcon} class="fill-slate-400 stroke-slate-800" /> Last update
 				</button>
 			</li>
 
@@ -185,7 +185,7 @@
 					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ order: SortOrder.ASCENDING }))}
 				>
-					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800"/> Ascending
+					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800" /> Ascending
 				</button>
 			</li>
 
@@ -194,7 +194,7 @@
 					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
 					onclick={() => goto(createTagListUrl({ order: SortOrder.DESCENDING }))}
 				>
-					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800"/> Descending
+					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800" /> Descending
 				</button>
 			</li>
 
@@ -204,7 +204,7 @@
 					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
 					onclick={() => goto(tagURL(page.url, { filter: Filter.UNKNOWN }))}
 				>
-					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800"/> None
+					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800" /> None
 				</button>
 			</li>
 
@@ -213,7 +213,7 @@
 					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
 					onclick={() => goto(tagURL(page.url, { filter: Filter.FAVORITE_TAGS }))}
 				>
-					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800"/> Favorite tags
+					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800" /> Favorite tags
 				</button>
 			</li>
 		</ul>

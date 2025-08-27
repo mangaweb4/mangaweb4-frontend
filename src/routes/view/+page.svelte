@@ -7,7 +7,7 @@
 	import SideBar from '$lib/components/SideBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 
-	import { browseURL } from '$lib/routes';
+	import { browseTagURL } from '$lib/routes';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import type { PageData } from './$types';
@@ -177,7 +177,7 @@
 			<li class="menu-title">Tags</li>
 			{#each tags as t}
 				<li>
-					<button onclick={() => goto(browseURL(page.url, { tag: t.name }))}>
+					<button onclick={() => goto(browseTagURL(page.url, t.name ))}>
 						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
 						{t.name}
 					</button>

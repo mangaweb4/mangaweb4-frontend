@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Icon } from 'svelte-icon';
-	import isFavoriteIcon from '@mdi/svg/svg/star.svg?raw';
-	import isNotFavoriteIcon from '@mdi/svg/svg/star-outline.svg?raw';
+	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
+	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
 
 	let { isFavorite = false, children, onclick } = $props();
 </script>
