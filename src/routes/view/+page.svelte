@@ -176,17 +176,15 @@
 			</li>
 			<li>
 				<button
-					class="btn"
+					class="btn btn-soft"
 					class:bg-pink-200={favorite}
 					class:text-pink-800={favorite}
-					class:border-pink-500={!favorite}
-					class:text-pink-500={!favorite}
 					onclick={() => toggleFavorite()}
 				>
 					{#if favorite}
-						<Icon data={isFavoriteIcon} class="stroke-pink-800"/> Favorite
+						<Icon data={isFavoriteIcon} class="stroke-pink-800 fill-pink-400"/> Favorite
 					{:else}
-						<Icon data={isNotFavoriteIcon} class="stroke-pink-200" /> Favorite
+						<Icon data={isNotFavoriteIcon} /> Favorite
 					{/if}
 				</button>
 			</li>

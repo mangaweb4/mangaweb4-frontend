@@ -190,23 +190,21 @@
 	<SideBar bind:showMenu>
 		<ul class="menu">
 			<li class="text">
-				<div class="tooltip tooltip-left" data-tip={tag}>
-					<div class="h-20 overflow-hidden">
+				<div class="tooltip tooltip-left  mb-2" data-tip={tag}>
+					<div class="h-20 overflow-hidden text-xl">
 						{tag}
 					</div>
 				</div>
 			</li>
 			<li>
 				<button
-					class="btn"
+					class="btn btn-soft"
 					class:bg-purple-200={tag_favorite}
 					class:text-purple-800={tag_favorite}
-					class:border-purple-500={!tag_favorite}
-					class:text-purple-500={!tag_favorite}
 					onclick={() => onTagFavorite()}
 				>
 					{#if tag_favorite}
-						<Icon data={isTagFavoriteIcon} /> Favorite
+						<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400"/> Favorite
 					{:else}
 						<Icon data={isTagNotFavoriteIcon} /> Favorite
 					{/if}
