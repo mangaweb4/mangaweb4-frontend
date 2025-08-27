@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { browseURL, viewURL } from '$lib/routes';
+	import { browseTagURL, browseURL, viewURL } from '$lib/routes';
 	import type { PageData } from './$types';
 
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
@@ -29,6 +29,8 @@
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
 	import isTagFavoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import isTagNotFavoriteIcon from '@mdi/svg/svg/tag-heart-outline.svg?raw';
+	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw';
+
 
 	let toast: Toast;
 
@@ -183,7 +185,7 @@
 	<Content>
 		<NavBar bind:showMenu>
 			<div class="text-xl hidden md:inline">
-				<div class="whitespace-nowrap">{tag}</div>
+				<div class="whitespace-nowrap">Tag: {tag}</div>
 			</div>
 		</NavBar>
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
@@ -220,7 +222,16 @@
 					<input class="input join-item" placeholder="title, author" bind:value={search} />
 					<button
 						class="btn join-item"
-						onclick={() => goto(browseURL(page.url.origin, { search: search }))}
+						onclick={() => {
+							search = '';
+							goto(browseTagURL(page.url.origin, tag));
+						}}
+					>
+						<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
+					</button>
+					<button
+						class="btn join-item"
+						onclick={() => goto(browseTagURL(page.url.origin, tag, { search: search }))}
 					>
 						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
 					</button>

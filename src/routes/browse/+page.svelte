@@ -27,6 +27,7 @@
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import pageCountIcon from '@mdi/svg/svg/book-open-page-variant.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
+	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw'
 
 	let toast: Toast;
 
@@ -174,6 +175,15 @@
 			<li>
 				<div class="join gap-0">
 					<input class="input join-item" placeholder="title, author" bind:value={search} />
+					<button
+						class="btn join-item"
+						onclick={() => {
+							search = '';
+							goto(browseURL(page.url.origin));
+						}}
+					>
+						<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
+					</button>
 					<button
 						class="btn join-item"
 						onclick={() => goto(browseURL(page.url.origin, { search: search }))}

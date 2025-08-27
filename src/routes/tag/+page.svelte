@@ -21,6 +21,8 @@
 	import favoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import lastUpdateIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
+	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
+	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw';
 
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import ItemCardGrid from '$lib/components/ItemCardGrid.svelte';
@@ -129,7 +131,7 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu >
+		<NavBar bind:showMenu>
 			<div class="text-xl">Tag list</div>
 		</NavBar>
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
@@ -142,11 +144,22 @@
 			<li class="menu-title">Search</li>
 			<li>
 				<div class="join gap-0">
-					<input class="input join-item" placeholder="Search" bind:value={search} />
+					<input class="input join-item" placeholder="tag, artist" bind:value={search} />
 					<button
 						class="btn join-item"
-						onclick={() => goto(tagURL(page.url.origin, { search: search }))}>Search</button
+						onclick={() => {
+							search = '';
+							goto(tagURL(page.url.origin));
+						}}
 					>
+						<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
+					</button>
+					<button
+						class="btn join-item"
+						onclick={() => goto(tagURL(page.url.origin, { search: search }))}
+					>
+						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
+					</button>
 				</div>
 			</li>
 
