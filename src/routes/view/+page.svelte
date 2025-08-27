@@ -142,7 +142,7 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
-			<div class="text-xl overflow whitespace-nowrap">{path.basename(name)}</div>
+			<div class="text-xl grow overflow-truncate whitespace-nowrap hidden md:block">{path.basename(name)}</div>
 		</NavBar>
 		<div class="fixed top-18 bottom-0 start-0 end-0">
 			<ImageViewer
