@@ -8,7 +8,6 @@
 
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
-	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
 	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import MoveToTop from '$lib/components/MoveToTop.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
@@ -28,6 +27,8 @@
 	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
 	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
+	import isTagFavoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw'
+	import isTagNotFavoriteIcon from '@mdi/svg/svg/tag-heart-outline.svg?raw'
 
 	let toast: Toast;
 
@@ -194,9 +195,20 @@
 				</div>
 			</li>
 			<li>
-				<FavoriteButton onclick={() => onTagFavorite()} isFavorite={tag_favorite}>
-					Favorite tag
-				</FavoriteButton>
+				<button
+					class="btn"
+					class:bg-pink-200={tag_favorite}
+					class:text-pink-800={tag_favorite}
+					class:border-pink-500={!tag_favorite}
+					class:text-pink-500={!tag_favorite}
+					onclick={() => onTagFavorite()}
+				>
+					{#if tag_favorite}
+						<Icon data={isTagFavoriteIcon} /> Favorite
+					{:else}
+						<Icon data={isTagNotFavoriteIcon} /> Favorite
+					{/if}
+				</button>
 			</li>
 
 			<li class="menu-title">Search</li>

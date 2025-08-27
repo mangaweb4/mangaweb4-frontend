@@ -20,6 +20,8 @@
 	import tagIcon from '@mdi/svg/svg/tag.svg?raw';
 	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
 	import logger from '$lib/logger';
+	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
+	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
 
 	let current = $state(0);
 	let viewer: ImageViewer;
@@ -169,15 +171,26 @@
 				</button>
 			</li>
 			<li>
-				<FavoriteButton onclick={() => toggleFavorite()} isFavorite={favorite}>
-					Favorite
-				</FavoriteButton>
+				<button
+					class="btn"
+					class:bg-pink-200={favorite}
+					class:text-pink-800={favorite}
+					class:border-pink-500={!favorite}
+					class:text-pink-500={!favorite}
+					onclick={() => toggleFavorite()}
+				>
+					{#if favorite}
+						<Icon data={isFavoriteIcon} class="stroke-pink-800"/> Favorite
+					{:else}
+						<Icon data={isNotFavoriteIcon} class="stroke-pink-200" /> Favorite
+					{/if}
+				</button>
 			</li>
 
 			<li class="menu-title">Tags</li>
 			{#each tags as t}
 				<li>
-					<button onclick={() => goto(browseTagURL(page.url, t.name ))}>
+					<button onclick={() => goto(browseTagURL(page.url, t.name))}>
 						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
 						{t.name}
 					</button>

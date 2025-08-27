@@ -8,7 +8,6 @@
 
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
-	import FavoriteButton from '$lib/components/FavoriteButton.svelte';
 	import LoadingDialog from '$lib/components/LoadingDialog.svelte';
 	import MoveToTop from '$lib/components/MoveToTop.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
@@ -57,7 +56,6 @@
 	let pageIndex = $derived(data.request.page);
 	let search = $state(data.request.search);
 	let sort = $derived(data.request.sort);
-	let tag = $derived(data.request.tag);
 	let tag_favorite = $state(data.response.tagFavorite);
 
 	let totalPage = $derived(data.response.totalPage);
@@ -96,7 +94,7 @@
 			tag: data.request.tag
 		};
 		if (options != null) {
-			const { filter, item_per_page, order, page, search, sort, tag } = options;
+			const { filter, item_per_page, order, page, search, sort } = options;
 			if (filter != null) {
 				callOptions.filter = filter;
 			}
@@ -116,9 +114,6 @@
 
 			if (sort != null) {
 				callOptions.sort = sort;
-			}
-			if (tag != null) {
-				callOptions.tag = tag;
 			}
 		}
 
@@ -150,24 +145,6 @@
 		return createBrowseURL(options);
 	}
 
-	async function onTagFavorite() {
-		const url = new URL('/api/tag/set_favorite', page.url.origin);
-
-		url.searchParams.set('name', tag);
-		url.searchParams.set('favorite', !tag_favorite ? 'true' : 'false');
-
-		const resp = await fetch(url, { method: 'GET' });
-		const json = await resp.json();
-
-		if (json.favorite) {
-			toast.add(`The tag "${tag}" is now your favorite.`, 'success');
-		} else {
-			toast.add(`The tag "${tag}" is no longer your favorite.`, 'success');
-		}
-
-		tag_favorite = json.favorite;
-	}
-
 	function createThumbnailUrl(name: string): URL {
 		const u = new URL('/api/manga/thumbnail', page.url);
 		u.searchParams.set('name', name);
@@ -179,14 +156,14 @@
 </script>
 
 <svelte:head>
-	<title>Browse: {tag}</title>
+	<title>Browse</title>
 </svelte:head>
 
 <Container bind:showMenu>
 	<Content>
 		<NavBar
 			bind:showMenu
-			title={data.request.tag == '' ? 'Browse' : `Browse: ${data.request.tag}`}
+			title="Browse"
 		/>
 
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
@@ -195,12 +172,6 @@
 	</Content>
 	<SideBar bind:showMenu>
 		<ul class="menu">
-			<li hidden={tag == '' ? true : undefined}>
-				<FavoriteButton onclick={() => onTagFavorite()} isFavorite={tag_favorite}>
-					Favorite tag
-				</FavoriteButton>
-			</li>
-
 			<li class="menu-title">Search</li>
 			<li>
 				<div class="join gap-0">

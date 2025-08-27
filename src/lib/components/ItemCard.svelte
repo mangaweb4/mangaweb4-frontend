@@ -1,6 +1,6 @@
 <script lang="ts">
-	import favoriteIcon from '@mdi/svg/svg/star.svg?raw';
-	import favoriteTagIcon from '@mdi/svg/svg/tag.svg?raw';
+	import favoriteIcon from '@mdi/svg/svg/heart.svg?raw';
+	import favoriteTagIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import newIcon from '@mdi/svg/svg/alert-decagram.svg?raw';
 	import readingIcon from '@mdi/svg/svg/book-open-variant.svg?raw';
 	import readIcon from '@mdi/svg/svg/check.svg?raw';
