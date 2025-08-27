@@ -181,7 +181,9 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
-			<div class="text-xl overflow">Tag: {tag}</div>
+			<div class="text-xl hidden md:inline">
+				<div class="whitespace-nowrap">{tag}</div>
+			</div>
 		</NavBar>
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
 			<ItemCardGrid bind:items bind:updated />
@@ -190,7 +192,7 @@
 	<SideBar bind:showMenu>
 		<ul class="menu">
 			<li class="text">
-				<div class="tooltip tooltip-left  mb-2" data-tip={tag}>
+				<div class="tooltip tooltip-left mb-2" data-tip={tag}>
 					<div class="h-20 overflow-hidden text-xl">
 						{tag}
 					</div>
@@ -204,7 +206,7 @@
 					onclick={() => onTagFavorite()}
 				>
 					{#if tag_favorite}
-						<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400"/> Favorite
+						<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" /> Favorite
 					{:else}
 						<Icon data={isTagNotFavoriteIcon} /> Favorite
 					{/if}
