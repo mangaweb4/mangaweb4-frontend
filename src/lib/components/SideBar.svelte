@@ -23,9 +23,9 @@
 	<ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
 		{@render children?.()}
 
-		<li class="menu-title">Navigation</li>
-
 		<ul class="list">
+			<li class="list-row text-xl">Navigation</li>
+
 			<li class="list-row">
 				<button onclick={() => goto(browseURL(page.url.origin))}>
 					<Icon data={browseIcon} class="fill-slate-400 stroke-slate-800"/>&nbsp;Browse items
