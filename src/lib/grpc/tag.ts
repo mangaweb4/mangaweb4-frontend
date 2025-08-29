@@ -98,9 +98,14 @@ export interface TagListResponseItem {
  */
 export interface TagThumbnailRequest {
     /**
-     * @generated from protobuf field: string Name = 1
+     * @deprecated
+     * @generated from protobuf field: string Name = 1 [deprecated = true]
      */
     name: string;
+    /**
+     * @generated from protobuf field: int32 Id = 2
+     */
+    id: number;
 }
 /**
  * @generated from protobuf message TagThumbnailResponse
@@ -124,13 +129,18 @@ export interface TagSetFavoriteRequest {
      */
     user: string;
     /**
-     * @generated from protobuf field: string Tag = 2
+     * @deprecated
+     * @generated from protobuf field: string Tag = 2 [deprecated = true]
      */
     tag: string;
     /**
      * @generated from protobuf field: bool Favorite = 3
      */
     favorite: boolean;
+    /**
+     * @generated from protobuf field: int32 Id = 4
+     */
+    id: number;
 }
 /**
  * @generated from protobuf message TagSetFavoriteResponse
@@ -394,12 +404,14 @@ export const TagListResponseItem = new TagListResponseItem$Type();
 class TagThumbnailRequest$Type extends MessageType<TagThumbnailRequest> {
     constructor() {
         super("TagThumbnailRequest", [
-            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "Id", kind: "scalar", jsonName: "Id", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<TagThumbnailRequest>): TagThumbnailRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.name = "";
+        message.id = 0;
         if (value !== undefined)
             reflectionMergePartial<TagThumbnailRequest>(this, message, value);
         return message;
@@ -409,8 +421,11 @@ class TagThumbnailRequest$Type extends MessageType<TagThumbnailRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string Name */ 1:
+                case /* string Name = 1 [deprecated = true] */ 1:
                     message.name = reader.string();
+                    break;
+                case /* int32 Id */ 2:
+                    message.id = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -424,9 +439,12 @@ class TagThumbnailRequest$Type extends MessageType<TagThumbnailRequest> {
         return message;
     }
     internalBinaryWrite(message: TagThumbnailRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string Name = 1; */
+        /* string Name = 1 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* int32 Id = 2; */
+        if (message.id !== 0)
+            writer.tag(2, WireType.Varint).int32(message.id);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -498,7 +516,8 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
         super("TagSetFavoriteRequest", [
             { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "Tag", kind: "scalar", jsonName: "Tag", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "Favorite", kind: "scalar", jsonName: "Favorite", T: 8 /*ScalarType.BOOL*/ }
+            { no: 3, name: "Favorite", kind: "scalar", jsonName: "Favorite", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "Id", kind: "scalar", jsonName: "Id", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<TagSetFavoriteRequest>): TagSetFavoriteRequest {
@@ -506,6 +525,7 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
         message.user = "";
         message.tag = "";
         message.favorite = false;
+        message.id = 0;
         if (value !== undefined)
             reflectionMergePartial<TagSetFavoriteRequest>(this, message, value);
         return message;
@@ -518,11 +538,14 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
                 case /* string User */ 1:
                     message.user = reader.string();
                     break;
-                case /* string Tag */ 2:
+                case /* string Tag = 2 [deprecated = true] */ 2:
                     message.tag = reader.string();
                     break;
                 case /* bool Favorite */ 3:
                     message.favorite = reader.bool();
+                    break;
+                case /* int32 Id */ 4:
+                    message.id = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -539,12 +562,15 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
         /* string User = 1; */
         if (message.user !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.user);
-        /* string Tag = 2; */
+        /* string Tag = 2 [deprecated = true]; */
         if (message.tag !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.tag);
         /* bool Favorite = 3; */
         if (message.favorite !== false)
             writer.tag(3, WireType.Varint).bool(message.favorite);
+        /* int32 Id = 4; */
+        if (message.id !== 0)
+            writer.tag(4, WireType.Varint).int32(message.id);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

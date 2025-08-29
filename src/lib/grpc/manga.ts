@@ -279,7 +279,8 @@ export interface MangaSetProgressResponse {
  */
 export interface MangaUpdateCoverRequest {
     /**
-     * @generated from protobuf field: string Name = 1
+     * @deprecated
+     * @generated from protobuf field: string Name = 1 [deprecated = true]
      */
     name: string;
     /**
@@ -303,8 +304,7 @@ export interface MangaUpdateCoverRequest {
      */
     height: number;
     /**
-     * @deprecated
-     * @generated from protobuf field: int32 Id = 7 [deprecated = true]
+     * @generated from protobuf field: int32 Id = 7
      */
     id: number;
 }
@@ -1334,7 +1334,7 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string Name */ 1:
+                case /* string Name = 1 [deprecated = true] */ 1:
                     message.name = reader.string();
                     break;
                 case /* int32 Index */ 2:
@@ -1352,7 +1352,7 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
                 case /* int32 Height */ 6:
                     message.height = reader.int32();
                     break;
-                case /* int32 Id = 7 [deprecated = true] */ 7:
+                case /* int32 Id */ 7:
                     message.id = reader.int32();
                     break;
                 default:
@@ -1367,7 +1367,7 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
         return message;
     }
     internalBinaryWrite(message: MangaUpdateCoverRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string Name = 1; */
+        /* string Name = 1 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
         /* int32 Index = 2; */
@@ -1385,7 +1385,7 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
         /* int32 Height = 6; */
         if (message.height !== 0)
             writer.tag(6, WireType.Varint).int32(message.height);
-        /* int32 Id = 7 [deprecated = true]; */
+        /* int32 Id = 7; */
         if (message.id !== 0)
             writer.tag(7, WireType.Varint).int32(message.id);
         let u = options.writeUnknownFields;

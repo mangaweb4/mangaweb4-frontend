@@ -10,7 +10,7 @@ import logger from '$lib/logger';
 import { ITEM_PER_PAGE } from '$lib/constants';
 
 export const load: PageServerLoad = async ({ request, url, cookies, params }) => {
-    const tag = decodeURIComponent(params.tag)
+    const id = parseInt(params.id ?? "")
 
     const searchParams = url.searchParams;
     const user = getUser(request, cookies);
@@ -41,9 +41,10 @@ export const load: PageServerLoad = async ({ request, url, cookies, params }) =>
 
     let client = new MangaClient(transport)
 
+    //TODO: use TagClient.List()
     let call = await client.list({
         user: user,
-        tag: tag,
+        tag: '',
         filter: filter,
         page: page,
         itemPerPage: ITEM_PER_PAGE,

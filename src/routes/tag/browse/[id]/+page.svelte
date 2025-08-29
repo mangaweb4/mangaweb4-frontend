@@ -2,7 +2,7 @@
 	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { browseTagURL, browseURL, viewURL } from '$lib/routes';
-	import type { PageData } from './$types';
+	import type { PageData } from '../[id]/$types';
 
 	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 
@@ -54,8 +54,8 @@
 				name: i.name,
 				pageCount: i.pageCount,
 				favoriteTag: i.hasFavoriteTag || favoriteTag,
-				imageUrl: createThumbnailUrl(i.name),
-				linkUrl: viewURL(page.url, i.name),
+				imageUrl: createThumbnailUrl(data.request.id),
+				linkUrl: viewURL(page.url, i.id),
 				currentPage: i.currentPage
 			};
 		})
@@ -167,9 +167,9 @@
 		favoriteTag = json.favorite;
 	}
 
-	function createThumbnailUrl(name: string): URL {
+	function createThumbnailUrl(id: number): URL {
 		const u = new URL('/api/manga/thumbnail', page.url);
-		u.searchParams.set('name', name);
+		u.searchParams.set('id', id.toString());
 
 		return u;
 	}

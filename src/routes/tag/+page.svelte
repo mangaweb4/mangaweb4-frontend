@@ -40,7 +40,7 @@
 			return {
 				name: tag.name,
 				linkUrl: browseTagURL(page.url, tag.name),
-				imageUrl: createThumbnailUrl(tag.name),
+				imageUrl: createThumbnailUrl(tag.id),
 				favoriteTag: tag.isFavorite,
 				itemCount: tag.pageCount
 			};
@@ -66,9 +66,9 @@
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
 
-	function createThumbnailUrl(name: string) {
+	function createThumbnailUrl(id: number) {
 		const output = new URL('/api/tag/thumbnail', page.url.origin);
-		output.searchParams.append('name', name);
+		output.searchParams.append('id', id.toString());
 
 		return output;
 	}
