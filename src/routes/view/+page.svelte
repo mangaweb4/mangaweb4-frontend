@@ -17,6 +17,7 @@
 	import fixIcon from '@mdi/svg/svg/tools.svg?raw';
 	import infoIcon from '@mdi/svg/svg/information-outline.svg?raw';
 	import tagIcon from '@mdi/svg/svg/tag.svg?raw';
+	import favoriteTagIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
 	import logger from '$lib/logger';
 	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
@@ -182,7 +183,7 @@
 					onclick={() => toggleFavorite()}
 				>
 					{#if favorite}
-						<Icon data={isFavoriteIcon} class="stroke-pink-800 fill-pink-400"/> Favorite
+						<Icon data={isFavoriteIcon} class="stroke-pink-800 fill-pink-400" /> Favorite
 					{:else}
 						<Icon data={isNotFavoriteIcon} /> Favorite
 					{/if}
@@ -191,12 +192,18 @@
 
 			<li class="menu-title">Tags</li>
 			{#each tags as t}
-				<li>
-					<button onclick={() => goto(browseTagURL(page.url, t.name))}>
-						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
-						{t.name}
-					</button>
-				</li>
+				{#if !t.isHidden}
+					<li>
+						<button onclick={() => goto(browseTagURL(page.url, t.name))}>
+							{#if t.isFavorite}
+								<Icon data={favoriteTagIcon} class="fill-purple-400 stroke-purple-800" />
+							{:else}
+								<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
+							{/if}
+							{t.name}
+						</button>
+					</li>
+				{/if}
 			{/each}
 
 			<li class="menu-title">Tools</li>
