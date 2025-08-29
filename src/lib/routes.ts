@@ -9,11 +9,8 @@ export function historyURL(base: URL | string): URL {
     return new URL("/history", base);
 }
 
-export function viewURL(base: URL | string, name: string): URL {
-    var u = new URL("/view", base);
-    u.searchParams.set('name', name)
-
-    return u;
+export function viewURL(base: URL | string, id: number): URL {
+    return new URL(`/view/${id}`, base);
 }
 
 export function userURL(base: URL | string): URL {

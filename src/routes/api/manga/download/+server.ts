@@ -5,18 +5,16 @@ import { MangaClient } from '$lib/grpc/manga.client';
 import { variables } from '$lib/variables.server';
 import { MAX_STREAM_OBJECT_SIZE } from '$lib/constants';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ url }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
     let client = new MangaClient(transport)
-    const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
-
-    let stream = client.download({ name })
+    let id = parseInt(url.searchParams.get('id') ?? "") ?? 0
+    let stream = client.download({ iD: id, name: '' })
 
     let filename = ""
     let contentType = ""

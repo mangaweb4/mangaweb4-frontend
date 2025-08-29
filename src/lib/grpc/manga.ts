@@ -73,9 +73,9 @@ export interface MangaListResponse {
  */
 export interface MangaListResponseItem {
     /**
-     * @generated from protobuf field: int32 Id = 1
+     * @generated from protobuf field: int32 ID = 1
      */
-    id: number;
+    iD: number;
     /**
      * @generated from protobuf field: string Name = 2
      */
@@ -110,9 +110,14 @@ export interface MangaListResponseItem {
  */
 export interface MangaThumbnailRequest {
     /**
-     * @generated from protobuf field: string Name = 1
+     * @deprecated
+     * @generated from protobuf field: string Name = 1 [deprecated = true]
      */
     name: string;
+    /**
+     * @generated from protobuf field: int32 ID = 2
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaThumbnailResponse
@@ -136,9 +141,14 @@ export interface MangaDetailRequest {
      */
     user: string;
     /**
-     * @generated from protobuf field: string Name = 2
+     * @deprecated
+     * @generated from protobuf field: string Name = 2 [deprecated = true]
      */
     name: string;
+    /**
+     * @generated from protobuf field: int32 ID = 3
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaDetailResponse
@@ -195,13 +205,18 @@ export interface MangaSetFavoriteRequest {
      */
     user: string;
     /**
-     * @generated from protobuf field: string Name = 2
+     * @deprecated
+     * @generated from protobuf field: string Name = 2 [deprecated = true]
      */
     name: string;
     /**
      * @generated from protobuf field: bool Favorite = 3
      */
     favorite: boolean;
+    /**
+     * @generated from protobuf field: int32 ID = 4
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaSetFavoriteResponse
@@ -225,13 +240,18 @@ export interface MangaSetProgressRequest {
      */
     user: string;
     /**
-     * @generated from protobuf field: string Name = 2
+     * @deprecated
+     * @generated from protobuf field: string Name = 2 [deprecated = true]
      */
     name: string;
     /**
      * @generated from protobuf field: int32 Page = 3
      */
     page: number;
+    /**
+     * @generated from protobuf field: int32 ID = 4
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaSetProgressResponse
@@ -282,6 +302,11 @@ export interface MangaUpdateCoverRequest {
      * @generated from protobuf field: int32 Height = 6
      */
     height: number;
+    /**
+     * @deprecated
+     * @generated from protobuf field: int32 ID = 7 [deprecated = true]
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaUpdateCoverResponse
@@ -301,7 +326,8 @@ export interface MangaPageImageRequest {
      */
     user: string;
     /**
-     * @generated from protobuf field: string Name = 2
+     * @deprecated
+     * @generated from protobuf field: string Name = 2 [deprecated = true]
      */
     name: string;
     /**
@@ -316,6 +342,10 @@ export interface MangaPageImageRequest {
      * @generated from protobuf field: int32 Height = 5
      */
     height: number;
+    /**
+     * @generated from protobuf field: int32 ID = 6
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaPageImageResponse
@@ -356,9 +386,14 @@ export interface MangaPageImageStreamResponse {
  */
 export interface MangaRepairRequest {
     /**
-     * @generated from protobuf field: string Name = 1
+     * @deprecated
+     * @generated from protobuf field: string Name = 1 [deprecated = true]
      */
     name: string;
+    /**
+     * @generated from protobuf field: int32 ID = 3
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaRepairResponse
@@ -378,9 +413,14 @@ export interface MangaRepairResponse {
  */
 export interface MangaDownloadRequest {
     /**
-     * @generated from protobuf field: string Name = 1
+     * @deprecated
+     * @generated from protobuf field: string Name = 1 [deprecated = true]
      */
     name: string;
+    /**
+     * @generated from protobuf field: int32 ID = 2
+     */
+    iD: number;
 }
 /**
  * @generated from protobuf message MangaDownloadResponse
@@ -573,7 +613,7 @@ export const MangaListResponse = new MangaListResponse$Type();
 class MangaListResponseItem$Type extends MessageType<MangaListResponseItem> {
     constructor() {
         super("MangaListResponseItem", [
-            { no: 1, name: "Id", kind: "scalar", jsonName: "Id", T: 5 /*ScalarType.INT32*/ },
+            { no: 1, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "IsFavorite", kind: "scalar", jsonName: "IsFavorite", T: 8 /*ScalarType.BOOL*/ },
             { no: 4, name: "IsRead", kind: "scalar", jsonName: "IsRead", T: 8 /*ScalarType.BOOL*/ },
@@ -585,7 +625,7 @@ class MangaListResponseItem$Type extends MessageType<MangaListResponseItem> {
     }
     create(value?: PartialMessage<MangaListResponseItem>): MangaListResponseItem {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.id = 0;
+        message.iD = 0;
         message.name = "";
         message.isFavorite = false;
         message.isRead = false;
@@ -602,8 +642,8 @@ class MangaListResponseItem$Type extends MessageType<MangaListResponseItem> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int32 Id */ 1:
-                    message.id = reader.int32();
+                case /* int32 ID */ 1:
+                    message.iD = reader.int32();
                     break;
                 case /* string Name */ 2:
                     message.name = reader.string();
@@ -638,9 +678,9 @@ class MangaListResponseItem$Type extends MessageType<MangaListResponseItem> {
         return message;
     }
     internalBinaryWrite(message: MangaListResponseItem, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 Id = 1; */
-        if (message.id !== 0)
-            writer.tag(1, WireType.Varint).int32(message.id);
+        /* int32 ID = 1; */
+        if (message.iD !== 0)
+            writer.tag(1, WireType.Varint).int32(message.iD);
         /* string Name = 2; */
         if (message.name !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.name);
@@ -676,12 +716,14 @@ export const MangaListResponseItem = new MangaListResponseItem$Type();
 class MangaThumbnailRequest$Type extends MessageType<MangaThumbnailRequest> {
     constructor() {
         super("MangaThumbnailRequest", [
-            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaThumbnailRequest>): MangaThumbnailRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.name = "";
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaThumbnailRequest>(this, message, value);
         return message;
@@ -691,8 +733,11 @@ class MangaThumbnailRequest$Type extends MessageType<MangaThumbnailRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string Name */ 1:
+                case /* string Name = 1 [deprecated = true] */ 1:
                     message.name = reader.string();
+                    break;
+                case /* int32 ID */ 2:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -706,9 +751,12 @@ class MangaThumbnailRequest$Type extends MessageType<MangaThumbnailRequest> {
         return message;
     }
     internalBinaryWrite(message: MangaThumbnailRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string Name = 1; */
+        /* string Name = 1 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* int32 ID = 2; */
+        if (message.iD !== 0)
+            writer.tag(2, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -779,13 +827,15 @@ class MangaDetailRequest$Type extends MessageType<MangaDetailRequest> {
     constructor() {
         super("MangaDetailRequest", [
             { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaDetailRequest>): MangaDetailRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.user = "";
         message.name = "";
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaDetailRequest>(this, message, value);
         return message;
@@ -798,8 +848,11 @@ class MangaDetailRequest$Type extends MessageType<MangaDetailRequest> {
                 case /* string User */ 1:
                     message.user = reader.string();
                     break;
-                case /* string Name */ 2:
+                case /* string Name = 2 [deprecated = true] */ 2:
                     message.name = reader.string();
+                    break;
+                case /* int32 ID */ 3:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -816,9 +869,12 @@ class MangaDetailRequest$Type extends MessageType<MangaDetailRequest> {
         /* string User = 1; */
         if (message.user !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.user);
-        /* string Name = 2; */
+        /* string Name = 2 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* int32 ID = 3; */
+        if (message.iD !== 0)
+            writer.tag(3, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -985,7 +1041,8 @@ class MangaSetFavoriteRequest$Type extends MessageType<MangaSetFavoriteRequest> 
         super("MangaSetFavoriteRequest", [
             { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "Favorite", kind: "scalar", jsonName: "Favorite", T: 8 /*ScalarType.BOOL*/ }
+            { no: 3, name: "Favorite", kind: "scalar", jsonName: "Favorite", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaSetFavoriteRequest>): MangaSetFavoriteRequest {
@@ -993,6 +1050,7 @@ class MangaSetFavoriteRequest$Type extends MessageType<MangaSetFavoriteRequest> 
         message.user = "";
         message.name = "";
         message.favorite = false;
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaSetFavoriteRequest>(this, message, value);
         return message;
@@ -1005,11 +1063,14 @@ class MangaSetFavoriteRequest$Type extends MessageType<MangaSetFavoriteRequest> 
                 case /* string User */ 1:
                     message.user = reader.string();
                     break;
-                case /* string Name */ 2:
+                case /* string Name = 2 [deprecated = true] */ 2:
                     message.name = reader.string();
                     break;
                 case /* bool Favorite */ 3:
                     message.favorite = reader.bool();
+                    break;
+                case /* int32 ID */ 4:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1026,12 +1087,15 @@ class MangaSetFavoriteRequest$Type extends MessageType<MangaSetFavoriteRequest> 
         /* string User = 1; */
         if (message.user !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.user);
-        /* string Name = 2; */
+        /* string Name = 2 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.name);
         /* bool Favorite = 3; */
         if (message.favorite !== false)
             writer.tag(3, WireType.Varint).bool(message.favorite);
+        /* int32 ID = 4; */
+        if (message.iD !== 0)
+            writer.tag(4, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1103,7 +1167,8 @@ class MangaSetProgressRequest$Type extends MessageType<MangaSetProgressRequest> 
         super("MangaSetProgressRequest", [
             { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "Page", kind: "scalar", jsonName: "Page", T: 5 /*ScalarType.INT32*/ }
+            { no: 3, name: "Page", kind: "scalar", jsonName: "Page", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaSetProgressRequest>): MangaSetProgressRequest {
@@ -1111,6 +1176,7 @@ class MangaSetProgressRequest$Type extends MessageType<MangaSetProgressRequest> 
         message.user = "";
         message.name = "";
         message.page = 0;
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaSetProgressRequest>(this, message, value);
         return message;
@@ -1123,11 +1189,14 @@ class MangaSetProgressRequest$Type extends MessageType<MangaSetProgressRequest> 
                 case /* string User */ 1:
                     message.user = reader.string();
                     break;
-                case /* string Name */ 2:
+                case /* string Name = 2 [deprecated = true] */ 2:
                     message.name = reader.string();
                     break;
                 case /* int32 Page */ 3:
                     message.page = reader.int32();
+                    break;
+                case /* int32 ID */ 4:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1144,12 +1213,15 @@ class MangaSetProgressRequest$Type extends MessageType<MangaSetProgressRequest> 
         /* string User = 1; */
         if (message.user !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.user);
-        /* string Name = 2; */
+        /* string Name = 2 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.name);
         /* int32 Page = 3; */
         if (message.page !== 0)
             writer.tag(3, WireType.Varint).int32(message.page);
+        /* int32 ID = 4; */
+        if (message.iD !== 0)
+            writer.tag(4, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1240,7 +1312,8 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
             { no: 3, name: "X", kind: "scalar", jsonName: "X", T: 5 /*ScalarType.INT32*/ },
             { no: 4, name: "Y", kind: "scalar", jsonName: "Y", T: 5 /*ScalarType.INT32*/ },
             { no: 5, name: "Width", kind: "scalar", jsonName: "Width", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "Height", kind: "scalar", jsonName: "Height", T: 5 /*ScalarType.INT32*/ }
+            { no: 6, name: "Height", kind: "scalar", jsonName: "Height", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaUpdateCoverRequest>): MangaUpdateCoverRequest {
@@ -1251,6 +1324,7 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
         message.y = 0;
         message.width = 0;
         message.height = 0;
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaUpdateCoverRequest>(this, message, value);
         return message;
@@ -1277,6 +1351,9 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
                     break;
                 case /* int32 Height */ 6:
                     message.height = reader.int32();
+                    break;
+                case /* int32 ID = 7 [deprecated = true] */ 7:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1308,6 +1385,9 @@ class MangaUpdateCoverRequest$Type extends MessageType<MangaUpdateCoverRequest> 
         /* int32 Height = 6; */
         if (message.height !== 0)
             writer.tag(6, WireType.Varint).int32(message.height);
+        /* int32 ID = 7 [deprecated = true]; */
+        if (message.iD !== 0)
+            writer.tag(7, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1373,7 +1453,8 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
             { no: 2, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "Index", kind: "scalar", jsonName: "Index", T: 5 /*ScalarType.INT32*/ },
             { no: 4, name: "Width", kind: "scalar", jsonName: "Width", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "Height", kind: "scalar", jsonName: "Height", T: 5 /*ScalarType.INT32*/ }
+            { no: 5, name: "Height", kind: "scalar", jsonName: "Height", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaPageImageRequest>): MangaPageImageRequest {
@@ -1383,6 +1464,7 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
         message.index = 0;
         message.width = 0;
         message.height = 0;
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaPageImageRequest>(this, message, value);
         return message;
@@ -1395,7 +1477,7 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
                 case /* string User */ 1:
                     message.user = reader.string();
                     break;
-                case /* string Name */ 2:
+                case /* string Name = 2 [deprecated = true] */ 2:
                     message.name = reader.string();
                     break;
                 case /* int32 Index */ 3:
@@ -1406,6 +1488,9 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
                     break;
                 case /* int32 Height */ 5:
                     message.height = reader.int32();
+                    break;
+                case /* int32 ID */ 6:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1422,7 +1507,7 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
         /* string User = 1; */
         if (message.user !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.user);
-        /* string Name = 2; */
+        /* string Name = 2 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.name);
         /* int32 Index = 3; */
@@ -1434,6 +1519,9 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
         /* int32 Height = 5; */
         if (message.height !== 0)
             writer.tag(5, WireType.Varint).int32(message.height);
+        /* int32 ID = 6; */
+        if (message.iD !== 0)
+            writer.tag(6, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1574,12 +1662,14 @@ export const MangaPageImageStreamResponse = new MangaPageImageStreamResponse$Typ
 class MangaRepairRequest$Type extends MessageType<MangaRepairRequest> {
     constructor() {
         super("MangaRepairRequest", [
-            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaRepairRequest>): MangaRepairRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.name = "";
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaRepairRequest>(this, message, value);
         return message;
@@ -1589,8 +1679,11 @@ class MangaRepairRequest$Type extends MessageType<MangaRepairRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string Name */ 1:
+                case /* string Name = 1 [deprecated = true] */ 1:
                     message.name = reader.string();
+                    break;
+                case /* int32 ID */ 3:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1604,9 +1697,12 @@ class MangaRepairRequest$Type extends MessageType<MangaRepairRequest> {
         return message;
     }
     internalBinaryWrite(message: MangaRepairRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string Name = 1; */
+        /* string Name = 1 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* int32 ID = 3; */
+        if (message.iD !== 0)
+            writer.tag(3, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1676,12 +1772,14 @@ export const MangaRepairResponse = new MangaRepairResponse$Type();
 class MangaDownloadRequest$Type extends MessageType<MangaDownloadRequest> {
     constructor() {
         super("MangaDownloadRequest", [
-            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "ID", kind: "scalar", jsonName: "ID", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<MangaDownloadRequest>): MangaDownloadRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.name = "";
+        message.iD = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaDownloadRequest>(this, message, value);
         return message;
@@ -1691,8 +1789,11 @@ class MangaDownloadRequest$Type extends MessageType<MangaDownloadRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string Name */ 1:
+                case /* string Name = 1 [deprecated = true] */ 1:
                     message.name = reader.string();
+                    break;
+                case /* int32 ID */ 2:
+                    message.iD = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1706,9 +1807,12 @@ class MangaDownloadRequest$Type extends MessageType<MangaDownloadRequest> {
         return message;
     }
     internalBinaryWrite(message: MangaDownloadRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string Name = 1; */
+        /* string Name = 1 [deprecated = true]; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* int32 ID = 2; */
+        if (message.iD !== 0)
+            writer.tag(2, WireType.Varint).int32(message.iD);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

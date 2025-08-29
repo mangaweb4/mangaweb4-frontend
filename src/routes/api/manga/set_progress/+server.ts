@@ -14,11 +14,11 @@ export const GET: RequestHandler = async ({ request, cookies }) => {
     let client = new MangaClient(transport)
     const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
+    let id = parseInt(url.searchParams.get('id') ?? "") ?? 0
     let user = getUser(request, cookies)
     let page = Number.parseInt(url.searchParams.get('page') ?? "") ?? 0
 
-    let { response } = await client.setProgress({ name, user, page })
+    let { response } = await client.setProgress({ iD: id, name: '', user, page })
 
     return new Response(JSON.stringify(response));
 };

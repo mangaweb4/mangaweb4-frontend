@@ -13,11 +13,10 @@
 	import { goto } from '$app/navigation';
 	import { viewURL } from '$lib/routes';
 
-	function createImageUrl(name: string, page: number, base: string | URL): URL {
+	function createImageUrl(id: number, page: number, base: string | URL): URL {
 		const url = new URL('/api/manga/page_image', base);
-		if (name != null) {
-			url.searchParams.append('name', name);
-		}
+
+		url.searchParams.append('id', id.toString());
 		url.searchParams.set('i', page.toString());
 
 		return url;
@@ -25,9 +24,9 @@
 
 	let { data } = $props();
 
-	let name = $derived(data.request.name);
 	let index = $state(0);
-	const image = $derived(name != null ? createImageUrl(name, index, page.url).toString() : '');
+	const image = $derived(createImageUrl(data.request.iD, index, page.url).toString()
+	);
 	let pageCount = $derived(data.response.pageCount);
 
 	let crop = $state({ x: 0, y: 0 });
@@ -48,7 +47,7 @@
 		url.searchParams.set('y', cropDetails.y.toString());
 		url.searchParams.set('w', cropDetails.width.toString());
 		url.searchParams.set('h', cropDetails.height.toString());
-		url.searchParams.set('name', name ?? '');
+		url.searchParams.set('id', data.request.iD.toString());
 
 		const resp = await fetch(url, { method: 'GET' });
 		const json = await resp.json();
@@ -68,7 +67,7 @@
 	<Content>
 		<NavBar bind:showMenu><div class="text-xl">Edit thumbnail</div></NavBar>
 		<div class="container mx-auto prose max-w-[1024px] mt-4">
-			<h2>{name}</h2>
+			<h2>{data.response.name}</h2>
 			<div>
 				<label class="input">
 					<span class="label">Use thumbnail from page</span>
@@ -98,8 +97,8 @@
 	<SideBar bind:showMenu>
 		<ul class="menu">
 			<li>
-				<button onclick={() => goto(viewURL(page.url, name))}>
-					<Icon data={viewIcon} /> View current item.
+				<button onclick={() => goto(viewURL(page.url, data.request.iD))}>
+					<Icon data={viewIcon} class="stroke-slate-800 fill-slate-400"/> View current item.
 				</button>
 			</li>
 		</ul>

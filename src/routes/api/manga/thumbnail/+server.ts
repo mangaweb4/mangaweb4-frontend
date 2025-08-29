@@ -4,17 +4,19 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
 import { variables } from '$lib/variables.server';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ url }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
     let client = new MangaClient(transport)
-    const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
-    let { response } = await client.thumbnail({ name })
+    let { response } = await client.thumbnail(
+        {
+            iD: parseInt(url.searchParams.get('id') ?? ""),
+            name: ''
+        })
 
     return new Response(response.data, {
         headers: {

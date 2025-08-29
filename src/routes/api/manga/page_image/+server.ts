@@ -6,20 +6,19 @@ import { variables } from '$lib/variables.server';
 import { getUser } from '$lib/user.server';
 import { MAX_STREAM_OBJECT_SIZE } from '$lib/constants';
 
-export const GET: RequestHandler = async ({ request, cookies }) => {
+export const GET: RequestHandler = async ({ request, cookies, url }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
     let client = new MangaClient(transport)
-    const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
     let iStr = url.searchParams.get('i')
     let index = iStr ? parseInt(iStr) : 0
     let user = getUser(request, cookies)
-    let stream = client.pageImageStream({ name, user, index, width: 0, height: 0 })
+    let id = parseInt(url.searchParams.get('id') ?? "") ?? 0
+    let stream = client.pageImageStream({iD: id, name: '', user, index, width: 0, height: 0 })
 
     let filename = ""
     let contentType = ""

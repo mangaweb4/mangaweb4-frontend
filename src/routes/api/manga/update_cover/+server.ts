@@ -11,23 +11,31 @@ function parseParamInt(name: string, searchParams: URLSearchParams) {
 }
 
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ url }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure()
     })
 
     let client = new MangaClient(transport)
-    const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
+    let id = url.searchParams.get('id')
     let index = parseParamInt("i", url.searchParams)
     let x = parseParamInt("x", url.searchParams)
     let y = parseParamInt("y", url.searchParams)
     let width = parseParamInt("w", url.searchParams)
     let height = parseParamInt("h", url.searchParams)
 
-    let { response } = await client.updateCover({ name, index, x, y, width, height })
+    let { response } = await client.updateCover(
+        {
+            iD: parseInt(id ?? ""),
+            name: '',
+            index,
+            x,
+            y,
+            width,
+            height
+        })
 
     return new Response(JSON.stringify(response));
 };

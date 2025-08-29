@@ -5,16 +5,11 @@ import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
 
-
 export const prerender = false;
 
-export const load: PageServerLoad = async ({ request, url, cookies }) => {
-    const params = url.searchParams;
-    
-    let name = ''
-    if (params.has('name')) {
-        name = params.get('name') as string;
-    }
+export const load: PageServerLoad = async ({ request, cookies, params }) => {
+    const { id } = params
+    const idNo = parseInt(id)
 
     const user = getUser(request, cookies);
 
@@ -26,8 +21,9 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
     let client = new MangaClient(transport)
 
     const call = await client.detail({
-        name: name,
+        iD: idNo,
         user: user,
+        name: ''
     })
 
     return {

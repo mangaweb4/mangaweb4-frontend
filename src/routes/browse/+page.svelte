@@ -43,12 +43,12 @@
 			return {
 				favorite: i.isFavorite,
 				isRead: i.isRead,
-				id: i.id,
+				id: i.iD,
 				name: i.name,
 				pageCount: i.pageCount,
 				favoriteTag: i.hasFavoriteTag,
-				imageUrl: createThumbnailUrl(i.name),
-				linkUrl: viewURL(page.url, i.name),
+				imageUrl: createThumbnailUrl(i.iD),
+				linkUrl: viewURL(page.url, i.iD),
 				currentPage: i.currentPage
 			};
 		})
@@ -145,9 +145,9 @@
 		return createBrowseURL(options);
 	}
 
-	function createThumbnailUrl(name: string): URL {
+	function createThumbnailUrl(id: number): URL {
 		const u = new URL('/api/manga/thumbnail', page.url);
-		u.searchParams.set('name', name);
+		u.searchParams.set('id', id.toString());
 
 		return u;
 	}
