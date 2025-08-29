@@ -53,14 +53,14 @@
 
 	function downloadManga() {
 		const url = new URL('/api/manga/download', page.url.origin);
-		url.searchParams.set('id', data.request.iD.toString());
+		url.searchParams.set('id', data.request.id.toString());
 
 		download(url.toString());
 	}
 
 	function downloadPage() {
 		const url = new URL('/api/manga/page_image', page.url.origin);
-		url.searchParams.set('id', data.request.iD.toString());
+		url.searchParams.set('id', data.request.id.toString());
 		url.searchParams.set('i', current.toString());
 
 		download(url.toString());
@@ -68,7 +68,7 @@
 
 	async function toggleFavorite() {
 		const url = new URL('/api/manga/set_favorite', page.url.origin);
-		url.searchParams.set('id', data.request.iD.toString());
+		url.searchParams.set('id', data.request.id.toString());
 		url.searchParams.set('favorite', !favorite ? 'true' : 'false');
 
 		const resp = await fetch(url, { method: 'GET' });
@@ -85,7 +85,7 @@
 
 	async function fixMetaData() {
 		const url = new URL('/api/manga/repair', page.url.origin);
-		url.searchParams.set('id', data.request.iD.toString());
+		url.searchParams.set('id', data.request.id.toString());
 
 		const resp = await fetch(url);
 		const json = await resp.json();
@@ -99,7 +99,7 @@
 	}
 
 	async function changeThumbnail() {
-		const url = new URL(`/view/thumb_edit/${data.request.iD}`, page.url.origin);
+		const url = new URL(`/view/thumb_edit/${data.request.id}`, page.url.origin);
 		url.searchParams.set('index', `${current}`);
 
 		goto(url);
@@ -120,7 +120,7 @@
 
 		const url = new URL('/api/manga/set_progress', page.url.origin);
 		url.searchParams.set('page', `${current}`);
-		url.searchParams.set('id', data.request.iD.toString());
+		url.searchParams.set('id', data.request.id.toString());
 
 		try {
 			fetch(url);
@@ -146,7 +146,7 @@
 		</NavBar>
 		<div class="fixed top-18 bottom-0 start-0 end-0">
 			<ImageViewer
-				imageURLs={createImageUrls(data.request.iD, data.response.pageCount)}
+				imageURLs={createImageUrls(data.request.id, data.response.pageCount)}
 				{onIndexChange}
 				bind:this={viewer}
 				startIndex={data.response.currentPage}

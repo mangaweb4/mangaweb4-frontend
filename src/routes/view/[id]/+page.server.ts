@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ request, cookies, params }) => {
     let client = new MangaClient(transport)
 
     const call = await client.detail({
-        iD: idNo,
+        id: idNo,
         user: user,
         name: ''
     })

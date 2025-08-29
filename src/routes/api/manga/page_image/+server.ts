@@ -18,7 +18,7 @@ export const GET: RequestHandler = async ({ request, cookies, url }) => {
     let index = iStr ? parseInt(iStr) : 0
     let user = getUser(request, cookies)
     let id = parseInt(url.searchParams.get('id') ?? "") ?? 0
-    let stream = client.pageImageStream({iD: id, name: '', user, index, width: 0, height: 0 })
+    let stream = client.pageImageStream({id: id, name: '', user, index, width: 0, height: 0 })
 
     let filename = ""
     let contentType = ""

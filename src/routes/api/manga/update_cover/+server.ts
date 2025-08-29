@@ -28,7 +28,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
     let { response } = await client.updateCover(
         {
-            iD: parseInt(id ?? ""),
+            id: parseInt(id ?? ""),
             name: '',
             index,
             x,

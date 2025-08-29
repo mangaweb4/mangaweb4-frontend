@@ -25,7 +25,7 @@
 	let { data } = $props();
 
 	let index = $state(0);
-	const image = $derived(createImageUrl(data.request.iD, index, page.url).toString()
+	const image = $derived(createImageUrl(data.request.id, index, page.url).toString()
 	);
 	let pageCount = $derived(data.response.pageCount);
 
@@ -47,7 +47,7 @@
 		url.searchParams.set('y', cropDetails.y.toString());
 		url.searchParams.set('w', cropDetails.width.toString());
 		url.searchParams.set('h', cropDetails.height.toString());
-		url.searchParams.set('id', data.request.iD.toString());
+		url.searchParams.set('id', data.request.id.toString());
 
 		const resp = await fetch(url, { method: 'GET' });
 		const json = await resp.json();
@@ -97,7 +97,7 @@
 	<SideBar bind:showMenu>
 		<ul class="menu">
 			<li>
-				<button onclick={() => goto(viewURL(page.url, data.request.iD))}>
+				<button onclick={() => goto(viewURL(page.url, data.request.id))}>
 					<Icon data={viewIcon} class="stroke-slate-800 fill-slate-400"/> View current item.
 				</button>
 			</li>

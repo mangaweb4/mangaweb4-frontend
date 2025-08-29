@@ -14,7 +14,7 @@ export const GET: RequestHandler = async ({ url }) => {
     let client = new MangaClient(transport)
 
     let id = parseInt(url.searchParams.get('id') ?? "") ?? 0
-    let stream = client.download({ iD: id, name: '' })
+    let stream = client.download({ id: id, name: '' })
 
     let filename = ""
     let contentType = ""

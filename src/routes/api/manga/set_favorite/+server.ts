@@ -16,7 +16,7 @@ export const GET: RequestHandler = async ({ request, url, cookies }) => {
     let favorite = url.searchParams.get('favorite')?.toLocaleLowerCase() == "true"
 
     let { response } = await client.setFavorite({
-        iD: parseInt(url.searchParams.get('id') ?? ""),
+        id: parseInt(url.searchParams.get('id') ?? ""),
         name: '',
         user,
         favorite

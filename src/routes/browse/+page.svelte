@@ -43,12 +43,12 @@
 			return {
 				favorite: i.isFavorite,
 				isRead: i.isRead,
-				id: i.iD,
+				id: i.id,
 				name: i.name,
 				pageCount: i.pageCount,
 				favoriteTag: i.hasFavoriteTag,
-				imageUrl: createThumbnailUrl(i.iD),
-				linkUrl: viewURL(page.url, i.iD),
+				imageUrl: createThumbnailUrl(i.id),
+				linkUrl: viewURL(page.url, i.id),
 				currentPage: i.currentPage
 			};
 		})
