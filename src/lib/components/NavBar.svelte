@@ -8,47 +8,55 @@
 	import { MediaQuery } from 'svelte/reactivity';
 	import { browseURL } from '$lib/routes';
 	import { page } from '$app/state';
-	let { children = undefined, showMenu = $bindable(), hasmenu = true, rootPage = false } = $props();
+	let {
+		children = undefined,
+		showMenu = $bindable(),
+		show = $bindable(true),
+		hasmenu = true,
+		rootPage = false
+	} = $props();
 
 	const isBrowser = new MediaQuery('display-mode: browser');
 
 	$inspect(isBrowser.current);
 </script>
 
-<div class="navbar bg-base-100 shadow-sm sticky top-0 z-1">
-	<div class="flex w-full max-w-[1024px] mx-auto">
-		{#if !isBrowser.current}
-			<div class="flex-none place-self-center">
-				<button
-					class="flex-none btn btn-ghost"
-					class:btn-disabled={rootPage}
-					onclick={() => history.back()}
-				>
-					<Icon data={backIcon} />
-				</button>
-			</div>
+{#if show}
+	<div class="navbar bg-base-100 shadow-sm sticky top-0 z-1">
+		<div class="flex w-full max-w-[1024px] mx-auto">
+			{#if !isBrowser.current}
+				<div class="flex-none place-self-center">
+					<button
+						class="btn btn-ghost"
+						class:btn-disabled={rootPage}
+						onclick={() => history.back()}
+					>
+						<Icon data={backIcon} />
+					</button>
+				</div>
 
-			<div class="flex-none place-self-center">
-				<button class="flex-none btn btn-ghost" onclick={() => location.reload()}>
-					<Icon data={reloadIcon} />
-				</button>
-			</div>
-		{/if}
-
-		<div class="flex-none place-self-center">
-			<a class="flex-none" href={browseURL(page.url).toString()}>
-				<Icon data={logo} width="128px" height="48px" />
-			</a>
-		</div>
-		<div class="flex-1 grow place-self-center overflow-hidden">
-			{@render children?.()}
-		</div>
-		<div class="flex-none place-self-center">
-			{#if hasmenu}
-				<button class="btn btn-square btn-ghost" onclick={() => (showMenu = true)}>
-					<Icon data={menuIcon} class="fill-slate-400 stroke-slate-800" />
-				</button>
+				<div class="flex-none place-self-center">
+					<button class="btn btn-ghost" onclick={() => location.reload()}>
+						<Icon data={reloadIcon} />
+					</button>
+				</div>
 			{/if}
+
+			<div class="flex-none place-self-center">
+				<a class="flex-none" href={browseURL(page.url).toString()}>
+					<Icon data={logo} width="128px" height="48px" />
+				</a>
+			</div>
+			<div class="flex-1 grow place-self-center overflow-hidden">
+				{@render children?.()}
+			</div>
+			<div class="flex-none place-self-center">
+				{#if hasmenu}
+					<button class="btn btn-square btn-ghost" onclick={() => (showMenu = true)}>
+						<Icon data={menuIcon} class="fill-slate-400 stroke-slate-800" />
+					</button>
+				{/if}
+			</div>
 		</div>
 	</div>
-</div>
+{/if}

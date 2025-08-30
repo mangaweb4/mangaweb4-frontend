@@ -10,6 +10,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import type { PageData } from './$types';
+	import path from 'path-browserify';
 
 	import { Icon } from 'svelte-icon';
 	import downloadIcon from '@mdi/svg/svg/download.svg?raw';
@@ -21,7 +22,7 @@
 	import logger from '$lib/logger';
 	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
 	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
-	import path from 'path-browserify';
+	import toggleNavBarIcon from '@mdi/svg/svg/chevron-down.svg?raw';
 
 	let current = $state(0);
 	let viewer: ImageViewer;
@@ -36,6 +37,8 @@
 	let pageCount = $derived(data.response.pageCount);
 	let tags = $derived(data.response.tags);
 	let favorite = $state(data.response.favorite);
+
+	let showNavBar = $state(true);
 
 	function createImageUrls(id: number, pageCount: number): string[] {
 		const url = new URL('/api/manga/page_image', page.url.origin);
@@ -139,12 +142,12 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu>
+		<NavBar bind:showMenu bind:show={showNavBar}>
 			<div class="text-xl hidden md:inline">
 				<div class=" whitespace-nowrap">{path.basename(data.response.name)}</div>
 			</div>
 		</NavBar>
-		<div class="fixed top-18 bottom-0 start-0 end-0">
+		<div class="fixed top-0 bottom-0 start-0 end-0">
 			<ImageViewer
 				imageURLs={createImageUrls(data.request.id, data.response.pageCount)}
 				{onIndexChange}
@@ -152,6 +155,14 @@
 				startIndex={data.response.currentPage}
 			/>
 		</div>
+
+		<button
+			class="cursor-pointer absolute w-full h-40 top-5"
+			onclick={() => showNavBar = !showNavBar}
+			aria-label="toggle-navbar"
+		>
+		&nbsp;
+		</button>
 	</Content>
 	<SideBar bind:showMenu>
 		<ul class="menu">
@@ -180,7 +191,7 @@
 					onclick={() => toggleFavorite()}
 				>
 					{#if favorite}
-						<Icon data={isFavoriteIcon} class="stroke-pink-800 fill-pink-400"/> Favorite
+						<Icon data={isFavoriteIcon} class="stroke-pink-800 fill-pink-400" /> Favorite
 					{:else}
 						<Icon data={isNotFavoriteIcon} /> Favorite
 					{/if}
