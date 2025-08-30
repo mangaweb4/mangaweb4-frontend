@@ -60,7 +60,7 @@
 
 	let totalPage = $derived(data.response.totalPage);
 
-	let updated = $state(false);
+	let updated = $derived(data != undefined && data != null);
 	let loadingDlg: LoadingDialog;
 
 	$effect(() => {
@@ -161,7 +161,7 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu>
+		<NavBar bind:showMenu rootPage={true}>
 			<div class="text-xl">Browse</div>
 		</NavBar>
 
