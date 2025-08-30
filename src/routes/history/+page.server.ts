@@ -14,8 +14,7 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
 
     let client = new HistoryClient(transport)
 
-    const pageStr = url.searchParams.get('page') ?? "0"
-    const page = parseInt(pageStr);
+    const page = parseInt(url.searchParams.get('page') ?? "0");
     const user = getUser(request, cookies);
 
     let call = await client.list({ page: page, user, itemPerPage: ITEM_PER_PAGE })

@@ -4,19 +4,22 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
 import { variables } from '$lib/variables.server';
 import { MAX_STREAM_OBJECT_SIZE } from '$lib/constants';
+import { error } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ url }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
     let client = new MangaClient(transport)
-    const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
+    let id = parseInt(url.searchParams.get('id') ?? "")
+    if (id == 0 || Number.isNaN(id)) {
+        error(404);
+    }
 
-    let stream = client.download({ name })
+    let stream = client.download({ id: id })
 
     let filename = ""
     let contentType = ""

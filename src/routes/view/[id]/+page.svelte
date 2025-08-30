@@ -33,16 +33,15 @@
 
 	let { data }: Props = $props();
 
-	let name = $derived(data.request.name);
 	let pageCount = $derived(data.response.pageCount);
 	let tags = $derived(data.response.tags);
 	let favorite = $state(data.response.favorite);
 
-	function createImageUrls(name: string, pageCount: number): string[] {
+	function createImageUrls(id: number, pageCount: number): string[] {
 		const url = new URL('/api/manga/page_image', page.url.origin);
 		const output = [];
 		const user = data.request.user;
-		url.searchParams.append('name', name);
+		url.searchParams.append('id', id.toString());
 		url.searchParams.append('user', user);
 		for (let i = 0; i < pageCount; i++) {
 			url.searchParams.set('i', i.toString());
@@ -54,14 +53,14 @@
 
 	function downloadManga() {
 		const url = new URL('/api/manga/download', page.url.origin);
-		url.searchParams.set('name', name);
+		url.searchParams.set('id', data.request.id.toString());
 
 		download(url.toString());
 	}
 
 	function downloadPage() {
 		const url = new URL('/api/manga/page_image', page.url.origin);
-		url.searchParams.set('name', name);
+		url.searchParams.set('id', data.request.id.toString());
 		url.searchParams.set('i', current.toString());
 
 		download(url.toString());
@@ -69,7 +68,7 @@
 
 	async function toggleFavorite() {
 		const url = new URL('/api/manga/set_favorite', page.url.origin);
-		url.searchParams.set('name', name);
+		url.searchParams.set('id', data.request.id.toString());
 		url.searchParams.set('favorite', !favorite ? 'true' : 'false');
 
 		const resp = await fetch(url, { method: 'GET' });
@@ -86,7 +85,7 @@
 
 	async function fixMetaData() {
 		const url = new URL('/api/manga/repair', page.url.origin);
-		url.searchParams.set('name', name);
+		url.searchParams.set('id', data.request.id.toString());
 
 		const resp = await fetch(url);
 		const json = await resp.json();
@@ -100,9 +99,8 @@
 	}
 
 	async function changeThumbnail() {
-		const url = new URL('/view/thumb_edit', page.url.origin);
+		const url = new URL(`/view/thumb_edit/${data.request.id}`, page.url.origin);
 		url.searchParams.set('index', `${current}`);
-		url.searchParams.set('name', name);
 
 		goto(url);
 	}
@@ -122,7 +120,7 @@
 
 		const url = new URL('/api/manga/set_progress', page.url.origin);
 		url.searchParams.set('page', `${current}`);
-		url.searchParams.set('name', name);
+		url.searchParams.set('id', data.request.id.toString());
 
 		try {
 			fetch(url);
@@ -136,19 +134,19 @@
 </script>
 
 <svelte:head>
-	<title>View: {name}</title>
+	<title>View: {data.response.name}</title>
 </svelte:head>
 
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
 			<div class="text-xl hidden md:inline">
-				<div class=" whitespace-nowrap">{path.basename(name)}</div>
+				<div class=" whitespace-nowrap">{path.basename(data.response.name)}</div>
 			</div>
 		</NavBar>
 		<div class="fixed top-18 bottom-0 start-0 end-0">
 			<ImageViewer
-				imageURLs={createImageUrls(name, pageCount)}
+				imageURLs={createImageUrls(data.request.id, data.response.pageCount)}
 				{onIndexChange}
 				bind:this={viewer}
 				startIndex={data.response.currentPage}
@@ -158,9 +156,9 @@
 	<SideBar bind:showMenu>
 		<ul class="menu">
 			<li class="text">
-				<div class="tooltip tooltip-left" data-tip={name}>
+				<div class="tooltip tooltip-left" data-tip={data.response.name}>
 					<div class="h-20 overflow-hidden">
-						{name}
+						{data.response.name}
 					</div>
 				</div>
 			</li>
@@ -192,7 +190,7 @@
 			<li class="menu-title">Tags</li>
 			{#each tags as t}
 				<li>
-					<button onclick={() => goto(browseTagURL(page.url, t.name))}>
+					<button onclick={() => goto(browseTagURL(page.url, t.id))}>
 						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
 						{t.name}
 					</button>
@@ -234,7 +232,7 @@
 			<tbody>
 				<tr>
 					<th>Title</th>
-					<td>{name}</td>
+					<td>{data.response.name}</td>
 				</tr>
 				<tr>
 					<th>Tags</th>

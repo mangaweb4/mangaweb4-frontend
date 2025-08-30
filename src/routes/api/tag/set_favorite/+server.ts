@@ -14,11 +14,10 @@ export const GET: RequestHandler = async ({ request, cookies }) => {
     let client = new TagClient(transport)
     const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
     let user = getUser(request, cookies)
     let favorite = url.searchParams.get('favorite')?.toLowerCase() == "true"
-
-    let { response } = await client.setFavorite({ tag: name, user, favorite })
+    let id = parseInt(url.searchParams.get("id") ?? "")
+    let { response } = await client.setFavorite({ id: id, tag: '', user, favorite })
 
     return new Response(JSON.stringify(response));
 };

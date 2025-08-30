@@ -9,11 +9,8 @@ export function historyURL(base: URL | string): URL {
     return new URL("/history", base);
 }
 
-export function viewURL(base: URL | string, name: string): URL {
-    var u = new URL("/view", base);
-    u.searchParams.set('name', name)
-
-    return u;
+export function viewURL(base: URL | string, id: number): URL {
+    return new URL(`/view/${id}`, base);
 }
 
 export function userURL(base: URL | string): URL {
@@ -107,7 +104,7 @@ export function browseURL(base: URL | string, options?: {
 }
 
 
-export function browseTagURL(base: URL | string, tag: string, options?: {
+export function browseTagURL(base: URL | string, id: number, options?: {
     user?: string;
     filter?: Filter;
     item_per_page?: number;
@@ -116,7 +113,7 @@ export function browseTagURL(base: URL | string, tag: string, options?: {
     search?: string;
     sort?: SortField;
 }): URL {
-    const output = new URL(`/tag/browse/${encodeURIComponent(tag)}`, base);
+    const output = new URL(`/tag/browse/${id}`, base);
 
     if (options != null) {
         const { filter, item_per_page, order, page, search, sort } = options;

@@ -8,9 +8,10 @@ import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 import { $enum } from 'ts-enum-util';
 import logger from '$lib/logger';
 import { ITEM_PER_PAGE } from '$lib/constants';
+import { TagClient } from '$lib/grpc/tag.client';
 
 export const load: PageServerLoad = async ({ request, url, cookies, params }) => {
-    const tag = decodeURIComponent(params.tag)
+    const id = parseInt(params.id ?? "")
 
     const searchParams = url.searchParams;
     const user = getUser(request, cookies);
@@ -39,11 +40,11 @@ export const load: PageServerLoad = async ({ request, url, cookies, params }) =>
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
-    let client = new MangaClient(transport)
+    let client = new TagClient(transport)
 
-    let call = await client.list({
+    let call = await client.detail({
         user: user,
-        tag: tag,
+        id: id,
         filter: filter,
         page: page,
         itemPerPage: ITEM_PER_PAGE,
