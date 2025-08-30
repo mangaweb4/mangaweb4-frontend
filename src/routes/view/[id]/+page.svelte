@@ -190,7 +190,7 @@
 			<li class="menu-title">Tags</li>
 			{#each tags as t}
 				<li>
-					<button onclick={() => goto(browseTagURL(page.url, t.name))}>
+					<button onclick={() => goto(browseTagURL(page.url, t.id))}>
 						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />
 						{t.name}
 					</button>
