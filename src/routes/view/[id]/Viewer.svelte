@@ -43,14 +43,14 @@
 </script>
 
 <button
-	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
+	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
 	onclick={() => emblaApi?.scrollPrev()}
 >
 	<Icon data={prevIcon} class="mx-auto"></Icon>
 </button>
 
 <button
-	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
+	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
 	onclick={() => emblaApi?.scrollNext()}
 >
 	<Icon data={nextIcon} class="mx-auto"></Icon>
@@ -71,10 +71,10 @@
 </div>
 
 <button
-	class="cursor-pointer text-gray-500/50 hover:text-gray-500 fixed inset-x-1/2 -translate-x-1/2 w-1/2 z-10 h-20 bottom-2"
+	class="cursor-pointer absolute w-full h-20 bottom-2"
 	onclick={() => pageScroll.showModal()}
+	aria-label='toggle-page-scroll'
 >
-	<Icon data={pageScrollIcon} class="mx-auto"></Icon>
 </button>
 
 <dialog class="modal modal-bottom" bind:this={pageScroll}>
