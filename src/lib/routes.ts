@@ -104,7 +104,7 @@ export function browseURL(base: URL | string, options?: {
 }
 
 
-export function browseTagURL(base: URL | string, tag: string, options?: {
+export function browseTagURL(base: URL | string, id: number, options?: {
     user?: string;
     filter?: Filter;
     item_per_page?: number;
@@ -113,7 +113,7 @@ export function browseTagURL(base: URL | string, tag: string, options?: {
     search?: string;
     sort?: SortField;
 }): URL {
-    const output = new URL(`/tag/browse/${encodeURIComponent(tag)}`, base);
+    const output = new URL(`/tag/browse/${id}`, base);
 
     if (options != null) {
         const { filter, item_per_page, order, page, search, sort } = options;

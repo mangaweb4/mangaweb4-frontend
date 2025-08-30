@@ -31,7 +31,7 @@ function createDefaultRequest(request: Request, cookies: Cookies): {
 }
 
 export const load: PageServerLoad = async ({ request, url, cookies }) => {
-    let { user, search, filter, page, item_per_page, order, sort } 
+    let { user, search, filter, page, item_per_page, order, sort }
         = createDefaultRequest(request, cookies);
 
     const params = url.searchParams;

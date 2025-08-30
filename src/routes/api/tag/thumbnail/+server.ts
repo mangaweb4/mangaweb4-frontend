@@ -4,18 +4,17 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { variables } from '$lib/variables.server';
 import { TagClient } from '$lib/grpc/tag.client';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ request, url }) => {
     let transport = new GrpcTransport({
         host: variables.apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
     let client = new TagClient(transport)
-    const url = new URL(request.url)
 
-    let name = url.searchParams.get('name') ?? ""
+    let id = parseInt(url.searchParams.get('id') ?? "")
 
-    let { response } = await client.thumbnail({ name })
+    let { response } = await client.thumbnail({ id, name: '' })
 
     return new Response(response.data, {
         headers: {

@@ -8,6 +8,8 @@ import type { TagSetFavoriteResponse } from "./tag";
 import type { TagSetFavoriteRequest } from "./tag";
 import type { TagThumbnailResponse } from "./tag";
 import type { TagThumbnailRequest } from "./tag";
+import type { TagDetailResponse } from "./tag";
+import type { TagDetailRequest } from "./tag";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { TagListResponse } from "./tag";
 import type { TagListRequest } from "./tag";
@@ -21,6 +23,10 @@ export interface ITagClient {
      * @generated from protobuf rpc: List
      */
     list(input: TagListRequest, options?: RpcOptions): UnaryCall<TagListRequest, TagListResponse>;
+    /**
+     * @generated from protobuf rpc: Detail
+     */
+    detail(input: TagDetailRequest, options?: RpcOptions): UnaryCall<TagDetailRequest, TagDetailResponse>;
     /**
      * @generated from protobuf rpc: Thumbnail
      */
@@ -47,17 +53,24 @@ export class TagClient implements ITagClient, ServiceInfo {
         return stackIntercept<TagListRequest, TagListResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: Detail
+     */
+    detail(input: TagDetailRequest, options?: RpcOptions): UnaryCall<TagDetailRequest, TagDetailResponse> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<TagDetailRequest, TagDetailResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: Thumbnail
      */
     thumbnail(input: TagThumbnailRequest, options?: RpcOptions): UnaryCall<TagThumbnailRequest, TagThumbnailResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<TagThumbnailRequest, TagThumbnailResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: SetFavorite
      */
     setFavorite(input: TagSetFavoriteRequest, options?: RpcOptions): UnaryCall<TagSetFavoriteRequest, TagSetFavoriteResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<TagSetFavoriteRequest, TagSetFavoriteResponse>("unary", this._transport, method, opt, input);
     }
 }

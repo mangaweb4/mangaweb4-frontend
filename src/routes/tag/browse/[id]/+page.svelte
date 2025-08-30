@@ -30,7 +30,7 @@
 	import isTagFavoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import isTagNotFavoriteIcon from '@mdi/svg/svg/tag-heart-outline.svg?raw';
 	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw';
-
+	import { ITEM_PER_PAGE } from '$lib/constants';
 
 	let toast: Toast;
 
@@ -40,10 +40,10 @@
 
 	let { data }: Props = $props();
 
-	let { order, page: pageIndex, search, sort, tag, filter } = $derived(data.request);
+	let { order, page: pageIndex, search, sort, filter } = $derived(data.request);
 
 	let favoriteTag = $state(data.response.tagFavorite);
-	let totalPage = $derived(data.response.totalPage);
+	let totalPage = $derived(Math.ceil(data.response.totalItemCount / ITEM_PER_PAGE));
 
 	let items = $derived.by(() =>
 		data.response.items.map((i) => {
@@ -54,7 +54,7 @@
 				name: i.name,
 				pageCount: i.pageCount,
 				favoriteTag: i.hasFavoriteTag || favoriteTag,
-				imageUrl: createThumbnailUrl(data.request.id),
+				imageUrl: createThumbnailUrl(i.id),
 				linkUrl: viewURL(page.url, i.id),
 				currentPage: i.currentPage
 			};
@@ -91,8 +91,7 @@
 			order: data.request.order,
 			page: data.request.page,
 			search: data.request.search,
-			sort: data.request.sort,
-			tag: data.request.tag
+			sort: data.request.sort
 		};
 		if (options != null) {
 			const { filter, item_per_page, order, page, search, sort, tag } = options;
@@ -115,9 +114,6 @@
 
 			if (sort != null) {
 				callOptions.sort = sort;
-			}
-			if (tag != null) {
-				callOptions.tag = tag;
 			}
 		}
 
@@ -152,16 +148,16 @@
 	async function onTagFavorite() {
 		const url = new URL('/api/tag/set_favorite', page.url.origin);
 
-		url.searchParams.set('name', tag);
+		url.searchParams.set('id', data.request.id.toString());
 		url.searchParams.set('favorite', !favoriteTag ? 'true' : 'false');
 
 		const resp = await fetch(url, { method: 'GET' });
 		const json = await resp.json();
 
 		if (json.favorite) {
-			toast.add(`The tag "${tag}" is now your favorite.`, 'success');
+			toast.add(`The tag "${data.response.name}" is now your favorite.`, 'success');
 		} else {
-			toast.add(`The tag "${tag}" is no longer your favorite.`, 'success');
+			toast.add(`The tag "${data.response.name}" is no longer your favorite.`, 'success');
 		}
 
 		favoriteTag = json.favorite;
@@ -178,14 +174,14 @@
 </script>
 
 <svelte:head>
-	<title>Tag: {tag}</title>
+	<title>Tag: {data.response.name}</title>
 </svelte:head>
 
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
 			<div class="text-xl hidden md:inline">
-				<div class="whitespace-nowrap">Tag: {tag}</div>
+				<div class="whitespace-nowrap">Tag: {data.response.name}</div>
 			</div>
 		</NavBar>
 		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
@@ -195,9 +191,9 @@
 	<SideBar bind:showMenu>
 		<ul class="menu">
 			<li class="text">
-				<div class="tooltip tooltip-left mb-2" data-tip={tag}>
+				<div class="tooltip tooltip-left mb-2" data-tip={data.response.name}>
 					<div class="h-20 overflow-hidden text-xl">
-						{tag}
+						{data.response.name}
 					</div>
 				</div>
 			</li>
@@ -224,14 +220,14 @@
 						class="btn join-item"
 						onclick={() => {
 							search = '';
-							goto(browseTagURL(page.url.origin, tag));
+							goto(browseTagURL(page.url.origin, data.request.id));
 						}}
 					>
 						<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
 					</button>
 					<button
 						class="btn join-item"
-						onclick={() => goto(browseTagURL(page.url.origin, tag, { search: search }))}
+						onclick={() => goto(browseTagURL(page.url.origin, data.request.id, { search: search }))}
 					>
 						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
 					</button>

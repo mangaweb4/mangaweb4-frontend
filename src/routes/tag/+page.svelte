@@ -39,7 +39,7 @@
 		data.response.items.map((tag) => {
 			return {
 				name: tag.name,
-				linkUrl: browseTagURL(page.url, tag.name),
+				linkUrl: browseTagURL(page.url, tag.id),
 				imageUrl: createThumbnailUrl(tag.id),
 				favoriteTag: tag.isFavorite,
 				itemCount: tag.pageCount
