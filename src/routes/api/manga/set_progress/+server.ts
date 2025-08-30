@@ -18,7 +18,7 @@ export const GET: RequestHandler = async ({ request, cookies }) => {
     let user = getUser(request, cookies)
     let page = Number.parseInt(url.searchParams.get('page') ?? "") ?? 0
 
-    let { response } = await client.setProgress({ id: id, name: '', user, page })
+    let { response } = await client.setProgress({ id: id, user, page })
 
     return new Response(JSON.stringify(response));
 };

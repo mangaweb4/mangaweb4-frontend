@@ -23,8 +23,6 @@ export interface TagListRequest {
      */
     user: string;
     /**
-     * reserved = 2
-     *
      * @generated from protobuf field: mangaweb4.types.Filter Filter = 3
      */
     filter: Filter;
@@ -195,11 +193,6 @@ export interface TagListResponseItem {
  */
 export interface TagThumbnailRequest {
     /**
-     * @deprecated
-     * @generated from protobuf field: string Name = 1 [deprecated = true]
-     */
-    name: string;
-    /**
      * @generated from protobuf field: int32 Id = 2
      */
     id: number;
@@ -225,11 +218,6 @@ export interface TagSetFavoriteRequest {
      * @generated from protobuf field: string User = 1
      */
     user: string;
-    /**
-     * @deprecated
-     * @generated from protobuf field: string Tag = 2 [deprecated = true]
-     */
-    tag: string;
     /**
      * @generated from protobuf field: bool Favorite = 3
      */
@@ -778,13 +766,11 @@ export const TagListResponseItem = new TagListResponseItem$Type();
 class TagThumbnailRequest$Type extends MessageType<TagThumbnailRequest> {
     constructor() {
         super("TagThumbnailRequest", [
-            { no: 1, name: "Name", kind: "scalar", jsonName: "Name", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "Id", kind: "scalar", jsonName: "Id", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<TagThumbnailRequest>): TagThumbnailRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.name = "";
         message.id = 0;
         if (value !== undefined)
             reflectionMergePartial<TagThumbnailRequest>(this, message, value);
@@ -795,9 +781,6 @@ class TagThumbnailRequest$Type extends MessageType<TagThumbnailRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string Name = 1 [deprecated = true] */ 1:
-                    message.name = reader.string();
-                    break;
                 case /* int32 Id */ 2:
                     message.id = reader.int32();
                     break;
@@ -813,9 +796,6 @@ class TagThumbnailRequest$Type extends MessageType<TagThumbnailRequest> {
         return message;
     }
     internalBinaryWrite(message: TagThumbnailRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string Name = 1 [deprecated = true]; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
         /* int32 Id = 2; */
         if (message.id !== 0)
             writer.tag(2, WireType.Varint).int32(message.id);
@@ -889,7 +869,6 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
     constructor() {
         super("TagSetFavoriteRequest", [
             { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "Tag", kind: "scalar", jsonName: "Tag", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "Favorite", kind: "scalar", jsonName: "Favorite", T: 8 /*ScalarType.BOOL*/ },
             { no: 4, name: "Id", kind: "scalar", jsonName: "Id", T: 5 /*ScalarType.INT32*/ }
         ]);
@@ -897,7 +876,6 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
     create(value?: PartialMessage<TagSetFavoriteRequest>): TagSetFavoriteRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.user = "";
-        message.tag = "";
         message.favorite = false;
         message.id = 0;
         if (value !== undefined)
@@ -911,9 +889,6 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
             switch (fieldNo) {
                 case /* string User */ 1:
                     message.user = reader.string();
-                    break;
-                case /* string Tag = 2 [deprecated = true] */ 2:
-                    message.tag = reader.string();
                     break;
                 case /* bool Favorite */ 3:
                     message.favorite = reader.bool();
@@ -936,9 +911,6 @@ class TagSetFavoriteRequest$Type extends MessageType<TagSetFavoriteRequest> {
         /* string User = 1; */
         if (message.user !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.user);
-        /* string Tag = 2 [deprecated = true]; */
-        if (message.tag !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.tag);
         /* bool Favorite = 3; */
         if (message.favorite !== false)
             writer.tag(3, WireType.Varint).bool(message.favorite);

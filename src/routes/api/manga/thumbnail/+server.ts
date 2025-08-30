@@ -15,7 +15,6 @@ export const GET: RequestHandler = async ({ url }) => {
     let { response } = await client.thumbnail(
         {
             id: parseInt(url.searchParams.get('id') ?? ""),
-            name: ''
         })
 
     return new Response(response.data, {

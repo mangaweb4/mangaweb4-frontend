@@ -22,7 +22,6 @@ export const load: PageServerLoad = async ({ request, cookies, params }) => {
 
     const call = await client.detail({
         id: parseInt(id) ?? 0,
-        name: '',
         user: user,
     })
 

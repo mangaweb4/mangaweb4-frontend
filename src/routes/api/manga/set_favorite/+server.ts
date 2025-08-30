@@ -17,7 +17,6 @@ export const GET: RequestHandler = async ({ request, url, cookies }) => {
 
     let { response } = await client.setFavorite({
         id: parseInt(url.searchParams.get('id') ?? ""),
-        name: '',
         user,
         favorite
     })

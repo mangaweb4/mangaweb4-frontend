@@ -13,7 +13,7 @@ export const GET: RequestHandler = async ({ url }) => {
     let client = new MangaClient(transport)
 
     let id = parseInt(url.searchParams.get('id') ?? "") ?? 0
-    let { response } = await client.repair({ name: '', id: id })
+    let { response } = await client.repair({ id: id })
 
     return new Response(JSON.stringify(response));
 };
