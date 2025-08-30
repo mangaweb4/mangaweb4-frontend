@@ -117,7 +117,7 @@
 			}
 		}
 
-		return browseURL(page.url.origin, callOptions);
+		return browseTagURL(page.url.origin, data.request.id, callOptions);
 	}
 
 	function createSortBrowseURL(options: {
