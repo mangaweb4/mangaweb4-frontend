@@ -4,6 +4,7 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
 import { variables } from '$lib/variables.server';
 import type { URLSearchParams } from 'url';
+import { error } from '@sveltejs/kit';
 
 function parseParamInt(name: string, searchParams: URLSearchParams) {
     let str = searchParams.get(name)
@@ -19,7 +20,10 @@ export const GET: RequestHandler = async ({ url }) => {
 
     let client = new MangaClient(transport)
 
-    let id = url.searchParams.get('id')
+    let id = parseInt(url.searchParams.get('id') ?? "")
+    if (id == 0 || Number.isNaN(id)) {
+        error(404);
+    }
     let index = parseParamInt("i", url.searchParams)
     let x = parseParamInt("x", url.searchParams)
     let y = parseParamInt("y", url.searchParams)
@@ -28,7 +32,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
     let { response } = await client.updateCover(
         {
-            id: parseInt(id ?? ""),
+            id: id,
             index,
             x,
             y,

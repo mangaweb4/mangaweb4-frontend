@@ -5,6 +5,7 @@ import { MangaClient } from '$lib/grpc/manga.client';
 import { variables } from '$lib/variables.server';
 import { getUser } from '$lib/user.server';
 import { MAX_STREAM_OBJECT_SIZE } from '$lib/constants';
+import { error } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ request, cookies, url }) => {
     let transport = new GrpcTransport({
@@ -13,12 +14,14 @@ export const GET: RequestHandler = async ({ request, cookies, url }) => {
     })
 
     let client = new MangaClient(transport)
-
-    let iStr = url.searchParams.get('i')
-    let index = iStr ? parseInt(iStr) : 0
+    let index = parseInt(url.searchParams.get('i') ?? "") || 0
     let user = getUser(request, cookies)
-    let id = parseInt(url.searchParams.get('id') ?? "") ?? 0
-    let stream = client.pageImageStream({id: id, user, index, width: 0, height: 0 })
+    let id = parseInt(url.searchParams.get('id') ?? "")
+    if (id == 0 || Number.isNaN(id)) {
+        error(404);
+    }
+
+    let stream = client.pageImageStream({ id: id, user, index, width: 0, height: 0 })
 
     let filename = ""
     let contentType = ""
