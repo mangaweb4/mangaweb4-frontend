@@ -60,7 +60,7 @@
 			<Icon data={customPageIcon} />
 		</button>
 
-		<button class="join-item btn" onclick={() => goto(createLink(totalPage-1).toString())}>
+		<button class="join-item btn" onclick={() => goto(createLink(totalPage - 1).toString())}>
 			<Icon data={lastPageIcon} />
 		</button>
 	</div>
