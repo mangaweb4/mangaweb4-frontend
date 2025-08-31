@@ -10,6 +10,8 @@
 	import previousPageIcon from '@mdi/svg/svg/chevron-left.svg?raw';
 	import nextPageIcon from '@mdi/svg/svg/chevron-right.svg?raw';
 	import lastPageIcon from '@mdi/svg/svg/page-last.svg?raw';
+	import plusIcon from '@mdi/svg/svg/plus.svg?raw';
+	import minusIcon from '@mdi/svg/svg/minus.svg?raw';	
 
 	function moveToTop() {
 		location.hash = '#top';
@@ -55,9 +57,9 @@
 <dialog class="modal modal-bottom" bind:this={customInput}>
 	<div class="modal-box w-full max-w-[640px] mx-auto">
 		<h3 class="text-lg font-bold">Move to page</h3>
-		<div class="py-4">
+		<div class="py-4 flex flex-col">
 			<p>Current page: {currentPage}</p>
-			<div class="join">
+			<div class="join mt-3">
 				<button class="join-item btn" onclick={() => goto(createLink(0))}>
 					<Icon data={firstPageIcon} /> <div class="text hidden sm:block">First</div></button
 				>
@@ -80,11 +82,16 @@
 				</button>
 			</div>
 			<div class="join mt-3">
-				<button class="join-item btn" onclick={() => (customPage = Math.max(customPage - 1, 0))}>
-					-
+				<button 
+					class="join-item btn"
+					class:btn-disabled={customPage -1 <= 0 }
+					onclick={() => (customPage = Math.max(customPage - 1, 0))}
+				>
+					<Icon data={minusIcon}/>
 				</button>
 				<input
 					type="number"
+					inputmode="numeric"
 					class="input join-item"
 					bind:value={customPage}
 					placeholder="page #"
@@ -93,9 +100,10 @@
 				/>
 				<button
 					class="join-item btn"
+					class:btn-disabled={customPage +1 >= totalPage -1 }
 					onclick={() => (customPage = Math.min(customPage + 1, totalPage - 1))}
 				>
-					+
+					<Icon data={plusIcon} />
 				</button>
 
 				<button class="join-item btn" onclick={() => gotoPage(customPage)}>
