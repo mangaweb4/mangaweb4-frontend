@@ -13,11 +13,11 @@
 	let { currentPage = $bindable(0), totalPage = 0, createLink = (n: number) => {} } = $props();
 	let customPage = $state(currentPage);
 
-    let dialog: HTMLDialogElement;
+	let dialog: HTMLDialogElement;
 
-    export function showModal(){
-        dialog.showModal()
-    }
+	export function showModal() {
+		dialog.showModal();
+	}
 </script>
 
 <dialog class="modal modal-bottom" bind:this={dialog}>
@@ -37,7 +37,7 @@
 					<Icon data={previousPageIcon} />
 					<div class="text hidden sm:block">Previous</div>
 				</button>
-				<div class="join flex-1 label"><p>Current page: {currentPage}</p></div>
+				<input type="number" readonly class="join flex-1 input" value={currentPage} />
 				<button
 					class="join-item btn flex-none"
 					class:btn-disabled={currentPage + 1 > totalPage - 1}
@@ -51,17 +51,10 @@
 					<div class="text hidden sm:block">Last</div>
 				</button>
 			</div>
+
+			<div class="divider">Enter page number manually.</div>
+
 			<div class="join flex mt-3">
-                <div class="label join-item flex-none">
-                    custom page
-                </div>
-				<button
-					class="join-item flex-none btn"
-					class:btn-disabled={customPage - 1 <= 0}
-					onclick={() => (customPage = Math.max(customPage - 1, 0))}
-				>
-					<Icon data={minusIcon} />
-				</button>
 				<input
 					type="number"
 					inputmode="numeric"
@@ -72,6 +65,13 @@
 					min={0}
 				/>
 				<button
+					class="join-item flex-none btn"
+					class:btn-disabled={customPage - 1 <= 0}
+					onclick={() => (customPage = Math.max(customPage - 1, 0))}
+				>
+					<Icon data={minusIcon} />
+				</button>
+				<button
 					class="join-item btn flex-none"
 					class:btn-disabled={customPage + 1 >= totalPage - 1}
 					onclick={() => (customPage = Math.min(customPage + 1, totalPage - 1))}
@@ -80,8 +80,8 @@
 				</button>
 
 				<button class="join-item btn flex-none" onclick={() => goto(createLink(customPage))}>
-					<Icon data={goIcon}></Icon>
-                    <div class="text hidden sm:block">Go</div>
+					<Icon data={goIcon} class="stroke-slate-800 fill-slate-400"></Icon>
+					<div class="text hidden sm:block">Go</div>
 				</button>
 			</div>
 		</div>
