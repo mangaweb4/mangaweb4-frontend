@@ -25,10 +25,6 @@
 
 	let customInput: PaginationDialog;
 
-	function gotoPage(i: number) {
-		goto(createLink(i));
-	}
-
 	function createLink(i: number): URL {
 		let url = new URL(page.url);
 		url.searchParams.set('page', i.toString());
@@ -64,4 +60,4 @@
 	</div>
 </div>
 
-<PaginationDialog bind:this={customInput} bind:currentPage {totalPage} {createLink} />
+<PaginationDialog bind:this={customInput} {currentPage} {totalPage} {createLink} />

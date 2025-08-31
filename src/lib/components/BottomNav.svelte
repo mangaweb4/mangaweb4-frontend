@@ -43,4 +43,4 @@
 	</div>
 </div>
 
-<PaginationDialog bind:this={customInput} bind:currentPage {totalPage} {createLink} />
+<PaginationDialog bind:this={customInput} {currentPage} {totalPage} {createLink} />
