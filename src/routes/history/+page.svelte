@@ -30,8 +30,8 @@
 				id: item.id,
 				name: item.name,
 				pageCount: item.pageCount,
-				linkUrl: viewURL(page.url, item.name),
-				imageUrl: createThumbnailUrl(item.name),
+				linkUrl: viewURL(page.url, item.id),
+				imageUrl: createThumbnailUrl(item.id),
 				accessTime: item.accessTime ? Timestamp.toDate(item.accessTime) : new Date()
 			};
 		})
@@ -53,9 +53,9 @@
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
 
-	function createThumbnailUrl(name: string): URL {
+	function createThumbnailUrl(id: number): URL {
 		let u = new URL('/api/manga/thumbnail', page.url.origin);
-		u.searchParams.append('name', name);
+		u.searchParams.append('id', id.toString());
 		return u;
 	}
 
