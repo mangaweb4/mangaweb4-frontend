@@ -10,7 +10,7 @@
 	import minusIcon from '@mdi/svg/svg/minus.svg?raw';
 	import { goto } from '$app/navigation';
 
-	let { currentPage = $bindable(0), totalPage = 0, createLink = (n: number) => {} } = $props();
+	let { currentPage = 0, totalPage = 0, createLink = (n: number) => {} } = $props();
 	let customPage = $state(currentPage);
 
 	let dialog: HTMLDialogElement;
@@ -66,14 +66,14 @@
 				/>
 				<button
 					class="join-item flex-none btn"
-					class:btn-disabled={customPage - 1 <= 0}
+					class:btn-disabled={customPage - 1 < 0}
 					onclick={() => (customPage = Math.max(customPage - 1, 0))}
 				>
 					<Icon data={minusIcon} />
 				</button>
 				<button
 					class="join-item btn flex-none"
-					class:btn-disabled={customPage + 1 >= totalPage - 1}
+					class:btn-disabled={customPage + 1 > totalPage - 1}
 					onclick={() => (customPage = Math.min(customPage + 1, totalPage - 1))}
 				>
 					<Icon data={plusIcon} />
