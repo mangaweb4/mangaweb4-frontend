@@ -11,7 +11,8 @@
 	import nextPageIcon from '@mdi/svg/svg/chevron-right.svg?raw';
 	import lastPageIcon from '@mdi/svg/svg/page-last.svg?raw';
 	import plusIcon from '@mdi/svg/svg/plus.svg?raw';
-	import minusIcon from '@mdi/svg/svg/minus.svg?raw';	
+	import minusIcon from '@mdi/svg/svg/minus.svg?raw';
+	import PaginationDialog from './PaginationDialog.svelte';
 
 	function moveToTop() {
 		location.hash = '#top';
@@ -25,8 +26,6 @@
 
 	let { currentPage = 0, totalPage = 1 }: Props = $props();
 
-	let customPage = $state(currentPage);
-
 	function gotoPage(i: number) {
 		goto(createLink(i));
 	}
@@ -38,7 +37,7 @@
 		return url;
 	}
 
-	let customInput: HTMLDialogElement;
+	let customInput: PaginationDialog;
 </script>
 
 <div class="fixed bottom-10 inset-x-1/2 md:hidden">
@@ -54,65 +53,4 @@
 	</div>
 </div>
 
-<dialog class="modal modal-bottom" bind:this={customInput}>
-	<div class="modal-box w-full max-w-[640px] mx-auto">
-		<h3 class="text-lg font-bold">Move to page</h3>
-		<div class="py-4 flex flex-col">
-			<p>Current page: {currentPage}</p>
-			<div class="join mt-3">
-				<button class="join-item btn" onclick={() => goto(createLink(0))}>
-					<Icon data={firstPageIcon} /> <div class="text hidden sm:block">First</div></button
-				>
-				<button
-					class="join-item btn"
-					class:btn-disabled={currentPage - 1 < 0}
-					onclick={() => goto(createLink(currentPage - 1))}
-				>
-					<Icon data={previousPageIcon} /> <div class="text hidden sm:block">Previous</div>
-				</button>
-				<button
-					class="join-item btn"
-					class:btn-disabled={currentPage + 1 > totalPage - 1}
-					onclick={() => goto(createLink(currentPage + 1))}
-				>
-					<Icon data={nextPageIcon} /> <div class="text hidden sm:block">Next</div>
-				</button>
-				<button class="join-item btn" onclick={() => goto(createLink(totalPage - 1))}>
-					<Icon data={lastPageIcon} /> <div class="text hidden sm:block">Last</div>
-				</button>
-			</div>
-			<div class="join mt-3">
-				<button 
-					class="join-item btn"
-					class:btn-disabled={customPage -1 <= 0 }
-					onclick={() => (customPage = Math.max(customPage - 1, 0))}
-				>
-					<Icon data={minusIcon}/>
-				</button>
-				<input
-					type="number"
-					inputmode="numeric"
-					class="input join-item"
-					bind:value={customPage}
-					placeholder="page #"
-					max={totalPage - 1}
-					min={0}
-				/>
-				<button
-					class="join-item btn"
-					class:btn-disabled={customPage +1 >= totalPage -1 }
-					onclick={() => (customPage = Math.min(customPage + 1, totalPage - 1))}
-				>
-					<Icon data={plusIcon} />
-				</button>
-
-				<button class="join-item btn" onclick={() => gotoPage(customPage)}>
-					<Icon data={goIcon}></Icon>
-				</button>
-			</div>
-		</div>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
+<PaginationDialog bind:this={customInput} bind:currentPage {totalPage} {createLink} />
