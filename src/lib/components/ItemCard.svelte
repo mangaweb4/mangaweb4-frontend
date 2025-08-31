@@ -116,6 +116,7 @@
 					<img
 						bind:this={img}
 						class="h-full w-full rounded-t-[5px] object-cover object-[25%_top]"
+						class:hidden={imageLoadErr}
 						alt={name}
 						loading="lazy"
 						src={imageUrl.toString()}

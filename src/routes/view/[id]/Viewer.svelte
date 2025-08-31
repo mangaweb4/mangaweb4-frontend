@@ -5,14 +5,15 @@
 	import { Icon } from 'svelte-icon';
 	import prevIcon from '@mdi/svg/svg/chevron-left.svg?raw';
 	import nextIcon from '@mdi/svg/svg/chevron-right.svg?raw';
-	import pageScrollIcon from '@mdi/svg/svg/chevron-up.svg?raw';
+	import firstIcon from '@mdi/svg/svg/page-first.svg?raw';
+	import lastIcon from '@mdi/svg/svg/page-last.svg?raw';
 
 	import Page from './Page.svelte';
 
 	let { imageURLs = [], onIndexChange, startIndex } = $props();
 
 	let pages: Page[] = $state(new Array(imageURLs.length));
-	let progress = $state(0);
+	let progress = $state(startIndex);
 
 	function slidesInView(emblaApi: EmblaCarouselType, eventName: EmblaEventType): void {
 		if (eventName == 'slidesInView') {
@@ -80,15 +81,41 @@
 <dialog class="modal modal-bottom" bind:this={pageScroll}>
 	<div class="modal-box w-full max-w-[1024px] mx-auto">
 		<h3 class="text-lg font-bold">Move to page</h3>
-		<p class="py-4">
+		<div class="flex flex-row mt-4">
+			<button 
+				class="btn flex-none" 
+				onclick={()=>{emblaApi.scrollTo(0) }}
+			>
+				<Icon data={firstIcon}/>
+			</button>
+			<button 
+				class="btn flex-none" 
+				onclick={()=>{emblaApi.scrollPrev() }}
+			>
+				<Icon data={prevIcon}/>
+			</button>
 			<input
 				type="range"
-				class="w-full"
+				class="range flex-1 place-self-center mx-2" 
 				min="0"
 				max={pages.length - 1}
 				bind:value={progress}
 				onchange={(e: any) => emblaApi.scrollTo(e.target.value)}
 			/>
+			<button 
+				class="btn flex-none" 
+				onclick={()=>{emblaApi.scrollNext() }}
+			>
+				<Icon data={nextIcon}/>
+			</button>
+			<button 
+				class="btn flex-none" 
+				onclick={()=>{emblaApi.scrollTo(pages.length - 1) }}
+			>
+				<Icon data={lastIcon}/>
+			</button>
+		</div>
+		<p class="mt-2">
 			{progress + 1} of {pages.length}
 		</p>
 	</div>
