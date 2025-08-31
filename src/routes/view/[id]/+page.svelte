@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
-	import ImageViewer from './Viewer.svelte';
+	import Viewer from './Viewer.svelte';
 	import NavBar from '$lib/components/NavBar.svelte';
 	import SideBar from '$lib/components/SideBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
@@ -25,7 +25,7 @@
 	import toggleNavBarIcon from '@mdi/svg/svg/chevron-down.svg?raw';
 
 	let current = $state(0);
-	let viewer: ImageViewer;
+	let viewer: Viewer;
 	let toast: Toast;
 
 	interface Props {
@@ -38,7 +38,7 @@
 	let tags = $derived(data.response.tags);
 	let favorite = $state(data.response.favorite);
 
-	let showNavBar = $state(true);
+	let showNavBar = $state(false);
 
 	function createImageUrls(id: number, pageCount: number): string[] {
 		const url = new URL('/api/manga/page_image', page.url.origin);
@@ -148,7 +148,7 @@
 			</div>
 		</NavBar>
 		<div class="fixed top-0 bottom-0 start-0 end-0">
-			<ImageViewer
+			<Viewer
 				imageURLs={createImageUrls(data.request.id, data.response.pageCount)}
 				{onIndexChange}
 				bind:this={viewer}
@@ -158,10 +158,10 @@
 
 		<button
 			class="cursor-pointer absolute w-full h-40 top-5"
-			onclick={() => showNavBar = !showNavBar}
+			onclick={() => (showNavBar = !showNavBar)}
 			aria-label="toggle-navbar"
 		>
-		&nbsp;
+			&nbsp;
 		</button>
 	</Content>
 	<SideBar bind:showMenu>
