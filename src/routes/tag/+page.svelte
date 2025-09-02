@@ -240,14 +240,14 @@
 					</details>
 				</fieldset>
 			</div>
-		</div>
-		<div class="w-full">
-			<ItemCardGrid bind:items bind:updated />
+
+			<div class="w-full">
+				<ItemCardGrid bind:items bind:updated />
+			</div>
 		</div>
 	</Content>
 
-	<SideBar bind:showMenu>
-	</SideBar>
+	<SideBar bind:showMenu></SideBar>
 </Container>
 
 <Pagination currentPage={current_page} totalPage={total_page} />
