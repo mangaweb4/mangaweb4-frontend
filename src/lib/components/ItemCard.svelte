@@ -70,7 +70,7 @@
 	const READ_THRESHOLD = 95; // 5%
 </script>
 
-<div class="{borderCls} card card-border border-2 bg-base-100 h-full shadow-xl" id={id.toString()}>
+<div class="{borderCls} card card-border border-2 bg-base-100 h-full shadow-xl overflow-hidden" id={id.toString()}>
 	{#if dummy}
 		<div class="mt-0 mb-0 h-full">
 			<div aria-label={name} class="aspect-ratio-[1/1.414]">
