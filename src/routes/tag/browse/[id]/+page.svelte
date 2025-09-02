@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
+	import { afterNavigate, beforeNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import { browseTagURL, browseURL, viewURL } from '$lib/routes';
+	import { viewURL } from '$lib/routes';
 	import type { PageData } from '../[id]/$types';
-
-	import { Filter, SortField, SortOrder } from '$lib/grpc/types';
 
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
@@ -18,19 +16,11 @@
 	import ItemCardGrid from '$lib/components/ItemCardGrid.svelte';
 
 	import { Icon } from 'svelte-icon';
-	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
-	import creationTimeIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
-	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
-	import favoriteIcon from '@mdi/svg/svg/heart.svg?raw';
-	import favoriteTagsIcon from '@mdi/svg/svg/tag-heart.svg?raw';
-	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
-	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
-	import pageCountIcon from '@mdi/svg/svg/file-multiple.svg?raw';
-	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
 	import isTagFavoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
 	import isTagNotFavoriteIcon from '@mdi/svg/svg/tag-heart-outline.svg?raw';
-	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw';
+	import filterIcon from '@mdi/svg/svg/filter-menu.svg?raw';
 	import { ITEM_PER_PAGE } from '$lib/constants';
+	import FilterPanel from './FilterPanel.svelte';
 
 	let toast: Toast;
 
@@ -75,76 +65,6 @@
 	beforeNavigate(() => (updated = false));
 	afterNavigate(() => (updated = true));
 
-	function createBrowseURL(options?: {
-		filter?: Filter;
-		item_per_page?: number;
-		order?: SortOrder;
-		page?: number;
-		search?: string;
-		sort?: SortField;
-		tag?: string;
-	}): URL {
-		let callOptions = {
-			user: data.request.user,
-			filter: data.request.filter,
-			item_per_page: data.request.itemPerPage,
-			order: data.request.order,
-			page: data.request.page,
-			search: data.request.search,
-			sort: data.request.sort
-		};
-		if (options != null) {
-			const { filter, item_per_page, order, page, search, sort, tag } = options;
-			if (filter != null) {
-				callOptions.filter = filter;
-			}
-			if (item_per_page != null) {
-				callOptions.item_per_page = item_per_page;
-			}
-			if (order != null) {
-				callOptions.order = order;
-			}
-			if (page != null) {
-				callOptions.page = page;
-			}
-
-			if (search != null) {
-				callOptions.search = search;
-			}
-
-			if (sort != null) {
-				callOptions.sort = sort;
-			}
-		}
-
-		return browseTagURL(page.url.origin, data.request.id, callOptions);
-	}
-
-	function createSortBrowseURL(options: {
-		favorite_only?: boolean;
-		item_per_page?: number;
-		order?: SortOrder;
-		page?: number;
-		search?: string;
-		sort?: SortField;
-		tag?: string;
-	}): URL {
-		const sort = options.sort;
-		switch (sort) {
-			case SortField.NAME:
-				options.order = SortOrder.ASCENDING;
-				break;
-			case SortField.CREATION_TIME:
-				options.order = SortOrder.DESCENDING;
-				break;
-			case SortField.PAGECOUNT:
-				options.order = SortOrder.DESCENDING;
-				break;
-		}
-
-		return createBrowseURL(options);
-	}
-
 	async function onTagFavorite() {
 		const url = new URL('/api/tag/set_favorite', page.url.origin);
 
@@ -171,145 +91,58 @@
 	}
 
 	let showMenu = $state(false);
+	let filterDialog: HTMLDialogElement;
 </script>
 
 <svelte:head>
-	<title>Tag: {data.response.name}</title>
+	<title>Browse Tag: {data.response.name}</title>
 </svelte:head>
 
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
-			<div class="text-xl hidden md:inline">
-				<div class="whitespace-nowrap">Tag: {data.response.name}</div>
+			<div class="text-xl">
+				<div class="whitespace-nowrap">Browse Tag</div>
 			</div>
 		</NavBar>
-		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
-			<ItemCardGrid bind:items bind:updated />
-		</div>
-	</Content>
-	<SideBar bind:showMenu>
-		<ul class="menu">
-			<li class="text">
-				<div class="tooltip tooltip-left mb-2" data-tip={data.response.name}>
-					<div class="h-20 overflow-hidden text-xl">
+		<div class="container mx-auto max-w-[1024px]">
+			<div class="w-full mb-4 shadow-sm p-4 bg-base-200">
+				<div class="flex mb-2">
+					<div class="flex-1 text-xl">
 						{data.response.name}
 					</div>
-				</div>
-			</li>
-			<li>
-				<button
-					class="btn btn-soft"
-					class:bg-purple-200={favoriteTag}
-					class:text-purple-800={favoriteTag}
-					onclick={() => onTagFavorite()}
-				>
-					{#if favoriteTag}
-						<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" /> Favorite
-					{:else}
-						<Icon data={isTagNotFavoriteIcon} /> Favorite
-					{/if}
-				</button>
-			</li>
-
-			<li class="menu-title">Search</li>
-			<li>
-				<div class="join gap-0">
-					<input class="input join-item" placeholder="title, author" bind:value={search} />
 					<button
-						class="btn join-item"
-						onclick={() => {
-							search = '';
-							goto(browseTagURL(page.url.origin, data.request.id));
-						}}
+						class="flex-none btn btn-ghost"
+						class:bg-purple-200={favoriteTag}
+						class:text-purple-800={favoriteTag}
+						onclick={() => onTagFavorite()}
 					>
-						<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
-					</button>
-					<button
-						class="btn join-item"
-						onclick={() => goto(browseTagURL(page.url.origin, data.request.id, { search: search }))}
-					>
-						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
+						{#if favoriteTag}
+							<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" />
+							Favorite
+						{:else}
+							<Icon data={isTagNotFavoriteIcon} class="stroke-slate-800 fill-slate-400" />
+							Favorite
+						{/if}
 					</button>
 				</div>
-			</li>
+				<div class="md:hidden flex">
+					<div class="flex-1"></div>
+					<button class="btn btn-ghost" onclick={() => filterDialog.showModal()}>
+						<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800"/> Option
+					</button>
+				</div>
 
-			<li class="menu-title">Sort By</li>
-			<li>
-				<button
-					class={sort == SortField.NAME ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
-				>
-					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={sort == SortField.CREATION_TIME ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
-				>
-					<Icon data={creationTimeIcon} class="fill-slate-400 stroke-slate-800" /> Creation time
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
-				>
-					<Icon data={pageCountIcon} class="fill-slate-400 stroke-slate-800" /> Page Count
-				</button>
-			</li>
-
-			<li class="menu-title">Order</li>
-			<li>
-				<button
-					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ order: SortOrder.ASCENDING }))}
-				>
-					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800" /> Ascending
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ order: SortOrder.DESCENDING }))}
-				>
-					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800" /> Descending
-				</button>
-			</li>
-
-			<li class="menu-title">Filter</li>
-			<li>
-				<button
-					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
-					onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
-				>
-					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800" /> None
-				</button>
-			</li>
-			<li>
-				<button
-					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
-					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
-				>
-					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800" /> Favorite items
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
-					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
-				>
-					<Icon data={favoriteTagsIcon} class="fill-slate-400 stroke-slate-800" /> Items with favorite
-					tags
-				</button>
-			</li>
-		</ul>
-	</SideBar>
+				<div class="hidden md:grid grid-cols-4 gap-4">
+					<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
+				</div>
+			</div>
+			<div class="w-full">
+				<ItemCardGrid bind:items bind:updated />
+			</div>
+		</div>
+	</Content>
+	<SideBar bind:showMenu></SideBar>
 </Container>
 
 <LoadingDialog bind:this={loadingDlg} />
@@ -321,3 +154,15 @@
 <BottomNav currentPage={pageIndex} {totalPage} />
 
 <Toast bind:this={toast} />
+
+<dialog class="modal modal-top" bind:this={filterDialog}>
+	<div class="modal-box">
+		<div class="text-xl">Option</div>
+		<div class="grid gap-4 bg-base-100">
+			<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
+		</div>
+	</div>
+	<form method="dialog" class="modal-backdrop w-full h-full">
+		<button>close</button>
+	</form>
+</dialog>

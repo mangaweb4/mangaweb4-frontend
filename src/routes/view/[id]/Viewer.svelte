@@ -58,7 +58,7 @@
 </button>
 
 <div
-	class="embla w-full h-full"
+	class="embla w-full h-full bg-base-300"
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onInit}
 >
