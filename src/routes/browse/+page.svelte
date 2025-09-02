@@ -28,6 +28,7 @@
 	import pageCountIcon from '@mdi/svg/svg/book-open-page-variant.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
 	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw';
+	import filterIcon from '@mdi/svg/svg/filter-menu.svg?raw';
 
 	let toast: Toast;
 
@@ -152,6 +153,8 @@
 	}
 
 	let showMenu = $state(false);
+
+	let filterDialog: HTMLDialogElement;
 </script>
 
 <svelte:head>
@@ -186,6 +189,84 @@
 	{/if}
 {/snippet}
 
+{#snippet filterPanel()}
+	<fieldset class="fieldset w-full">
+		<legend class="fieldset-legend">Search</legend>
+		<div class="join gap-0 flex">
+			<input class="input join-item flex-1" placeholder="title, author" bind:value={search} />
+			<button
+				class="btn join-item flex-none"
+				onclick={() => {
+					search = '';
+					goto(browseURL(page.url.origin));
+				}}
+			>
+				<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
+			</button>
+			<button
+				class="btn join-item flex-none"
+				onclick={() => goto(browseURL(page.url.origin, { search: search }))}
+			>
+				<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
+			</button>
+		</div>
+	</fieldset>
+	<fieldset class="fieldset w-full">
+		<legend class="fieldset-legend">Sort By</legend>
+		<details class="dropdown w-full">
+			<summary class="btn w-full">{@render sortFieldTitle(data.request.sort)}</summary>
+			<ul class="menu dropdown-content bg-base-100 shadow-sm">
+				{#each [SortField.NAME, SortField.CREATION_TIME, SortField.PAGECOUNT] as option}
+					<li>
+						<button
+							class:menu-active={sort == option}
+							onclick={() => goto(createSortBrowseURL({ sort: option }))}
+						>
+							{@render sortFieldTitle(option)}
+						</button>
+					</li>
+				{/each}
+			</ul>
+		</details>
+	</fieldset>
+	<fieldset class="fieldset w-full">
+		<legend class="fieldset-legend">Order</legend>
+		<details class="dropdown w-full">
+			<summary class="btn w-full">{@render orderTitle(data.request.order)}</summary>
+			<ul class="menu dropdown-content bg-base-100 shadow-sm">
+				{#each [SortOrder.ASCENDING, SortOrder.DESCENDING] as option}
+					<li>
+						<button
+							class:menu-active={order == option}
+							onclick={() => goto(createSortBrowseURL({ order: option }))}
+						>
+							{@render orderTitle(option)}
+						</button>
+					</li>
+				{/each}
+			</ul>
+		</details>
+	</fieldset>
+	<fieldset class="fieldset w-full">
+		<legend class="fieldset-legend">Filter</legend>
+		<details class="dropdown w-full">
+			<summary class="btn w-full">{@render filterTitle(data.request.filter)}</summary>
+			<ul class="menu dropdown-content bg-base-100 shadow-sm">
+				{#each [Filter.UNKNOWN, Filter.FAVORITE_ITEMS, Filter.FAVORITE_TAGS] as option}
+					<li>
+						<button
+							class:menu-active={filter == option}
+							onclick={() => goto(createBrowseURL({ filter: option }))}
+						>
+							{@render filterTitle(option)}
+						</button>
+					</li>
+				{/each}
+			</ul>
+		</details>
+	</fieldset>
+{/snippet}
+
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu rootPage={true}>
@@ -193,82 +274,14 @@
 		</NavBar>
 
 		<div class="container mx-auto max-w-[1024px]">
-			<div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-100">
-				<fieldset class="fieldset w-full">
-					<legend class="fieldset-legend">Search</legend>
-					<div class="join gap-0 flex">
-						<input class="input join-item flex-1" placeholder="title, author" bind:value={search} />
-						<button
-							class="btn join-item flex-none"
-							onclick={() => {
-								search = '';
-								goto(browseURL(page.url.origin));
-							}}
-						>
-							<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
-						</button>
-						<button
-							class="btn join-item flex-none"
-							onclick={() => goto(browseURL(page.url.origin, { search: search }))}
-						>
-							<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
-						</button>
-					</div>
-				</fieldset>
-				<fieldset class="fieldset w-full">
-					<legend class="fieldset-legend">Sort By</legend>
-					<details class="dropdown w-full">
-						<summary class="btn w-full">{@render sortFieldTitle(data.request.sort)}</summary>
-						<ul class="menu dropdown-content bg-base-100 shadow-sm">
-							{#each [SortField.NAME, SortField.CREATION_TIME, SortField.PAGECOUNT] as option}
-								<li>
-									<button
-										class:menu-active={sort == option}
-										onclick={() => goto(createSortBrowseURL({ sort: option }))}
-									>
-										{@render sortFieldTitle(option)}
-									</button>
-								</li>
-							{/each}
-						</ul>
-					</details>
-				</fieldset>
-				<fieldset class="fieldset w-full">
-					<legend class="fieldset-legend">Order</legend>
-					<details class="dropdown w-full">
-						<summary class="btn w-full">{@render orderTitle(data.request.order)}</summary>
-						<ul class="menu dropdown-content bg-base-100 shadow-sm">
-							{#each [SortOrder.ASCENDING, SortOrder.DESCENDING] as option}
-								<li>
-									<button
-										class:menu-active={order == option}
-										onclick={() => goto(createSortBrowseURL({ order: option }))}
-									>
-										{@render orderTitle(option)}
-									</button>
-								</li>
-							{/each}
-						</ul>
-					</details>
-				</fieldset>
-				<fieldset class="fieldset w-full">
-					<legend class="fieldset-legend">Filter</legend>
-					<details class="dropdown w-full">
-						<summary class="btn w-full">{@render filterTitle(data.request.filter)}</summary>
-						<ul class="menu dropdown-content bg-base-100 shadow-sm">
-							{#each [Filter.UNKNOWN, Filter.FAVORITE_ITEMS, Filter.FAVORITE_TAGS] as option}
-								<li>
-									<button
-										class:menu-active={filter == option}
-										onclick={() => goto(createBrowseURL({ filter: option }))}
-									>
-										{@render filterTitle(option)}
-									</button>
-								</li>
-							{/each}
-						</ul>
-					</details>
-				</fieldset>
+			<div class="md:hidden bg-base-100 flex py-4">
+				<div class="flex-1"></div>
+				<button class="btn" onclick={() => filterDialog.showModal()}>
+					<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800"></Icon>
+				</button>
+			</div>
+			<div class="hidden md:grid md:grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-100">
+				{@render filterPanel()}
 			</div>
 			<div class="w-full">
 				<ItemCardGrid bind:items bind:updated />
@@ -277,6 +290,18 @@
 	</Content>
 	<SideBar bind:showMenu></SideBar>
 </Container>
+
+<dialog class="modal" bind:this={filterDialog}>
+	<div class="modal-box">
+		<div class="text-xl">Filter</div>
+		<div class="grid gap-4 bg-base-100">
+			{@render filterPanel()}
+		</div>
+	</div>
+	<form method="dialog" class="modal-backdrop w-full h-full">
+		<button>close</button>
+	</form>
+</dialog>
 
 <LoadingDialog bind:this={loadingDlg} />
 
