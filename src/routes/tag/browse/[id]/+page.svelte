@@ -174,142 +174,155 @@
 </script>
 
 <svelte:head>
-	<title>Tag: {data.response.name}</title>
+	<title>Browse Tag: {data.response.name}</title>
 </svelte:head>
+
+{#snippet sortFieldTitle(field: SortField)}
+	{#if field == SortField.NAME}
+		<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
+	{:else if field == SortField.CREATION_TIME}
+		<Icon data={creationTimeIcon} class="fill-slate-400 stroke-slate-800" /> Creation time
+	{:else if field == SortField.PAGECOUNT}
+		<Icon data={pageCountIcon} class="fill-slate-400 stroke-slate-800" /> Page Count
+	{/if}
+{/snippet}
+
+{#snippet orderTitle(order: SortOrder)}
+	{#if order == SortOrder.ASCENDING}
+		<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800" /> Ascending
+	{:else if order == SortOrder.DESCENDING}
+		<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800" /> Descending
+	{/if}
+{/snippet}
+
+{#snippet filterTitle(filter: Filter)}
+	{#if filter == Filter.UNKNOWN}
+		<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800" /> None
+	{:else if filter == Filter.FAVORITE_ITEMS}
+		<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800" /> Favorite items
+	{:else if filter == Filter.FAVORITE_TAGS}
+		<Icon data={favoriteTagsIcon} class="fill-slate-400 stroke-slate-800" /> Items with favorite tags
+	{/if}
+{/snippet}
 
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
 			<div class="text-xl hidden md:inline">
-				<div class="whitespace-nowrap">Tag: {data.response.name}</div>
+				<div class="whitespace-nowrap">Browse Tag</div>
 			</div>
 		</NavBar>
-		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
-			<ItemCardGrid bind:items bind:updated />
-		</div>
-	</Content>
-	<SideBar bind:showMenu>
-		<ul class="menu">
-			<li class="text">
-				<div class="tooltip tooltip-left mb-2" data-tip={data.response.name}>
-					<div class="h-20 overflow-hidden text-xl">
+		<div class="container mx-auto max-w-[1024px]">
+			<div class="w-full mb-4 shadow-sm p-4 bg-base-100">
+				<div class="flex">
+					<div class="flex-1 text-xl">
 						{data.response.name}
 					</div>
-				</div>
-			</li>
-			<li>
-				<button
-					class="btn btn-soft"
-					class:bg-purple-200={favoriteTag}
-					class:text-purple-800={favoriteTag}
-					onclick={() => onTagFavorite()}
-				>
-					{#if favoriteTag}
-						<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" /> Favorite
-					{:else}
-						<Icon data={isTagNotFavoriteIcon} /> Favorite
-					{/if}
-				</button>
-			</li>
-
-			<li class="menu-title">Search</li>
-			<li>
-				<div class="join gap-0">
-					<input class="input join-item" placeholder="title, author" bind:value={search} />
 					<button
-						class="btn join-item"
-						onclick={() => {
-							search = '';
-							goto(browseTagURL(page.url.origin, data.request.id));
-						}}
+						class="flex-none btn btn-ghost"
+						class:bg-purple-200={favoriteTag}
+						class:text-purple-800={favoriteTag}
+						onclick={() => onTagFavorite()}
 					>
-						<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
-					</button>
-					<button
-						class="btn join-item"
-						onclick={() => goto(browseTagURL(page.url.origin, data.request.id, { search: search }))}
-					>
-						<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
+						{#if favoriteTag}
+							<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" />
+							<div class="hidden md:inlin">Favorite</div>
+						{:else}
+							<Icon data={isTagNotFavoriteIcon} class="stroke-slate-800 fill-slate-400"/>
+							<div class="hidden md:inlin" >Favorite</div>
+						{/if}
 					</button>
 				</div>
-			</li>
 
-			<li class="menu-title">Sort By</li>
-			<li>
-				<button
-					class={sort == SortField.NAME ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ sort: SortField.NAME }))}
-				>
-					<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={sort == SortField.CREATION_TIME ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ sort: SortField.CREATION_TIME }))}
-				>
-					<Icon data={creationTimeIcon} class="fill-slate-400 stroke-slate-800" /> Creation time
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={sort == SortField.PAGECOUNT ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ sort: SortField.PAGECOUNT }))}
-				>
-					<Icon data={pageCountIcon} class="fill-slate-400 stroke-slate-800" /> Page Count
-				</button>
-			</li>
-
-			<li class="menu-title">Order</li>
-			<li>
-				<button
-					class={order == SortOrder.ASCENDING ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ order: SortOrder.ASCENDING }))}
-				>
-					<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800" /> Ascending
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={order == SortOrder.DESCENDING ? 'menu-active' : ''}
-					onclick={() => goto(createSortBrowseURL({ order: SortOrder.DESCENDING }))}
-				>
-					<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800" /> Descending
-				</button>
-			</li>
-
-			<li class="menu-title">Filter</li>
-			<li>
-				<button
-					class={filter == Filter.UNKNOWN ? 'menu-active' : ''}
-					onclick={() => goto(createBrowseURL({ filter: Filter.UNKNOWN }))}
-				>
-					<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800" /> None
-				</button>
-			</li>
-			<li>
-				<button
-					class={filter == Filter.FAVORITE_ITEMS ? 'menu-active' : ''}
-					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_ITEMS }))}
-				>
-					<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800" /> Favorite items
-				</button>
-			</li>
-
-			<li>
-				<button
-					class={filter == Filter.FAVORITE_TAGS ? 'menu-active' : ''}
-					onclick={() => goto(createBrowseURL({ filter: Filter.FAVORITE_TAGS }))}
-				>
-					<Icon data={favoriteTagsIcon} class="fill-slate-400 stroke-slate-800" /> Items with favorite
-					tags
-				</button>
-			</li>
-		</ul>
-	</SideBar>
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+					<fieldset class="fieldset w-full">
+						<legend class="fieldset-legend">Search</legend>
+						<div class="join gap-0 flex">
+							<input
+								class="input join-item flex-1"
+								placeholder="title, author"
+								bind:value={search}
+							/>
+							<button
+								class="btn join-item flex-none"
+								onclick={() => {
+									search = '';
+									goto(browseTagURL(page.url.origin, data.request.id));
+								}}
+							>
+								<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
+							</button>
+							<button
+								class="btn join-item flex-none"
+								onclick={() =>
+									goto(browseTagURL(page.url.origin, data.request.id, { search: search }))}
+							>
+								<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
+							</button>
+						</div>
+					</fieldset>
+					<fieldset class="fieldset w-full">
+						<legend class="fieldset-legend">Sort By</legend>
+						<details class="dropdown w-full">
+							<summary class="btn w-full">{@render sortFieldTitle(data.request.sort)}</summary>
+							<ul class="menu dropdown-content bg-base-100 shadow-sm">
+								{#each [SortField.NAME, SortField.CREATION_TIME, SortField.PAGECOUNT] as option}
+									<li>
+										<button
+											class:menu-active={sort == option}
+											onclick={() => goto(createSortBrowseURL({ sort: option }))}
+										>
+											{@render sortFieldTitle(option)}
+										</button>
+									</li>
+								{/each}
+							</ul>
+						</details>
+					</fieldset>
+					<fieldset class="fieldset w-full">
+						<legend class="fieldset-legend">Order</legend>
+						<details class="dropdown w-full">
+							<summary class="btn w-full">{@render orderTitle(data.request.order)}</summary>
+							<ul class="menu dropdown-content bg-base-100 shadow-sm">
+								{#each [SortOrder.ASCENDING, SortOrder.DESCENDING] as option}
+									<li>
+										<button
+											class:menu-active={order == option}
+											onclick={() => goto(createSortBrowseURL({ order: option }))}
+										>
+											{@render orderTitle(option)}
+										</button>
+									</li>
+								{/each}
+							</ul>
+						</details>
+					</fieldset>
+					<fieldset class="fieldset w-full">
+						<legend class="fieldset-legend">Filter</legend>
+						<details class="dropdown w-full">
+							<summary class="btn w-full">{@render filterTitle(data.request.filter)}</summary>
+							<ul class="menu dropdown-content bg-base-100 shadow-sm">
+								{#each [Filter.UNKNOWN, Filter.FAVORITE_ITEMS, Filter.FAVORITE_TAGS] as option}
+									<li>
+										<button
+											class:menu-active={filter == option}
+											onclick={() => goto(createBrowseURL({ filter: option }))}
+										>
+											{@render filterTitle(option)}
+										</button>
+									</li>
+								{/each}
+							</ul>
+						</details>
+					</fieldset>
+				</div>
+			</div>
+			<div class="w-full">
+				<ItemCardGrid bind:items bind:updated />
+			</div>
+		</div>
+	</Content>
+	<SideBar bind:showMenu></SideBar>
 </Container>
 
 <LoadingDialog bind:this={loadingDlg} />
