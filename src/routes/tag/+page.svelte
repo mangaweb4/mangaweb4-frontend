@@ -73,14 +73,16 @@
 		return output;
 	}
 
-	function createTagListUrl(options?: {
-		filter?: Filter.UNKNOWN | Filter.FAVORITE_TAGS;
+	interface tagListurlParams {
+		filter?: Filter;
 		order?: SortOrder;
-		sort?: SortField.NAME | SortField.ITEMCOUNT | SortField.LAST_UPDATE;
+		sort?: SortField;
 		search?: string;
 		page?: number;
 		item_per_page?: number;
-	}) {
+	}
+
+	function createTagListUrl(options?: tagListurlParams) {
 		let callOptions = { ...data.request };
 		if (options != null) {
 			const { item_per_page, order, page, search, sort } = options;
@@ -129,13 +131,118 @@
 	<title>Tag List</title>
 </svelte:head>
 
+{#snippet sortFieldTitle(field: SortField)}
+	{#if field == SortField.NAME}
+		<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
+	{:else if field == SortField.ITEMCOUNT}
+		<Icon data={itemCountIcon} class="fill-slate-400 stroke-slate-800" /> Item count
+	{:else if field == SortField.LAST_UPDATE}
+		<Icon data={lastUpdateIcon} class="fill-slate-400 stroke-slate-800" /> Last update
+	{/if}
+{/snippet}
+
+{#snippet orderTitle(order: SortOrder)}
+	{#if order == SortOrder.ASCENDING}
+		<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800" /> Ascending
+	{:else if order == SortOrder.DESCENDING}
+		<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800" /> Descending
+	{/if}
+{/snippet}
+
+{#snippet filterTitle(filter: Filter)}
+	{#if filter == Filter.UNKNOWN}
+		<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800" /> None
+	{:else if filter == Filter.FAVORITE_TAGS}
+		<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800" /> Favorite tags
+	{/if}
+{/snippet}
+
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu>
 			<div class="text-xl">Tag list</div>
 		</NavBar>
-		<div class="container mx-auto max-w-[1024px] mt-4 mb-24">
-			<ItemCardGrid bind:items bind:updated accessTime={true} />
+		<div class="container mx-auto max-w-[1024px]">
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-100">
+				<fieldset class="fieldset w-full">
+					<legend class="fieldset-legend">Search</legend>
+					<div class="join gap-0 flex">
+						<input class="input join-item flex-1" placeholder="title, author" bind:value={search} />
+						<button
+							class="btn join-item flex-none"
+							onclick={() => {
+								search = '';
+								goto(tagURL(page.url.origin));
+							}}
+						>
+							<Icon data={clearIcon} class="fill-slate-400 stroke-slate-800" />
+						</button>
+						<button
+							class="btn join-item flex-none"
+							onclick={() => goto(tagURL(page.url.origin, { search: search }))}
+						>
+							<Icon data={searchIcon} class="fill-slate-400 stroke-slate-800" />
+						</button>
+					</div>
+				</fieldset>
+				<fieldset class="fieldset w-full">
+					<legend class="fieldset-legend">Sort By</legend>
+					<details class="dropdown w-full">
+						<summary class="btn w-full">{@render sortFieldTitle(data.request.sort)}</summary>
+						<ul class="menu dropdown-content bg-base-100 shadow-sm">
+							{#each [{ sort: SortField.NAME }, { sort: SortField.ITEMCOUNT, order: SortOrder.DESCENDING }, { sort: SortField.LAST_UPDATE, order: SortOrder.DESCENDING }] as option}
+								<li>
+									<button
+										class:menu-active={sort == option.sort}
+										onclick={() => goto(createTagListUrl(option))}
+									>
+										{@render sortFieldTitle(option.sort)}
+									</button>
+								</li>
+							{/each}
+						</ul>
+					</details>
+				</fieldset>
+				<fieldset class="fieldset w-full">
+					<legend class="fieldset-legend">Order</legend>
+					<details class="dropdown w-full">
+						<summary class="btn w-full">{@render orderTitle(data.request.order)}</summary>
+						<ul class="menu dropdown-content bg-base-100 shadow-sm">
+							{#each [SortOrder.ASCENDING, SortOrder.DESCENDING] as option}
+								<li>
+									<button
+										class:menu-active={order == option}
+										onclick={() => goto(createTagListUrl({ order: option }))}
+									>
+										{@render orderTitle(option)}
+									</button>
+								</li>
+							{/each}
+						</ul>
+					</details>
+				</fieldset>
+				<fieldset class="fieldset w-full">
+					<legend class="fieldset-legend">Filter</legend>
+					<details class="dropdown w-full">
+						<summary class="btn w-full">{@render filterTitle(data.request.filter)}</summary>
+						<ul class="menu dropdown-content bg-base-100 shadow-sm">
+							{#each [Filter.UNKNOWN, Filter.FAVORITE_TAGS] as option}
+								<li>
+									<button
+										class:menu-active={filter == option}
+										onclick={() => goto(tagURL(page.url, { filter: option }))}
+									>
+										{@render filterTitle(option)}
+									</button>
+								</li>
+							{/each}
+						</ul>
+					</details>
+				</fieldset>
+			</div>
+		</div>
+		<div class="w-full">
+			<ItemCardGrid bind:items bind:updated />
 		</div>
 	</Content>
 
