@@ -1,11 +1,10 @@
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { variables } from "$lib/variables.server";
-import { browseURL } from "$lib/routes";
 import logger from "$lib/logger";
 
-export const load: PageServerLoad = async ({ url, fetch }) => {
-    const target = url.searchParams.get('target') ?? browseURL(url.origin).toString()
+export const load: PageServerLoad = async ({ url }) => {
+    const target = url.searchParams.get('target') ?? url.origin.toString()
 
     if (!variables.oidcEnable) {
         logger.debug("OIDC not enable. redirect to browse page")
@@ -17,7 +16,7 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
     oidpUrl.searchParams.set('scope', 'openid email profile')
     oidpUrl.searchParams.set('client_id', variables.oidcClient)
     oidpUrl.searchParams.set('redirect_uri', new URL("/login/callback", url.origin).toString())
-    oidpUrl.searchParams.set('state', target ?? browseURL(url.origin).toString())
+    oidpUrl.searchParams.set('state', target)
 
     logger.debug(oidpUrl, "OIDC login")
     redirect(307, oidpUrl)

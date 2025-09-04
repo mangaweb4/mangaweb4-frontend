@@ -4,6 +4,7 @@ export const variables = {
     apiBasePath: env.BACKEND_URL ?? 'localhost:8972',
     defaultSortField: env.DEFAULT_SORT_FIELD ?? "CREATION_TIME",
     defaultOrder: env.DEFAULT_ORDER ?? "DESCENDING",
+    homepage: env.HOMEPAGE ?? "BROWSE",
 
     oidcEnable: env.OIDC_ENABLE ? env.OIDC_ENABLE == "true" : false,
     oidcClient: env.OIDC_CLIENT ?? '',
