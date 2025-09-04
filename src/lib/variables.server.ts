@@ -4,6 +4,7 @@ import { SortField, SortOrder } from './grpc/types';
 
 let variables: {
     apiBasePath: string
+    homepage: string
 
     defaultBrowseSortField: SortField
     defaultBrowseSortOrder: SortOrder
@@ -43,6 +44,7 @@ export default function getVariables() {
 
     variables = {
         apiBasePath: env.BACKEND_URL ?? 'localhost:8972',
+        homepage: env.HOMEPAGE ?? "BROWSE",
 
         defaultBrowseSortField,
         defaultBrowseSortOrder,

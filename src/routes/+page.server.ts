@@ -1,9 +1,13 @@
 import type { PageServerLoad } from './$types';
 import variables from '$lib/variables.server';
 import { redirect } from '@sveltejs/kit'
-import { browseURL, loginUrl } from '$lib/routes'
-import logger from '$lib/logger';
+import { browseURL, tagURL } from '$lib/routes'
 
 export const load: PageServerLoad = async ({ url }) => {
-    redirect(307, browseURL(url.origin))
+    switch (variables.homepage) {
+        default: redirect(307, browseURL(url.origin));
+        case "TAGS": redirect(307, tagURL(url.origin))
+        case "BROWSE": redirect(307, browseURL(url.origin))
+    }
+
 }
