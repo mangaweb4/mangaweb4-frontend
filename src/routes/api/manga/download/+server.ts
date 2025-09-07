@@ -2,13 +2,13 @@ import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import type { RequestHandler } from './$types';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
-import { variables } from '$lib/variables.server';
+import variables from '$lib/variables.server';
 import { MAX_STREAM_OBJECT_SIZE } from '$lib/constants';
 import { error } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url }) => {
     let transport = new GrpcTransport({
-        host: variables.apiBasePath,
+        host: variables().apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 

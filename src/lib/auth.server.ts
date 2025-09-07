@@ -1,13 +1,13 @@
 import * as jose from 'jose'
 import { redirect, type Cookies } from '@sveltejs/kit'
 import { loginUrl } from './routes'
-import { variables } from './variables.server'
+import variables from './variables.server'
 import logger from '$lib/logger'
 
-const JWKS = variables.oidcEnable ? jose.createRemoteJWKSet(new URL(variables.oidcJWKS)) : null
+const JWKS = variables().oidcEnable ? jose.createRemoteJWKSet(new URL(variables().oidc.jwks)) : null
 
 export async function validateSessionWithHeader(url: URL, request: Request) {
-    if (!variables.oidcEnable) {
+    if (!variables().oidcEnable) {
         return;
     }
 
@@ -34,8 +34,8 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
 
     try {
         const { payload, protectedHeader } = await jose.jwtVerify(accessToken, JWKS, {
-            issuer: variables.oidcIssuer,
-            audience: variables.oidcClient,
+            issuer: variables().oidc.issuer,
+            audience: variables().oidc.client,
         })
 
         logger.debug({ payload, protectedHeader }, "verify JWT token")
@@ -47,7 +47,7 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
 }
 
 export async function validateSession(url: URL, cookies: Cookies) {
-    if (!variables.oidcEnable) {
+    if (!variables().oidcEnable) {
         logger.debug("OIDC not enable.")
         return;
     }
@@ -70,8 +70,8 @@ export async function validateSession(url: URL, cookies: Cookies) {
 
     try {
         const { payload, protectedHeader } = await jose.jwtVerify(accessToken, JWKS, {
-            issuer: variables.oidcIssuer,
-            audience: variables.oidcClient,
+            issuer: variables().oidc.issuer,
+            audience: variables().oidc.client,
         })
 
         logger.debug({ payload, protectedHeader }, "verify JWT token")

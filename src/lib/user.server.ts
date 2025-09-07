@@ -1,11 +1,11 @@
 import * as jose from 'jose'
-import { variables } from './variables.server';
+import variables from './variables.server';
 import type { Cookies } from '@sveltejs/kit';
 
 const DEFAULT_EMAIL = "default@example.com"
 
 export function getUser(request: Request, cookies: Cookies): string {
-    if (!variables.oidcEnable) {
+    if (!variables().oidcEnable) {
         return getUserCF(request)
     }
     const idToken = cookies.get("idToken")
@@ -21,7 +21,7 @@ export function getUserDetail(request: Request, cookies: Cookies): {
     email: string,
     name: string
 } {
-    if (!variables.oidcEnable) {
+    if (!variables().oidcEnable) {
         return getUserDetailCF(request);
     }
 

@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { variables } from '$lib/variables.server';
+import variables from '$lib/variables.server';
 import { redirect } from '@sveltejs/kit'
 import { browseURL, loginUrl } from '$lib/routes'
 import logger from '$lib/logger';

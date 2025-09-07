@@ -17,8 +17,6 @@
 	} = $props();
 
 	const isBrowser = new MediaQuery('display-mode: browser');
-
-	$inspect(isBrowser.current);
 </script>
 
 {#if show}
