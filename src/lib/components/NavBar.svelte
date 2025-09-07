@@ -6,7 +6,6 @@
 	import reloadIcon from '@mdi/svg/svg/reload.svg?raw';
 
 	import { MediaQuery } from 'svelte/reactivity';
-	import { browseURL } from '$lib/routes';
 	import { page } from '$app/state';
 	let {
 		children = undefined,
@@ -41,7 +40,7 @@
 			{/if}
 
 			<div class="flex-none place-self-center">
-				<a class="flex-none" href={browseURL(page.url).toString()}>
+				<a class="flex-none" href={page.url.origin.toString()}>
 					<Icon data={logo} width="128px" height="48px" />
 				</a>
 			</div>
