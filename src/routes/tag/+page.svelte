@@ -79,10 +79,10 @@
 			<div class="text-xl">Tag list</div>
 		</NavBar>
 		<div class="container mx-auto max-w-[1024px]">
-			<div class="hidden md:grid grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-200">
+			<div class="hidden md:grid grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-200 top-16 sticky w-full z-1">
 				<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
 			</div>
-			<div class="md:hidden bg-base-200 flex py-4">
+			<div class="md:hidden bg-base-200 flex py-4 top-16 sticky w-full z-1">
 				<div class="flex-1"></div>
 				<button class="btn btn-ghost" onclick={() => filterDialog.showModal()}>
 					<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800" /> Option
