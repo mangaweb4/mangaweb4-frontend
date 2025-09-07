@@ -13,7 +13,7 @@
 	let { children = undefined, showMenu = $bindable() } = $props();
 </script>
 
-<div class="drawer-side">
+<div class="drawer-side z-3">
 	<div
 		class="drawer-overlay"
 		role="none"
