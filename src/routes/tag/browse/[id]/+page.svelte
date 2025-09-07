@@ -106,7 +106,7 @@
 			</div>
 		</NavBar>
 		<div class="container mx-auto max-w-[1024px]">
-			<div class="w-full mb-4 shadow-sm p-4 bg-base-200">
+			<div class="w-full mb-4 shadow-sm p-4 bg-base-200 top-16 sticky w-full z-1">
 				<div class="flex mb-2">
 					<div class="flex-1 text-xl">
 						{data.response.name}
