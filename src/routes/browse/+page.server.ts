@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { variables } from '$lib/variables.server';
+import variables from '$lib/variables.server';
 import { getUser } from '$lib/user.server';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { ChannelCredentials } from '@grpc/grpc-js';
@@ -16,37 +16,29 @@ function createDefaultRequest(): {
     page: number;
     search: string;
     sort: SortField;
-    tag: string;
 } {
-    let sortField: SortField = $enum(SortField)
-        .getValueOrDefault(variables.defaultSortField, SortField.CREATION_TIME)
-
-    let order = SortOrder.DESCENDING
-    if (sortField == SortField.NAME) {
-        order = SortOrder.ASCENDING
-    }
+    const v = variables();
 
     return {
         user: '',
         filter: Filter.UNKNOWN,
         item_per_page: 30,
-        order: order,
+        order: v.defaultBrowseSortOrder,
         page: 0,
         search: '',
-        sort: sortField,
-        tag: ''
+        sort: v.defaultBrowseSortField,
     };
 }
 
 export const load: PageServerLoad = async ({ request, url, cookies }) => {
     let transport = new GrpcTransport({
-        host: variables.apiBasePath,
+        host: variables().apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
     let client = new MangaClient(transport)
 
-    let { user, filter, item_per_page, order, page, search, sort, tag } = createDefaultRequest();
+    let { user, filter, item_per_page, order, page, search, sort } = createDefaultRequest();
     user = getUser(request, cookies);
 
     const params = url.searchParams;
@@ -60,10 +52,6 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
 
     if (params.has('order')) {
         order = $enum(SortOrder).getValueOrDefault(params.get('order'), SortOrder.ASCENDING);
-    }
-
-    if (params.has('tag')) {
-        tag = params.get('tag') as string;
     }
 
     if (params.has('page')) {
@@ -82,7 +70,6 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
 
     let call = await client.list({
         user: user,
-        tag: tag,
         filter: filter,
         page: page,
         itemPerPage: item_per_page,

@@ -2,7 +2,7 @@ import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import type { RequestHandler } from './$types';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
-import { variables } from '$lib/variables.server';
+import variables from '$lib/variables.server';
 import type { URLSearchParams } from 'url';
 import { error } from '@sveltejs/kit';
 
@@ -14,7 +14,7 @@ function parseParamInt(name: string, searchParams: URLSearchParams) {
 
 export const GET: RequestHandler = async ({ url }) => {
     let transport = new GrpcTransport({
-        host: variables.apiBasePath,
+        host: variables().apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure()
     })
 

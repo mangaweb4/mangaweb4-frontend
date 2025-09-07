@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { getUser } from '$lib/user.server';
-import { variables } from '$lib/variables.server';
+import variables from '$lib/variables.server';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { TagClient } from '$lib/grpc/tag.client';
@@ -25,8 +25,8 @@ function createDefaultRequest(request: Request, cookies: Cookies): {
         filter: Filter.UNKNOWN,
         page: 0,
         item_per_page: 30,
-        order: SortOrder.ASCENDING,
-        sort: SortField.NAME,
+        order: variables().defaultTagSortOrder,
+        sort: variables().defaultTagSortField
     };
 }
 
@@ -65,7 +65,7 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
     }
 
     let transport = new GrpcTransport({
-        host: variables.apiBasePath,
+        host: variables().apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 

@@ -1,7 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import { getUserDetail } from "$lib/user.server";
 import { GrpcTransport } from "@protobuf-ts/grpc-transport";
-import { variables } from "$lib/variables.server";
+import variables from "$lib/variables.server";
 import { ChannelCredentials } from "@grpc/grpc-js";
 import logger from "$lib/logger";
 import { UserClient } from '$lib/grpc/user.client'
@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
    const user = getUserDetail(request, cookies)
 
    let transport = new GrpcTransport({
-      host: variables.apiBasePath,
+      host: variables().apiBasePath,
       channelCredentials: ChannelCredentials.createInsecure(),
    })
 

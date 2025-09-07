@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { getUser } from '$lib/user.server';
-import { variables } from '$lib/variables.server';
+import variables from '$lib/variables.server';
 import { GrpcTransport } from '@protobuf-ts/grpc-transport';
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { MangaClient } from '$lib/grpc/manga.client';
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ request, cookies, params }) => {
     const user = getUser(request, cookies);
 
     let transport = new GrpcTransport({
-        host: variables.apiBasePath,
+        host: variables().apiBasePath,
         channelCredentials: ChannelCredentials.createInsecure(),
     })
 
