@@ -14,5 +14,5 @@ export const load: PageServerLoad = async ({ url, fetch, cookies }) => {
     cookies.delete("idToken", { path: "/" })
 
     logger.debug("Redirect to OIDC logout page")
-    redirect(307, variables().oidcLogout);
+    redirect(307, variables().oidc.logout);
 }

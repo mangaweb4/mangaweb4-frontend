@@ -12,13 +12,15 @@ let variables: {
     defaultTagSortOrder: SortOrder
 
     oidcEnable: boolean
-    oidcClient: string
-    oidcSecret: string
-    oidcAuth: string
-    oidcToken: string
-    oidcIssuer: string
-    oidcJWKS: string
-    oidcLogout: string
+    oidc: {
+        client: string
+        secret: string
+        auth: string
+        token: string
+        issuer: string
+        jwks: string
+        logout: string
+    }
 } | null = null;
 
 export default function getVariables() {
@@ -49,13 +51,15 @@ export default function getVariables() {
         defaultTagSortOrder,
 
         oidcEnable: env.OIDC_ENABLE ? env.OIDC_ENABLE == "true" : false,
-        oidcClient: env.OIDC_CLIENT ?? '',
-        oidcSecret: env.OIDC_SECRET ?? '',
-        oidcAuth: env.OIDC_AUTHORIZE ?? '',
-        oidcToken: env.OIDC_TOKEN ?? '',
-        oidcIssuer: env.OIDC_ISSUER ?? '',
-        oidcJWKS: env.OIDC_JWKS ?? '',
-        oidcLogout: env.OIDC_LOGOUT ?? ''
+        oidc: {
+            client: env.OIDC_CLIENT ?? '',
+            secret: env.OIDC_SECRET ?? '',
+            auth: env.OIDC_AUTHORIZE ?? '',
+            token: env.OIDC_TOKEN ?? '',
+            issuer: env.OIDC_ISSUER ?? '',
+            jwks: env.OIDC_JWKS ?? '',
+            logout: env.OIDC_LOGOUT ?? ''
+        }
     };
 
     return variables;
