@@ -10,7 +10,7 @@
 
 	import Page from './Page.svelte';
 
-	let { imageURLs = [], onIndexChange, startIndex } = $props();
+	let { imageURLs = [], onIndexChange, startIndex, grayscale = false, disableAnimation=false } = $props();
 
 	let pages: Page[] = $state(new Array(imageURLs.length));
 	let progress = $state(startIndex);
@@ -45,14 +45,14 @@
 
 <button
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
-	onclick={() => emblaApi?.scrollPrev()}
+	onclick={() => emblaApi?.scrollPrev(disableAnimation)}
 >
 	<Icon data={prevIcon} class="mx-auto"></Icon>
 </button>
 
 <button
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
-	onclick={() => emblaApi?.scrollNext()}
+	onclick={() => emblaApi?.scrollNext(disableAnimation)}
 >
 	<Icon data={nextIcon} class="mx-auto"></Icon>
 </button>
@@ -65,7 +65,7 @@
 	<div class="embla__container w-full h-full flex">
 		{#each imageURLs as url, index}
 			<div class="embla__slide w-full h-full flex grow-0 shrink-0">
-				<Page alt="page-{index}" src={url} bind:this={pages[index]} />
+				<Page alt="page-{index}" src={url} bind:this={pages[index]} grayscale={grayscale}/>
 			</div>
 		{/each}
 	</div>
@@ -84,13 +84,13 @@
 		<div class="flex flex-row mt-4">
 			<button 
 				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollTo(0) }}
+				onclick={()=>{emblaApi.scrollTo(0, disableAnimation) }}
 			>
 				<Icon data={firstIcon}/>
 			</button>
 			<button 
 				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollPrev() }}
+				onclick={()=>{emblaApi.scrollPrev(disableAnimation) }}
 			>
 				<Icon data={prevIcon}/>
 			</button>
@@ -100,17 +100,17 @@
 				min="0"
 				max={pages.length - 1}
 				bind:value={progress}
-				onchange={(e: any) => emblaApi.scrollTo(e.target.value)}
+				onchange={(e: any) => emblaApi.scrollTo(e.target.value, disableAnimation)}
 			/>
 			<button 
 				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollNext() }}
+				onclick={()=>{emblaApi.scrollNext(disableAnimation) }}
 			>
 				<Icon data={nextIcon}/>
 			</button>
 			<button 
 				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollTo(pages.length - 1) }}
+				onclick={()=>{emblaApi.scrollTo(pages.length - 1, disableAnimation) }}
 			>
 				<Icon data={lastIcon}/>
 			</button>

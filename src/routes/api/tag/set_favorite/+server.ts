@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ request, cookies }) => {
     let user = getUser(request, cookies)
     let favorite = url.searchParams.get('favorite')?.toLowerCase() == "true"
     let id = parseInt(url.searchParams.get("id") ?? "")
-    let { response } = await client.setFavorite({ id: id, tag: '', user, favorite })
+    let { response } = await client.setFavorite({ id: id, user, favorite })
 
     return new Response(JSON.stringify(response));
 };

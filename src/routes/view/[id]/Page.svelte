@@ -2,7 +2,7 @@
 	import { Icon } from 'svelte-icon';
 	import errorIcon from '@mdi/svg/svg/alert-circle.svg?raw';
 
-	let { alt, src } = $props();
+	let { alt, src, grayscale=true } = $props();
 
 	let img: HTMLImageElement;
 	let loading: 'lazy' | 'eager' = $state('lazy');
@@ -38,6 +38,7 @@
 <div class="relative w-full h-full">
 	<img
 		class="absolute w-full h-full object-contain max-w-full max-h-full"
+		class:grayscale={grayscale}
 		{loading}
 		{alt}
 		src={src.toString()}
