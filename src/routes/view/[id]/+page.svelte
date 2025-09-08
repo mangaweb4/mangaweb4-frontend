@@ -153,6 +153,8 @@
 				{onIndexChange}
 				bind:this={viewer}
 				startIndex={data.response.currentPage}
+				grayscale={true}
+				disableAnimation={true}
 			/>
 		</div>
 
