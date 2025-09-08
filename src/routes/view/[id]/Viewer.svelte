@@ -61,10 +61,12 @@
 		manager.add(swipe);
 
 		manager.on('swipeleft', () => {
-			emblaApi?.scrollNext(disableAnimation);
+			if (!disableAnimation) return;
+			emblaApi?.scrollNext(true);
 		});
 		manager.on('swiperight', () => {
-			emblaApi?.scrollPrev(disableAnimation);
+			if (!disableAnimation) return;
+			emblaApi?.scrollPrev(true);
 		});
 	}
 </script>
@@ -87,6 +89,7 @@
 	class="embla w-full h-full bg-base-300"
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onInit}
+	{@attach swipeAttachment}
 >
 	<div class="embla__container w-full h-full flex">
 		{#each imageURLs as url, index}
@@ -96,12 +99,6 @@
 		{/each}
 	</div>
 </div>
-
-<div
-	class="absolute top-0 bottom-0 start-0 end-0"
-	class:hidden={!disableAnimation}
-	{@attach swipeAttachment}
->&nbsp;</div>
 
 <button
 	class="cursor-pointer absolute w-full h-20 bottom-2"
