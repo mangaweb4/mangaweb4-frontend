@@ -1,6 +1,7 @@
 <script lang="ts">
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import type { EmblaCarouselType, EmblaEventType } from 'embla-carousel';
+	import Hammer from 'hammerjs';
 
 	import { Icon } from 'svelte-icon';
 	import prevIcon from '@mdi/svg/svg/chevron-left.svg?raw';
@@ -10,7 +11,13 @@
 
 	import Page from './Page.svelte';
 
-	let { imageURLs = [], onIndexChange, startIndex, grayscale = false, disableAnimation=false } = $props();
+	let {
+		imageURLs = [],
+		onIndexChange,
+		startIndex,
+		grayscale = false,
+		disableAnimation = false
+	} = $props();
 
 	let pages: Page[] = $state(new Array(imageURLs.length));
 	let progress = $state(startIndex);
@@ -33,7 +40,13 @@
 	}
 
 	let emblaApi: EmblaCarouselType;
-	let options = { loop: true, startIndex };
+	let options = {
+		loop: true,
+		startIndex,
+		watchDrag: () => {
+			return !disableAnimation;
+		}
+	};
 
 	function onInit(event: any) {
 		emblaApi = event.detail;
@@ -41,6 +54,21 @@
 	}
 
 	let pageScroll: HTMLDialogElement;
+
+	function swipeAttachment(element: HTMLElement) {
+		let manager = new Hammer.Manager(element);
+		let swipe = new Hammer.Swipe();
+		manager.add(swipe);
+
+		manager.on('swipeleft', () => {
+			if (!disableAnimation) return;
+			emblaApi?.scrollNext(true);
+		});
+		manager.on('swiperight', () => {
+			if (!disableAnimation) return;
+			emblaApi?.scrollPrev(true);
+		});
+	}
 </script>
 
 <button
@@ -61,11 +89,12 @@
 	class="embla w-full h-full bg-base-300"
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onInit}
+	{@attach swipeAttachment}
 >
 	<div class="embla__container w-full h-full flex">
 		{#each imageURLs as url, index}
 			<div class="embla__slide w-full h-full flex grow-0 shrink-0">
-				<Page alt="page-{index}" src={url} bind:this={pages[index]} grayscale={grayscale}/>
+				<Page alt="page-{index}" src={url} bind:this={pages[index]} {grayscale} />
 			</div>
 		{/each}
 	</div>
@@ -74,7 +103,7 @@
 <button
 	class="cursor-pointer absolute w-full h-20 bottom-2"
 	onclick={() => pageScroll.showModal()}
-	aria-label='toggle-page-scroll'
+	aria-label="toggle-page-scroll"
 >
 </button>
 
@@ -82,37 +111,45 @@
 	<div class="modal-box w-full max-w-[1024px] mx-auto">
 		<h3 class="text-lg font-bold">Move to page</h3>
 		<div class="flex flex-row mt-4">
-			<button 
-				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollTo(0, disableAnimation) }}
+			<button
+				class="btn flex-none"
+				onclick={() => {
+					emblaApi.scrollTo(0, disableAnimation);
+				}}
 			>
-				<Icon data={firstIcon}/>
+				<Icon data={firstIcon} />
 			</button>
-			<button 
-				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollPrev(disableAnimation) }}
+			<button
+				class="btn flex-none"
+				onclick={() => {
+					emblaApi.scrollPrev(disableAnimation);
+				}}
 			>
-				<Icon data={prevIcon}/>
+				<Icon data={prevIcon} />
 			</button>
 			<input
 				type="range"
-				class="range flex-1 place-self-center mx-2" 
+				class="range flex-1 place-self-center mx-2"
 				min="0"
 				max={pages.length - 1}
 				bind:value={progress}
 				onchange={(e: any) => emblaApi.scrollTo(e.target.value, disableAnimation)}
 			/>
-			<button 
-				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollNext(disableAnimation) }}
+			<button
+				class="btn flex-none"
+				onclick={() => {
+					emblaApi.scrollNext(disableAnimation);
+				}}
 			>
-				<Icon data={nextIcon}/>
+				<Icon data={nextIcon} />
 			</button>
-			<button 
-				class="btn flex-none" 
-				onclick={()=>{emblaApi.scrollTo(pages.length - 1, disableAnimation) }}
+			<button
+				class="btn flex-none"
+				onclick={() => {
+					emblaApi.scrollTo(pages.length - 1, disableAnimation);
+				}}
 			>
-				<Icon data={lastIcon}/>
+				<Icon data={lastIcon} />
 			</button>
 		</div>
 		<p class="mt-2">

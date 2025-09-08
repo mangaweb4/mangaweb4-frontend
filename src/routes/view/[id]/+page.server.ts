@@ -7,6 +7,7 @@ import { MangaClient } from '$lib/grpc/manga.client';
 import { getViewOptions } from '$lib/view_options.server';
 
 export const prerender = false;
+export const ssr = false;
 
 export const load: PageServerLoad = async ({ request, cookies, params }) => {
     const { id } = params
