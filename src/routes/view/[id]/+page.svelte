@@ -18,11 +18,13 @@
 	import fixIcon from '@mdi/svg/svg/tools.svg?raw';
 	import infoIcon from '@mdi/svg/svg/information-outline.svg?raw';
 	import tagIcon from '@mdi/svg/svg/tag.svg?raw';
-	import thumbnailIcon from '@mdi/svg/svg/crop-portrait.svg?raw';
+	import thumbnailIcon from '@mdi/svg/svg/image.svg?raw';
 	import logger from '$lib/logger';
 	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
 	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
 	import toggleNavBarIcon from '@mdi/svg/svg/chevron-down.svg?raw';
+	import disableAnimationIcon from '@mdi/svg/svg/transition.svg?raw';
+	import grayscaleIcon from '@mdi/svg/svg/square-opacity.svg?raw';
 
 	let current = $state(0);
 	let viewer: Viewer;
@@ -39,6 +41,8 @@
 	let favorite = $state(data.response.favorite);
 
 	let showNavBar = $state(false);
+
+	let options = $state(data.options);
 
 	function createImageUrls(id: number, pageCount: number): string[] {
 		const url = new URL('/api/manga/page_image', page.url.origin);
@@ -132,6 +136,17 @@
 		}
 	}
 
+	async function onUpdateOptions() {
+		const url = new URL('/api/view/set_options', page.url.origin);
+		url.searchParams.set('disableAnimation', options.disableAnimation.toString());
+		url.searchParams.set('grayscale', options.grayscale.toString());
+
+		const resp = await fetch(url);
+		const json = await resp.json();
+
+		return json.success;
+	}
+
 	let showMenu = $state(false);
 	let aboutDialog: HTMLDialogElement;
 </script>
@@ -153,8 +168,8 @@
 				{onIndexChange}
 				bind:this={viewer}
 				startIndex={data.response.currentPage}
-				grayscale={true}
-				disableAnimation={true}
+				grayscale={options.grayscale}
+				disableAnimation={options.disableAnimation}
 			/>
 		</div>
 
@@ -232,6 +247,30 @@
 			<li>
 				<button onclick={() => fixMetaData()}>
 					<Icon data={fixIcon} class="fill-slate-400 stroke-slate-800" /> Fix item metadata
+				</button>
+			</li>
+
+			<li class="menu-title">Options</li>
+			<li>
+				<button
+					class:menu-active={options.disableAnimation}
+					onclick={async () => {
+						options.disableAnimation = !options.disableAnimation;
+						onUpdateOptions();
+					}}
+				>
+					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Disable Animation
+				</button>
+			</li>
+			<li>
+				<button class="my-1"
+					class:menu-active={options.grayscale}
+					onclick={async () => {
+						options.grayscale = !options.grayscale;
+						onUpdateOptions();
+					}}
+					>
+					<Icon data={grayscaleIcon} class="fill-slate-400 stroke-slate-800" /> Grayscale
 				</button>
 			</li>
 		</ul>
