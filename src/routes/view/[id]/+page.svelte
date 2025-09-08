@@ -25,6 +25,7 @@
 	import toggleNavBarIcon from '@mdi/svg/svg/chevron-down.svg?raw';
 	import disableAnimationIcon from '@mdi/svg/svg/transition.svg?raw';
 	import grayscaleIcon from '@mdi/svg/svg/square-opacity.svg?raw';
+	import type { ViewOptions } from '$lib/view_options.server';
 
 	let current = $state(0);
 	let viewer: Viewer;
@@ -136,13 +137,17 @@
 		}
 	}
 
-	async function onUpdateOptions() {
+	async function onUpdateOptions(o: ViewOptions) {
 		const url = new URL('/api/view/set_options', page.url.origin);
 		url.searchParams.set('disableAnimation', options.disableAnimation.toString());
 		url.searchParams.set('grayscale', options.grayscale.toString());
 
 		const resp = await fetch(url);
 		const json = await resp.json();
+
+		if (json.success) {
+			options = o;
+		}
 
 		return json.success;
 	}
@@ -255,21 +260,24 @@
 				<button
 					class:menu-active={options.disableAnimation}
 					onclick={async () => {
-						options.disableAnimation = !options.disableAnimation;
-						onUpdateOptions();
+						let o = options;
+						o.disableAnimation = !o.disableAnimation;
+						onUpdateOptions(o);
 					}}
 				>
 					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Disable Animation
 				</button>
 			</li>
 			<li>
-				<button class="my-1"
+				<button
+					class="my-1"
 					class:menu-active={options.grayscale}
 					onclick={async () => {
-						options.grayscale = !options.grayscale;
-						onUpdateOptions();
+						let o = options
+						o.grayscale = !o.grayscale
+						onUpdateOptions(o);
 					}}
-					>
+				>
 					<Icon data={grayscaleIcon} class="fill-slate-400 stroke-slate-800" /> Grayscale
 				</button>
 			</li>
