@@ -22,10 +22,10 @@
 	import logger from '$lib/logger';
 	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
 	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
-	import toggleNavBarIcon from '@mdi/svg/svg/chevron-down.svg?raw';
 	import disableAnimationIcon from '@mdi/svg/svg/transition.svg?raw';
 	import grayscaleIcon from '@mdi/svg/svg/square-opacity.svg?raw';
 	import type { ViewOptions } from '$lib/view_options.server';
+	import Navigation from './Navigation.svelte';
 
 	let current = $state(0);
 	let viewer: Viewer;
@@ -179,12 +179,35 @@
 		</div>
 
 		<button
-			class="cursor-pointer absolute w-full h-40 top-5"
+			aria-label="toggle-navbar"
+			class="bg-black/50 fixed top-0 bottom-0 left-0 right-0"
+			onclick={() => (showNavBar = !showNavBar)}
+			hidden={!showNavBar}
+		></button>
+
+		<button
+			class="cursor-pointer fixed w-full h-50 top-0"
 			onclick={() => (showNavBar = !showNavBar)}
 			aria-label="toggle-navbar"
 		>
 			&nbsp;
 		</button>
+
+		<button
+			class="cursor-pointer fixed w-full h-40 bottom-0"
+			onclick={() => (showNavBar = !showNavBar)}
+			aria-label="toggle-page-scroll"
+		>
+		</button>
+
+		<Navigation
+			bind:show={showNavBar}
+			bind:current
+			length={pageCount}
+			onNext={() => viewer.next()}
+			onPrevious={() => viewer.previous()}
+			onMovedToPage={(i: number) => viewer.moveToPage(i)}
+		/>
 	</Content>
 	<SideBar bind:showMenu>
 		<ul class="menu">
@@ -273,8 +296,8 @@
 					class="my-1"
 					class:menu-active={options.grayscale}
 					onclick={async () => {
-						let o = options
-						o.grayscale = !o.grayscale
+						let o = options;
+						o.grayscale = !o.grayscale;
 						onUpdateOptions(o);
 					}}
 				>
