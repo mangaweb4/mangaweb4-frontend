@@ -1,7 +1,6 @@
 <script lang="ts">
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import type { EmblaCarouselType, EmblaEventType } from 'embla-carousel';
-	import Hammer from 'hammerjs';
 
 	import { Icon } from 'svelte-icon';
 	import prevIcon from '@mdi/svg/svg/chevron-left.svg?raw';
@@ -47,27 +46,16 @@
 		}
 	};
 
+	let scrolling = false;
+
 	function onInit(event: any) {
 		emblaApi = event.detail;
 		emblaApi.on('slidesInView', slidesInView);
-	}
+		emblaApi.on('scroll', () => (scrolling = true));
+		emblaApi.on('settle', () => (scrolling = false));
 
-	function swipeAttachment(element: HTMLElement) {
-		let manager = new Hammer.Manager(element);
-		let swipe = new Hammer.Swipe();
-		manager.add(swipe);
-
-		manager.on('swipeleft', () => {
-			next();
-		});
-		manager.on('swiperight', () => {
-			previous();
-		});
-
-		let tap = new Hammer.Tap();
-		manager.add(tap);
-		manager.on('tap', () => {
-			onTapped();
+		emblaApi.on('pointerUp', () => {
+			if (!scrolling) onTapped();
 		});
 	}
 
@@ -102,7 +90,6 @@
 	class="embla w-full h-full bg-base-300"
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onInit}
-	{@attach swipeAttachment}
 >
 	<div class="embla__container w-full h-full flex">
 		{#each imageURLs as url, index}
