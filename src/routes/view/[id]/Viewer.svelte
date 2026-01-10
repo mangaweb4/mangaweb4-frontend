@@ -107,7 +107,16 @@
 	<div class="embla__container w-full h-full flex">
 		{#each imageURLs as url, index}
 			<div class="embla__slide w-full h-full flex grow-0 shrink-0">
-				<Page alt="page-{index}" src={url} bind:this={pages[index]} {grayscale} />
+				<Page
+					alt="page-{index}"
+					src={url}
+					bind:this={pages[index]}
+					{grayscale}
+					onLoaded={() => {
+						if (index - 1 >= 0) pages[index - 1].forceLoad();
+						if (index + 1 < pages.length) pages[index + 1].forceLoad();
+					}}
+				/>
 			</div>
 		{/each}
 	</div>
