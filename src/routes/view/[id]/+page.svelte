@@ -175,6 +175,7 @@
 				startIndex={data.response.currentPage}
 				grayscale={options.grayscale}
 				disableAnimation={options.disableAnimation}
+				onTapped={() => (showNavBar = true)}
 			/>
 		</div>
 
@@ -184,21 +185,6 @@
 			onclick={() => (showNavBar = !showNavBar)}
 			hidden={!showNavBar}
 		></button>
-
-		<button
-			class="cursor-pointer fixed w-full h-50 top-0"
-			onclick={() => (showNavBar = !showNavBar)}
-			aria-label="toggle-navbar"
-		>
-			&nbsp;
-		</button>
-
-		<button
-			class="cursor-pointer fixed w-full h-40 bottom-0"
-			onclick={() => (showNavBar = !showNavBar)}
-			aria-label="toggle-page-scroll"
-		>
-		</button>
 
 		<Navigation
 			bind:show={showNavBar}

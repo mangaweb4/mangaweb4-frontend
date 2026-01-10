@@ -12,6 +12,7 @@
 	let {
 		imageURLs = [],
 		onIndexChange = (i: number) => {},
+		onTapped = () => {},
 		startIndex,
 		grayscale = false,
 		disableAnimation = false
@@ -61,6 +62,12 @@
 		});
 		manager.on('swiperight', () => {
 			previous();
+		});
+
+		let tap = new Hammer.Tap();
+		manager.add(tap);
+		manager.on('tap', () => {
+			onTapped();
 		});
 	}
 
