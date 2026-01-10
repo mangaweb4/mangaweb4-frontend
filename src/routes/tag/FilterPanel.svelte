@@ -5,13 +5,6 @@
 	import { tagURL } from '$lib/routes';
 	import { Icon } from 'svelte-icon';
 
-	import nameIcon from '@mdi/svg/svg/format-title.svg?raw';
-	import itemCountIcon from '@mdi/svg/svg/book-multiple.svg?raw';
-	import ascendingIcon from '@mdi/svg/svg/sort-ascending.svg?raw';
-	import descendingIcon from '@mdi/svg/svg/sort-descending.svg?raw';
-	import favoriteIcon from '@mdi/svg/svg/tag-heart.svg?raw';
-	import noneIcon from '@mdi/svg/svg/cancel.svg?raw';
-	import lastUpdateIcon from '@mdi/svg/svg/calendar-clock.svg?raw';
 	import searchIcon from '@mdi/svg/svg/magnify.svg?raw';
 	import clearIcon from '@mdi/svg/svg/close-circle.svg?raw';
 
@@ -98,81 +91,67 @@
 </fieldset>
 <fieldset class="fieldset w-full">
 	<legend class="fieldset-legend">Sort By</legend>
-	<details class="dropdown w-full">
-		<summary class="btn w-full">{@render sortFieldTitle(data.request.sort)}</summary>
-		<ul class="menu dropdown-content bg-base-100 shadow-sm">
-			{#each [{ sort: SortField.NAME }, { sort: SortField.ITEMCOUNT, order: SortOrder.DESCENDING }, { sort: SortField.LAST_UPDATE, order: SortOrder.DESCENDING }] as option}
-				<li>
-					<button
-						class:menu-active={sort == option.sort}
-						onclick={() => goto(createTagListUrl(option))}
-					>
-						{@render sortFieldTitle(option.sort)}
-					</button>
-				</li>
-			{/each}
-		</ul>
-	</details>
+	<select
+		class="select"
+		onchange={(e: Event) => {
+			const target = e.target as HTMLSelectElement;
+			const sort = parseInt(target.value);
+			const order = ((s: SortField) => {
+				switch (s) {
+					default:
+						return undefined;
+
+					case SortField.NAME:
+						return SortOrder.ASCENDING;
+
+					case SortField.ITEMCOUNT:
+					case SortField.LAST_UPDATE:
+						return SortOrder.DESCENDING;
+				}
+			})(sort);
+			goto(createTagListUrl({ sort: sort, order: order }));
+		}}
+	>
+		<option value={SortField.NAME} selected={sort == SortField.NAME}> Title </option>
+		<option value={SortField.ITEMCOUNT} selected={sort == SortField.ITEMCOUNT}> Item Count </option>
+		<option value={SortField.LAST_UPDATE} selected={sort == SortField.LAST_UPDATE}>
+			Last Update
+		</option>
+	</select>
 </fieldset>
 <fieldset class="fieldset w-full">
 	<legend class="fieldset-legend">Order</legend>
-	<details class="dropdown w-full">
-		<summary class="btn w-full">{@render orderTitle(data.request.order)}</summary>
-		<ul class="menu dropdown-content bg-base-100 shadow-sm">
-			{#each [SortOrder.ASCENDING, SortOrder.DESCENDING] as option}
-				<li>
-					<button
-						class:menu-active={order == option}
-						onclick={() => goto(createTagListUrl({ order: option }))}
-					>
-						{@render orderTitle(option)}
-					</button>
-				</li>
-			{/each}
-		</ul>
-	</details>
+
+	<select
+		class="select"
+		onchange={(e: Event) => {
+			const target = e.target as HTMLSelectElement;
+			const order = parseInt(target.value);
+
+			goto(createTagListUrl({ order: order }));
+		}}
+	>
+		<option value={SortOrder.ASCENDING} selected={order == SortOrder.ASCENDING}> Ascending </option>
+		<option value={SortOrder.DESCENDING} selected={order == SortOrder.DESCENDING}>
+			Descending
+		</option>
+	</select>
 </fieldset>
 <fieldset class="fieldset w-full">
 	<legend class="fieldset-legend">Filter</legend>
-	<details class="dropdown w-full">
-		<summary class="btn w-full">{@render filterTitle(data.request.filter)}</summary>
-		<ul class="menu dropdown-content bg-base-100 shadow-sm">
-			{#each [Filter.UNKNOWN, Filter.FAVORITE_TAGS] as option}
-				<li>
-					<button
-						class:menu-active={filter == option}
-						onclick={() => goto(tagURL(page.url, { filter: option }))}
-					>
-						{@render filterTitle(option)}
-					</button>
-				</li>
-			{/each}
-		</ul>
-	</details>
+
+	<select
+		class="select"
+		onchange={(e: Event) => {
+			const target = e.target as HTMLSelectElement;
+			const filter = parseInt(target.value);
+
+			goto(tagURL(page.url, { filter: filter }));
+		}}
+	>
+		<option value={Filter.UNKNOWN} selected={filter == Filter.UNKNOWN}> None </option>
+		<option value={Filter.FAVORITE_TAGS} selected={filter == Filter.FAVORITE_TAGS}>
+			Favorite Tags
+		</option>
+	</select>
 </fieldset>
-
-{#snippet sortFieldTitle(field: SortField)}
-	{#if field == SortField.NAME}
-		<Icon data={nameIcon} class="fill-slate-400 stroke-slate-800" /> Title
-	{:else if field == SortField.ITEMCOUNT}
-		<Icon data={itemCountIcon} class="fill-slate-400 stroke-slate-800" /> Item count
-	{:else if field == SortField.LAST_UPDATE}
-		<Icon data={lastUpdateIcon} class="fill-slate-400 stroke-slate-800" /> Last update
-	{/if}
-{/snippet}
-
-{#snippet orderTitle(order: SortOrder)}
-	{#if order == SortOrder.ASCENDING}
-		<Icon data={ascendingIcon} class="fill-slate-400 stroke-slate-800" /> Ascending
-	{:else if order == SortOrder.DESCENDING}
-		<Icon data={descendingIcon} class="fill-slate-400 stroke-slate-800" /> Descending
-	{/if}
-{/snippet}
-
-{#snippet filterTitle(filter: Filter)}
-	{#if filter == Filter.UNKNOWN}
-		<Icon data={noneIcon} class="fill-slate-400 stroke-slate-800" /> None
-	{:else if filter == Filter.FAVORITE_TAGS}
-		<Icon data={favoriteIcon} class="fill-slate-400 stroke-slate-800" /> Favorite tags
-	{/if}
-{/snippet}
