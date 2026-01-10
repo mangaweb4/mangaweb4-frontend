@@ -51,6 +51,7 @@
 		"@grpc/grpc-js": "^1.14.3",
 		"@mdi/svg": "^7.4.47",
 		"@protobuf-ts/grpc-transport": "^2.11.1",
+		"@rwh/keystrokes": "^1.5.6",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/vite": "^4.1.18",
 		"daisyui": "^5.5.14",
