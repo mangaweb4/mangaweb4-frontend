@@ -1,12 +1,19 @@
 <script lang="ts">
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import type { EmblaCarouselType, EmblaEventType } from 'embla-carousel';
+	import { bindKey } from '@rwh/keystrokes';
+	import { onMount } from 'svelte';
 
 	import { Icon } from 'svelte-icon';
 	import prevIcon from '@mdi/svg/svg/chevron-left.svg?raw';
 	import nextIcon from '@mdi/svg/svg/chevron-right.svg?raw';
 
 	import Page from './Page.svelte';
+
+	onMount(() => {
+		bindKey(['ArrowLeft', 'ArrowDown', 'PageDown'], () => previous());
+		bindKey(['ArrowRight', 'ArrowUp', 'PageUp'], () => next());
+	});
 
 	let {
 		imageURLs = [],
