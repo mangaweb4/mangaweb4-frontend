@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Icon } from 'svelte-icon';
 	import errorIcon from '@mdi/svg/svg/alert-circle.svg?raw';
+	import logger from '$lib/logger';
 
-	let { alt, src, grayscale=true } = $props();
+	let { alt, src, grayscale = true, onLoaded = () => {} } = $props();
 
 	let img: HTMLImageElement;
 	let loading: 'lazy' | 'eager' = $state('lazy');
@@ -31,6 +32,9 @@
 	}
 
 	function onImageLoad() {
+		logger.debug(`img: ${alt} is loaded.`);
+
+		if (!loaded) onLoaded();
 		loaded = true;
 	}
 </script>
@@ -38,7 +42,7 @@
 <div class="relative w-full h-full">
 	<img
 		class="absolute w-full h-full object-contain max-w-full max-h-full"
-		class:grayscale={grayscale}
+		class:grayscale
 		{loading}
 		{alt}
 		src={src.toString()}
