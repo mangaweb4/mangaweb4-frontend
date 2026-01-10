@@ -6,14 +6,13 @@
 	import { Icon } from 'svelte-icon';
 	import prevIcon from '@mdi/svg/svg/chevron-left.svg?raw';
 	import nextIcon from '@mdi/svg/svg/chevron-right.svg?raw';
-	import firstIcon from '@mdi/svg/svg/page-first.svg?raw';
-	import lastIcon from '@mdi/svg/svg/page-last.svg?raw';
 
 	import Page from './Page.svelte';
 
 	let {
 		imageURLs = [],
-		onIndexChange,
+		onIndexChange = (i: number) => {},
+		onTapped = () => {},
 		startIndex,
 		grayscale = false,
 		disableAnimation = false
@@ -53,34 +52,48 @@
 		emblaApi.on('slidesInView', slidesInView);
 	}
 
-	let pageScroll: HTMLDialogElement;
-
 	function swipeAttachment(element: HTMLElement) {
 		let manager = new Hammer.Manager(element);
 		let swipe = new Hammer.Swipe();
 		manager.add(swipe);
 
 		manager.on('swipeleft', () => {
-			if (!disableAnimation) return;
-			emblaApi?.scrollNext(true);
+			next();
 		});
 		manager.on('swiperight', () => {
-			if (!disableAnimation) return;
-			emblaApi?.scrollPrev(true);
+			previous();
 		});
+
+		let tap = new Hammer.Tap();
+		manager.add(tap);
+		manager.on('tap', () => {
+			onTapped();
+		});
+	}
+
+	export function moveToPage(p: number) {
+		emblaApi.scrollTo(p, disableAnimation);
+	}
+
+	export function next() {
+		emblaApi.scrollNext(disableAnimation);
+	}
+
+	export function previous() {
+		emblaApi.scrollPrev(disableAnimation);
 	}
 </script>
 
 <button
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
-	onclick={() => emblaApi?.scrollPrev(disableAnimation)}
+	onclick={() => previous()}
 >
 	<Icon data={prevIcon} class="mx-auto"></Icon>
 </button>
 
 <button
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
-	onclick={() => emblaApi?.scrollNext(disableAnimation)}
+	onclick={() => next()}
 >
 	<Icon data={nextIcon} class="mx-auto"></Icon>
 </button>
@@ -108,64 +121,3 @@
 		{/each}
 	</div>
 </div>
-
-<button
-	class="cursor-pointer absolute w-full h-20 bottom-2"
-	onclick={() => pageScroll.showModal()}
-	aria-label="toggle-page-scroll"
->
-</button>
-
-<dialog class="modal modal-bottom" bind:this={pageScroll}>
-	<div class="modal-box w-full max-w-[1024px] mx-auto">
-		<h3 class="text-lg font-bold">Move to page</h3>
-		<div class="flex flex-row mt-4">
-			<button
-				class="btn flex-none"
-				onclick={() => {
-					emblaApi.scrollTo(0, disableAnimation);
-				}}
-			>
-				<Icon data={firstIcon} />
-			</button>
-			<button
-				class="btn flex-none"
-				onclick={() => {
-					emblaApi.scrollPrev(disableAnimation);
-				}}
-			>
-				<Icon data={prevIcon} />
-			</button>
-			<input
-				type="range"
-				class="range flex-1 place-self-center mx-2"
-				min="0"
-				max={pages.length - 1}
-				bind:value={progress}
-				onchange={(e: any) => emblaApi.scrollTo(e.target.value, disableAnimation)}
-			/>
-			<button
-				class="btn flex-none"
-				onclick={() => {
-					emblaApi.scrollNext(disableAnimation);
-				}}
-			>
-				<Icon data={nextIcon} />
-			</button>
-			<button
-				class="btn flex-none"
-				onclick={() => {
-					emblaApi.scrollTo(pages.length - 1, disableAnimation);
-				}}
-			>
-				<Icon data={lastIcon} />
-			</button>
-		</div>
-		<p class="mt-2">
-			{progress + 1} of {pages.length}
-		</p>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
