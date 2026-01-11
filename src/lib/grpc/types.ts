@@ -56,3 +56,24 @@ export enum SortOrder {
      */
     DESCENDING = 1
 }
+/**
+ * @generated from protobuf enum mangaweb4.types.ImageQuality
+ */
+export enum ImageQuality {
+    /**
+     * @generated from protobuf enum value: IMAGE_QUALITY_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * @generated from protobuf enum value: IMAGE_QUALITY_LOW = 1;
+     */
+    LOW = 1,
+    /**
+     * @generated from protobuf enum value: IMAGE_QUALITY_HIGH = 2;
+     */
+    HIGH = 2,
+    /**
+     * @generated from protobuf enum value: IMAGE_QUALITY_ORIGINAL = 3;
+     */
+    ORIGINAL = 3
+}

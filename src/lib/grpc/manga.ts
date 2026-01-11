@@ -11,6 +11,7 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { ImageQuality } from "./types";
 import { SortOrder } from "./types";
 import { SortField } from "./types";
 import { Filter } from "./types";
@@ -297,17 +298,13 @@ export interface MangaPageImageRequest {
      */
     index: number;
     /**
-     * @generated from protobuf field: int32 Width = 4
-     */
-    width: number;
-    /**
-     * @generated from protobuf field: int32 Height = 5
-     */
-    height: number;
-    /**
      * @generated from protobuf field: int32 Id = 6
      */
     id: number;
+    /**
+     * @generated from protobuf field: mangaweb4.types.ImageQuality Quality = 7
+     */
+    quality: ImageQuality;
 }
 /**
  * @generated from protobuf message MangaPageImageResponse
@@ -1347,18 +1344,16 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
         super("MangaPageImageRequest", [
             { no: 1, name: "User", kind: "scalar", jsonName: "User", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "Index", kind: "scalar", jsonName: "Index", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "Width", kind: "scalar", jsonName: "Width", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "Height", kind: "scalar", jsonName: "Height", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "Id", kind: "scalar", jsonName: "Id", T: 5 /*ScalarType.INT32*/ }
+            { no: 6, name: "Id", kind: "scalar", jsonName: "Id", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "Quality", kind: "enum", jsonName: "Quality", T: () => ["mangaweb4.types.ImageQuality", ImageQuality, "IMAGE_QUALITY_"] }
         ]);
     }
     create(value?: PartialMessage<MangaPageImageRequest>): MangaPageImageRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.user = "";
         message.index = 0;
-        message.width = 0;
-        message.height = 0;
         message.id = 0;
+        message.quality = 0;
         if (value !== undefined)
             reflectionMergePartial<MangaPageImageRequest>(this, message, value);
         return message;
@@ -1374,14 +1369,11 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
                 case /* int32 Index */ 3:
                     message.index = reader.int32();
                     break;
-                case /* int32 Width */ 4:
-                    message.width = reader.int32();
-                    break;
-                case /* int32 Height */ 5:
-                    message.height = reader.int32();
-                    break;
                 case /* int32 Id */ 6:
                     message.id = reader.int32();
+                    break;
+                case /* mangaweb4.types.ImageQuality Quality */ 7:
+                    message.quality = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1401,15 +1393,12 @@ class MangaPageImageRequest$Type extends MessageType<MangaPageImageRequest> {
         /* int32 Index = 3; */
         if (message.index !== 0)
             writer.tag(3, WireType.Varint).int32(message.index);
-        /* int32 Width = 4; */
-        if (message.width !== 0)
-            writer.tag(4, WireType.Varint).int32(message.width);
-        /* int32 Height = 5; */
-        if (message.height !== 0)
-            writer.tag(5, WireType.Varint).int32(message.height);
         /* int32 Id = 6; */
         if (message.id !== 0)
             writer.tag(6, WireType.Varint).int32(message.id);
+        /* mangaweb4.types.ImageQuality Quality = 7; */
+        if (message.quality !== 0)
+            writer.tag(7, WireType.Varint).int32(message.quality);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
