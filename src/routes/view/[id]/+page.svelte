@@ -11,6 +11,8 @@
 	import { page } from '$app/state';
 	import type { PageData } from './$types';
 	import path from 'path-browserify';
+	import { $enum as enumUtil } from 'ts-enum-util';
+	import { ImageQuality } from '$lib/grpc/types';
 
 	import { Icon } from 'svelte-icon';
 	import downloadIcon from '@mdi/svg/svg/download.svg?raw';
@@ -24,6 +26,10 @@
 	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
 	import disableAnimationIcon from '@mdi/svg/svg/transition.svg?raw';
 	import grayscaleIcon from '@mdi/svg/svg/square-opacity.svg?raw';
+	import highQualityIcon from '@mdi/svg/svg/quality-high.svg?raw';
+	import lowQualityIcon from '@mdi/svg/svg/quality-low.svg?raw';
+	import originalQualityIcon from '@mdi/svg/svg/square-rounded.svg?raw';
+
 	import type { ViewOptions } from '$lib/view_options.server';
 	import Navigation from './Navigation.svelte';
 
@@ -44,6 +50,7 @@
 	let showNavBar = $state(false);
 
 	let options = $state(data.options);
+	let quality = $derived.by(() => options.quality ?? ImageQuality.HIGH);
 
 	function createImageUrls(id: number, pageCount: number): string[] {
 		const url = new URL('/api/manga/page_image', page.url.origin);
@@ -141,6 +148,7 @@
 		const url = new URL('/api/view/set_options', page.url.origin);
 		url.searchParams.set('disableAnimation', options.disableAnimation.toString());
 		url.searchParams.set('grayscale', options.grayscale.toString());
+		url.searchParams.set('quality', enumUtil(ImageQuality).getKeyOrDefault(o.quality, 'HIGH'));
 
 		const resp = await fetch(url);
 		const json = await resp.json();
@@ -282,6 +290,49 @@
 					}}
 				>
 					<Icon data={grayscaleIcon} class="fill-slate-400 stroke-slate-800" /> Grayscale
+				</button>
+			</li>
+
+			<li class="menu-title">Image Quality</li>
+			<li class="menu-sm"><em>This setting applies after the next item view.</em></li>
+			<li>
+				<button
+					class="my-1"
+					class:menu-active={quality === ImageQuality.ORIGINAL}
+					onclick={async () => {
+						let o = options;
+						o.quality = ImageQuality.ORIGINAL;
+						onUpdateOptions(o);
+					}}
+				>
+					<Icon data={originalQualityIcon} class="fill-slate-400 stroke-slate-800" /> Original
+				</button>
+			</li>
+			<li>
+				<button
+					class="my-1"
+					class:menu-active={quality === ImageQuality.HIGH}
+					onclick={async () => {
+						let o = options;
+						o.quality = ImageQuality.HIGH;
+						onUpdateOptions(o);
+					}}
+				>
+					<Icon data={highQualityIcon} class="fill-slate-400 stroke-slate-800" /> High
+				</button>
+			</li>
+
+			<li>
+				<button
+					class="my-1"
+					class:menu-active={quality === ImageQuality.LOW}
+					onclick={async () => {
+						let o = options;
+						o.quality = ImageQuality.LOW;
+						onUpdateOptions(o);
+					}}
+				>
+					<Icon data={lowQualityIcon} class="fill-slate-400 stroke-slate-800" /> Low
 				</button>
 			</li>
 		</ul>
