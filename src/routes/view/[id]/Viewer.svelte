@@ -3,6 +3,7 @@
 	import type { EmblaCarouselType, EmblaEventType } from 'embla-carousel';
 	import { bindKey } from '@rwh/keystrokes';
 	import { onMount } from 'svelte';
+	import Hammer from 'hammerjs';
 
 	import { Icon } from 'svelte-icon';
 	import prevIcon from '@mdi/svg/svg/chevron-left.svg?raw';
@@ -26,6 +27,24 @@
 
 	let pages: Page[] = $state(new Array(imageURLs.length));
 	let progress = $state(startIndex);
+
+	function hammerJsAttachment(element: HTMLElement) {
+		let manager = new Hammer.Manager(element);
+		let swipe = new Hammer.Swipe();
+		manager.add(swipe);
+		manager.on('swipeleft', () => {
+			if (disableAnimation) next();
+		});
+		manager.on('swiperight', () => {
+			if (disableAnimation) previous();
+		});
+
+		let tap = new Hammer.Tap();
+		manager.add(tap);
+		manager.on('tap', () => {
+			onTapped();
+		});
+	}
 
 	function slidesInView(emblaApi: EmblaCarouselType, eventName: EmblaEventType): void {
 		if (eventName == 'slidesInView') {
@@ -53,17 +72,9 @@
 		}
 	};
 
-	let scrolling = false;
-
 	function onInit(event: any) {
 		emblaApi = event.detail;
 		emblaApi.on('slidesInView', slidesInView);
-		emblaApi.on('scroll', () => (scrolling = true));
-		emblaApi.on('settle', () => (scrolling = false));
-
-		emblaApi.on('pointerUp', () => {
-			if (!scrolling) onTapped();
-		});
 	}
 
 	export function moveToPage(p: number) {
@@ -97,6 +108,7 @@
 	class="embla w-full h-full bg-base-300"
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onInit}
+	{@attach hammerJsAttachment}
 >
 	<div class="embla__container w-full h-full flex">
 		{#each imageURLs as url, index}
