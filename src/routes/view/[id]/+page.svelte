@@ -175,16 +175,10 @@
 				startIndex={data.response.currentPage}
 				grayscale={options.grayscale}
 				disableAnimation={options.disableAnimation}
-				onTapped={() => (showNavBar = true)}
+				onTapped={() => (showNavBar = !showNavBar)}
+				disabled={showNavBar}
 			/>
 		</div>
-
-		<button
-			aria-label="toggle-navbar"
-			class="bg-black/50 fixed top-0 bottom-0 left-0 right-0"
-			onclick={() => (showNavBar = false)}
-			hidden={!showNavBar}
-		></button>
 
 		<Navigation
 			bind:show={showNavBar}

@@ -22,7 +22,8 @@
 		onTapped = () => {},
 		startIndex,
 		grayscale = false,
-		disableAnimation = false
+		disableAnimation = false,
+		disabled = $bindable(false)
 	} = $props();
 
 	let pages: Page[] = $state(new Array(imageURLs.length));
@@ -33,10 +34,15 @@
 		let swipe = new Hammer.Swipe();
 		manager.add(swipe);
 		manager.on('swipeleft', () => {
-			if (disableAnimation) next();
+			if (disabled) return;
+			if (!disableAnimation) return;
+			next();
 		});
+
 		manager.on('swiperight', () => {
-			if (disableAnimation) previous();
+			if (disabled) return;
+			if (!disableAnimation) return;
+			previous();
 		});
 
 		let tap = new Hammer.Tap();
@@ -68,7 +74,7 @@
 		loop: true,
 		startIndex,
 		watchDrag: () => {
-			return !disableAnimation;
+			return !disableAnimation && !disabled;
 		}
 	};
 
@@ -93,6 +99,7 @@
 <button
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
 	onclick={() => previous()}
+	{disabled}
 >
 	<Icon data={prevIcon} class="mx-auto"></Icon>
 </button>
@@ -100,12 +107,14 @@
 <button
 	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
 	onclick={() => next()}
+	{disabled}
 >
 	<Icon data={nextIcon} class="mx-auto"></Icon>
 </button>
 
 <div
 	class="embla w-full h-full bg-base-300"
+	class:brightness-50={disabled}
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onInit}
 	{@attach hammerJsAttachment}
