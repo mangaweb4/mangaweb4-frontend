@@ -105,7 +105,7 @@
 				<div class="whitespace-nowrap">Browse Tag</div>
 			</div>
 		</NavBar>
-		<div class="container mx-auto max-w-[1024px]">
+		<div class="container mx-auto max-w-5xl">
 			<div class="w-full mb-4 shadow-sm p-4 bg-base-200 top-16 sticky w-full z-1">
 				<div class="flex mb-2">
 					<div class="flex-1 text-xl">
@@ -129,7 +129,7 @@
 				<div class="md:hidden flex">
 					<div class="flex-1"></div>
 					<button class="btn btn-ghost" onclick={() => filterDialog.showModal()}>
-						<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800"/> Option
+						<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800" /> Option
 					</button>
 				</div>
 

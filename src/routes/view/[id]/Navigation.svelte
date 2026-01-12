@@ -16,7 +16,7 @@
 </script>
 
 <div class="w-full bg-base-100 fixed h-[10em] bottom-0" hidden={!show}>
-	<div class="mx-auto max-w-[1024px] p-3">
+	<div class="mx-auto max-w-5xl p-3">
 		<h3 class="text-lg font-bold">Move to page</h3>
 		<div class="flex flex-row mt-4">
 			<button
