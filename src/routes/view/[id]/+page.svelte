@@ -45,13 +45,13 @@
 
 	let pageCount = $derived(data.response.pageCount);
 	let tags = $derived(data.response.tags);
-	let favorite = $state(data.response.favorite);
+	let favorite = $derived(data.response.favorite);
 
 	let showNavBar = $state(false);
 
 	const prefersReducedMotion = new MediaQuery('prefers-reduced-motion');
 
-	let options = $state(data.options);
+	let options = $state((() => data.options)()); // use initial value
 	let quality = $derived.by(() => options.quality ?? ImageQuality.HIGH);
 	let disableAnimation = $derived.by(
 		() => options.disableAnimation || prefersReducedMotion.current
@@ -179,11 +179,11 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu bind:show={showNavBar}>
-			<div class="text-xl hidden md:inline">
+			<div class="hidden text-xl md:inline">
 				<div class=" whitespace-nowrap">{path.basename(data.response.name)}</div>
 			</div>
 		</NavBar>
-		<div class="fixed top-0 bottom-0 start-0 end-0">
+		<div class="fixed start-0 end-0 top-0 bottom-0">
 			<Viewer
 				imageURLs={createImageUrls(data.request.id, data.response.pageCount)}
 				{onIndexChange}
@@ -232,7 +232,7 @@
 					onclick={() => toggleFavorite()}
 				>
 					{#if favorite}
-						<Icon data={isFavoriteIcon} class="stroke-pink-800 fill-pink-400" /> Favorite
+						<Icon data={isFavoriteIcon} class="fill-pink-400 stroke-pink-800" /> Favorite
 					{:else}
 						<Icon data={isNotFavoriteIcon} /> Favorite
 					{/if}
@@ -342,7 +342,7 @@
 </Container>
 
 <dialog class="modal" bind:this={aboutDialog}>
-	<div class="modal-box w-full max-w-5xl mx-auto">
+	<div class="modal-box mx-auto w-full max-w-5xl">
 		<h3 class="text-lg font-bold">Information</h3>
 		<table class="table">
 			<tbody>
