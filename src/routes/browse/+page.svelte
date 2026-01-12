@@ -3,6 +3,9 @@
 	import { page } from '$app/state';
 	import { viewURL } from '$lib/routes';
 	import type { PageData } from './$types';
+	import { bindKey } from '@rwh/keystrokes';
+	import { onMount } from 'svelte';
+	import { MediaQuery } from 'svelte/reactivity';
 
 	import Container from '$lib/components/Container.svelte';
 	import Content from '$lib/components/Content.svelte';
@@ -53,11 +56,26 @@
 	let updated = $derived(data != undefined && data != null);
 	let loadingDlg: LoadingDialog;
 
+	const prefersReducedMotion = new MediaQuery('prefers-reduced-motion');
+
 	$effect(() => {
 		if (updated) {
 			loadingDlg.close();
 		} else {
 			loadingDlg.show();
+		}
+	});
+
+	onMount(() => {
+		if (prefersReducedMotion.current) {
+			bindKey(['ArrowUp', 'PageUp'], (e) => {
+				e.preventDefault();
+				window.scrollBy(0, -250);
+			});
+			bindKey(['ArrowDown', 'PageDown'], (e) => {
+				e.preventDefault();
+				window.scrollBy(0, 250);
+			});
 		}
 	});
 
@@ -90,10 +108,12 @@
 			<div class="md:hidden bg-base-200 flex py-4 top-16 sticky w-full z-1">
 				<div class="flex-1"></div>
 				<button class="btn btn-ghost" onclick={() => filterDialog.showModal()}>
-					<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800"/> Option
+					<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800" /> Option
 				</button>
 			</div>
-			<div class="hidden md:grid md:grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-200 top-16 sticky w-full z-1">
+			<div
+				class="hidden md:grid md:grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-200 top-16 sticky w-full z-1"
+			>
 				<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
 			</div>
 			<div class="w-full">

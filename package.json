@@ -3,7 +3,7 @@
 	"version": "0.2.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev | pino-pretty ",
+		"dev": "vite dev --host | pino-pretty ",
 		"build": "vite build | pino-pretty",
 		"preview": "vite preview | pino-pretty",
 		"test": "playwright test",
