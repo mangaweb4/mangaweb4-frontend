@@ -54,7 +54,7 @@
 	let options = $state(data.options);
 	let quality = $derived.by(() => options.quality ?? ImageQuality.HIGH);
 	let disableAnimation = $derived.by(
-		() => data.options.disableAnimation || prefersReducedMotion.current
+		() => options.disableAnimation || prefersReducedMotion.current
 	);
 
 	function createImageUrls(id: number, pageCount: number): string[] {
@@ -271,11 +271,12 @@
 				</button>
 			</li>
 
-			<li class="menu-title">Options</li>
-			<li>
+			<li class="menu-title">Read Options</li>
+			<li
+				class:menu-active={options.disableAnimation}
+				class:menu-disabled={prefersReducedMotion.current}
+			>
 				<button
-					class:menu-active={!options.disableAnimation}
-					class:menu-disabled={prefersReducedMotion.current}
 					disabled={prefersReducedMotion.current}
 					onclick={async () => {
 						let o = options;
@@ -283,13 +284,11 @@
 						onUpdateOptions(o);
 					}}
 				>
-					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Animation
+					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Reduce Motion
 				</button>
 			</li>
-			<li>
+			<li class:menu-active={options.grayscale}>
 				<button
-					class="my-1"
-					class:menu-active={options.grayscale}
 					onclick={async () => {
 						let o = options;
 						o.grayscale = !o.grayscale;
@@ -302,10 +301,8 @@
 
 			<li class="menu-title">Image Quality</li>
 			<li class="menu-sm"><em>This setting applies after the next item view.</em></li>
-			<li>
+			<li class:menu-active={quality === ImageQuality.ORIGINAL}>
 				<button
-					class="my-1"
-					class:menu-active={quality === ImageQuality.ORIGINAL}
 					onclick={async () => {
 						let o = options;
 						o.quality = ImageQuality.ORIGINAL;
@@ -315,10 +312,8 @@
 					<Icon data={originalQualityIcon} class="fill-slate-400 stroke-slate-800" /> Original
 				</button>
 			</li>
-			<li>
+			<li class:menu-active={quality === ImageQuality.HIGH}>
 				<button
-					class="my-1"
-					class:menu-active={quality === ImageQuality.HIGH}
 					onclick={async () => {
 						let o = options;
 						o.quality = ImageQuality.HIGH;
@@ -329,10 +324,8 @@
 				</button>
 			</li>
 
-			<li>
+			<li class:menu-active={quality === ImageQuality.LOW}>
 				<button
-					class="my-1"
-					class:menu-active={quality === ImageQuality.LOW}
 					onclick={async () => {
 						let o = options;
 						o.quality = ImageQuality.LOW;
