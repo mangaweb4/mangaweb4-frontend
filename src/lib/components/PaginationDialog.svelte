@@ -11,7 +11,7 @@
 	import { goto } from '$app/navigation';
 
 	let { currentPage = 0, totalPage = 0, createLink = (n: number) => {} } = $props();
-	let customPage = $state(currentPage);
+	let customPage = $derived(currentPage);
 
 	let dialog: HTMLDialogElement;
 
@@ -21,10 +21,10 @@
 </script>
 
 <dialog class="modal modal-bottom" bind:this={dialog}>
-	<div class="modal-box w-full max-w-[640px] mx-auto">
+	<div class="modal-box mx-auto w-full max-w-160">
 		<h3 class="text-lg font-bold">Move to page</h3>
-		<div class="py-4 flex flex-col">
-			<div class="join flex mt-3">
+		<div class="flex flex-col py-4">
+			<div class="join mt-3 flex">
 				<button class="join-item btn flex-none" onclick={() => goto(createLink(0))}>
 					<Icon data={firstPageIcon} />
 					<div class="text hidden sm:block">First</div></button
@@ -37,7 +37,7 @@
 					<Icon data={previousPageIcon} />
 					<div class="text hidden sm:block">Previous</div>
 				</button>
-				<input type="number" readonly class="join flex-1 input" value={currentPage} />
+				<input type="number" readonly class="join input flex-1" value={currentPage} />
 				<button
 					class="join-item btn flex-none"
 					class:btn-disabled={currentPage + 1 > totalPage - 1}
@@ -54,7 +54,7 @@
 
 			<div class="divider">Enter page number manually.</div>
 
-			<div class="join flex mt-3">
+			<div class="join mt-3 flex">
 				<input
 					type="number"
 					inputmode="numeric"
@@ -65,7 +65,7 @@
 					min={0}
 				/>
 				<button
-					class="join-item flex-none btn"
+					class="join-item btn flex-none"
 					class:btn-disabled={customPage - 1 < 0}
 					onclick={() => (customPage = Math.max(customPage - 1, 0))}
 				>
@@ -80,7 +80,7 @@
 				</button>
 
 				<button class="join-item btn flex-none" onclick={() => goto(createLink(customPage))}>
-					<Icon data={goIcon} class="stroke-slate-800 fill-slate-400"></Icon>
+					<Icon data={goIcon} class="fill-slate-400 stroke-slate-800"></Icon>
 					<div class="text hidden sm:block">Go</div>
 				</button>
 			</div>

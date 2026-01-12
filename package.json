@@ -1,6 +1,6 @@
 {
 	"name": "mangaweb4-frontend",
-	"version": "0.2.1",
+	"version": "0.3.1",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev --host | pino-pretty ",
@@ -14,7 +14,7 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 static/favicon.svg",
 		"generate-grpc": "protoc --ts_out=src/lib/grpc --proto_path=./schema history.proto maintenance.proto manga.proto tag.proto types.proto system.proto user.proto",
-		"knip": "knip"
+		"svelte-check": "svelte-check"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.57.0",
@@ -35,7 +35,6 @@
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.14.0",
-		"knip": "^5.80.2",
 		"prettier": "^3.7.4",
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
