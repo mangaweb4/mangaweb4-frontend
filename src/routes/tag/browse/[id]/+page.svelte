@@ -32,7 +32,7 @@
 
 	let { order, page: pageIndex, search, sort, filter } = $derived(data.request);
 
-	let favoriteTag = $state(data.response.tagFavorite);
+	let favoriteTag = $derived(data.response.tagFavorite);
 	let totalPage = $derived(Math.ceil(data.response.totalItemCount / ITEM_PER_PAGE));
 
 	let items = $derived.by(() =>
