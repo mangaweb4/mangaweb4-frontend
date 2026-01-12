@@ -63,6 +63,8 @@
 		const user = data.request.user;
 		url.searchParams.append('id', id.toString());
 		url.searchParams.append('user', user);
+		url.searchParams.append('quality', enumUtil(ImageQuality).getKeyOrDefault(quality, 'HIGH'));
+
 		for (let i = 0; i < pageCount; i++) {
 			url.searchParams.set('i', i.toString());
 			output.push(url.toString());
@@ -82,6 +84,7 @@
 		const url = new URL('/api/manga/page_image', page.url.origin);
 		url.searchParams.set('id', data.request.id.toString());
 		url.searchParams.set('i', current.toString());
+		url.searchParams.append('quality', 'ORIGINAL');
 
 		download(url.toString());
 	}
@@ -300,7 +303,6 @@
 			</li>
 
 			<li class="menu-title">Image Quality</li>
-			<li class="menu-sm"><em>This setting applies after the next item view.</em></li>
 			<li class:menu-active={quality === ImageQuality.ORIGINAL}>
 				<button
 					onclick={async () => {
