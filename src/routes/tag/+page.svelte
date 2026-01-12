@@ -40,7 +40,7 @@
 	let total_page = $derived(data.response.totalPage);
 	let order = $derived(data.request.order);
 	let sort = $derived(data.request.sort);
-	let search = $state(data.request.search);
+	let search = $derived(data.request.search);
 
 	let updated = $state(false);
 
