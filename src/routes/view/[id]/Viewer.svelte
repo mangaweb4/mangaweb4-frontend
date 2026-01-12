@@ -12,8 +12,14 @@
 	import Page from './Page.svelte';
 
 	onMount(() => {
-		bindKey(['ArrowLeft', 'ArrowUp', 'PageUp'], () => previous());
-		bindKey(['ArrowRight', 'ArrowDown', 'PageDown'], () => next());
+		bindKey(['ArrowLeft', 'ArrowUp', 'PageUp'], (e) => {
+			e.preventDefault();
+			previous();
+		});
+		bindKey(['ArrowRight', 'ArrowDown', 'PageDown'], (e) => {
+			e.preventDefault();
+			next();
+		});
 	});
 
 	let {
