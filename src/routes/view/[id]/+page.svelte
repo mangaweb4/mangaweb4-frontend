@@ -6,6 +6,9 @@
 	import SideBar from '$lib/components/SideBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 
+	import Navigation from './Navigation.svelte';
+	import type { ViewOptions } from '$lib/view_options.server';
+	import { MediaQuery } from 'svelte/reactivity';
 	import { browseTagURL } from '$lib/routes';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
@@ -30,9 +33,6 @@
 	import lowQualityIcon from '@mdi/svg/svg/quality-low.svg?raw';
 	import originalQualityIcon from '@mdi/svg/svg/square-rounded.svg?raw';
 
-	import type { ViewOptions } from '$lib/view_options.server';
-	import Navigation from './Navigation.svelte';
-
 	let current = $state(0);
 	let viewer: Viewer;
 	let toast: Toast;
@@ -49,8 +49,13 @@
 
 	let showNavBar = $state(false);
 
+	const prefersReducedMotion = new MediaQuery('prefers-reduced-motion');
+
 	let options = $state(data.options);
 	let quality = $derived.by(() => options.quality ?? ImageQuality.HIGH);
+	let disableAnimation = $derived.by(
+		() => data.options.disableAnimation || prefersReducedMotion.current
+	);
 
 	function createImageUrls(id: number, pageCount: number): string[] {
 		const url = new URL('/api/manga/page_image', page.url.origin);
@@ -182,7 +187,7 @@
 				bind:this={viewer}
 				startIndex={data.response.currentPage}
 				grayscale={options.grayscale}
-				disableAnimation={options.disableAnimation}
+				{disableAnimation}
 				onTapped={() => (showNavBar = !showNavBar)}
 				disabled={showNavBar}
 			/>
@@ -269,14 +274,16 @@
 			<li class="menu-title">Options</li>
 			<li>
 				<button
-					class:menu-active={options.disableAnimation}
+					class:menu-active={!options.disableAnimation}
+					class:menu-disabled={prefersReducedMotion.current}
+					disabled={prefersReducedMotion.current}
 					onclick={async () => {
 						let o = options;
 						o.disableAnimation = !o.disableAnimation;
 						onUpdateOptions(o);
 					}}
 				>
-					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Disable Animation
+					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Animation
 				</button>
 			</li>
 			<li>
