@@ -25,4 +25,3 @@
 </svelte:head>
 
 {@render children?.()}
-

@@ -5,19 +5,19 @@ on:
     types: [published]
 
   push:
-    branches: ["master"]
+    branches: ['master']
 
 jobs:
   push_to_registry:
     name: docker-image-build-push
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: true
-      
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -43,7 +43,7 @@ jobs:
         id: tagger
         uses: jimschubert/query-tag-action@v2
         with:
-          include: "v*"
+          include: 'v*'
 
       - uses: haya14busa/action-cond@v1
         id: condval

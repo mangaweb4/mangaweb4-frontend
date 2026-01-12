@@ -9,13 +9,14 @@ BACKEND_URL=localhost:8972
 DEFAULT_SORT_FIELD=CREATION_TIME # can be either 'NAME', 'PAGECOUNT', or 'CREATION_TIME'
 DEFAULT_ORDER=DESCENDING # can be either 'ASCENDING' or 'DESCENDING'
 ```
+
 **MangaWeb 4** also supports reading environment variables from `.env` file at run time.
 
 ## Authentication
 
-By default, **MangaWeb 4** use Cloudflare Access's `Cf-Access-Authenticated-User-Email` request header value to identify the user. 
+By default, **MangaWeb 4** use Cloudflare Access's `Cf-Access-Authenticated-User-Email` request header value to identify the user.
 
-If the request is made without this parameter, the default user (default@example.com) will be used instead. Also if this header is set with an email address that's not exists in the system, a new account will be created automatically. 
+If the request is made without this parameter, the default user (default@example.com) will be used instead. Also if this header is set with an email address that's not exists in the system, a new account will be created automatically.
 
 ### OpenID Connect Authentication
 
@@ -36,13 +37,13 @@ OIDC_LOGOUT=<Logout URL>
 
 ## Development
 
-**MangaWeb 4** was developed with [Node.JS](https://nodejs.org/en) runtime. Currently other runtimes such as [Bun](https://bun.com/) are not supported. 
+**MangaWeb 4** was developed with [Node.JS](https://nodejs.org/en) runtime. Currently other runtimes such as [Bun](https://bun.com/) are not supported.
 
 ### Running MangaWeb 4
 
 Before you can run **MangaWeb 4**, you have to install its dependency first. Use `npm install` command to install the dependencies.
 
-After that, use the command `npm run dev -- --open` to start the server in development environment. 
+After that, use the command `npm run dev -- --open` to start the server in development environment.
 
 For more information, please consult [SvelteKit](https://svelte.dev/docs/kit/introduction) documentation.
 
@@ -63,8 +64,8 @@ The grpc's schema files are kept separately in [mangaweb4-grpc-schema](https://g
 
 ### Generating Web Application Manifest resources
 
-**MangaWeb 4** includes progressive web application (PWA)'s web application manifest resources so it could run as a standalone application despite being a web application. 
+**MangaWeb 4** includes progressive web application (PWA)'s web application manifest resources so it could run as a standalone application despite being a web application.
 
-In order to update the PWA's icon, make changes to the file `static/favicon.svg` and then run the script `npm run generate-pwa-assets` to update other icons. 
+In order to update the PWA's icon, make changes to the file `static/favicon.svg` and then run the script `npm run generate-pwa-assets` to update other icons.
 
 **MangaWeb 4** uses [Vite PWA Plugin](https://vite-pwa-org.netlify.app/) to setup PWA.

@@ -23,7 +23,7 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu><div class="text-xl">User</div></NavBar>
-		<div class="container mx-auto prose max-w-5xl mt-4">
+		<div class="prose container mx-auto mt-4 max-w-5xl">
 			<div class="avatar">
 				<div class="rounded-full">
 					<img class="mt-0" alt="user avartar" src="https://www.gravatar.com/avatar/{md5(email)}" />
@@ -34,7 +34,7 @@
 			<p><b>Email</b> {email}</p>
 
 			<button
-				class="mt-4 btn btn-primary btn-wide"
+				class="btn btn-primary btn-wide mt-4"
 				onclick={() => goto(logoutURL(page.url.origin))}
 			>
 				<Icon data={logoutIcon} />&nbsp;Logout

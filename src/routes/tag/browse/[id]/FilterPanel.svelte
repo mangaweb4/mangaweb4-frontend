@@ -96,7 +96,7 @@
 
 <fieldset class="fieldset w-full">
 	<legend class="fieldset-legend">Search</legend>
-	<div class="join gap-0 flex">
+	<div class="join flex gap-0">
 		<input class="input join-item flex-1" placeholder="title, author" bind:value={search} />
 		<button
 			class="btn join-item flex-none"

@@ -49,7 +49,7 @@
 	});
 </script>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 m-2 overflow-visible">
+<div class="m-2 grid grid-cols-1 gap-8 overflow-visible sm:grid-cols-2 md:grid-cols-3">
 	{#if !updated}
 		{#each { length: ITEM_PER_PAGE } as _}
 			<PlaceholderCard />

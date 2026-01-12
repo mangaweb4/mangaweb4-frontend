@@ -7,20 +7,20 @@ import { HistoryClient } from '$lib/grpc/history.client';
 import { ITEM_PER_PAGE } from '$lib/constants';
 
 export const load: PageServerLoad = async ({ request, url, cookies }) => {
-    let transport = new GrpcTransport({
-        host: variables().apiBasePath,
-        channelCredentials: ChannelCredentials.createInsecure(),
-    })
+	let transport = new GrpcTransport({
+		host: variables().apiBasePath,
+		channelCredentials: ChannelCredentials.createInsecure()
+	});
 
-    let client = new HistoryClient(transport)
+	let client = new HistoryClient(transport);
 
-    const page = parseInt(url.searchParams.get('page') ?? "0");
-    const user = getUser(request, cookies);
+	const page = parseInt(url.searchParams.get('page') ?? '0');
+	const user = getUser(request, cookies);
 
-    let call = await client.list({ page: page, user, itemPerPage: ITEM_PER_PAGE })
+	let call = await client.list({ page: page, user, itemPerPage: ITEM_PER_PAGE });
 
-    return {
-        request: call.request,
-        response: call.response
-    }
+	return {
+		request: call.request,
+		response: call.response
+	};
 };

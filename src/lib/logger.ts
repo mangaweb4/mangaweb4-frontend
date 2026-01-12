@@ -1,5 +1,5 @@
-import Logger from 'pino'
+import Logger from 'pino';
 
-const logger = Logger()
+const logger = Logger();
 
 export default logger;

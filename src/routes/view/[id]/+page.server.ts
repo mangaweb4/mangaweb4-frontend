@@ -10,28 +10,28 @@ export const prerender = false;
 export const ssr = false;
 
 export const load: PageServerLoad = async ({ request, cookies, params }) => {
-    const { id } = params
-    const idNo = parseInt(id)
+	const { id } = params;
+	const idNo = parseInt(id);
 
-    const user = getUser(request, cookies);
+	const user = getUser(request, cookies);
 
-    let transport = new GrpcTransport({
-        host: variables().apiBasePath,
-        channelCredentials: ChannelCredentials.createInsecure(),
-    })
+	let transport = new GrpcTransport({
+		host: variables().apiBasePath,
+		channelCredentials: ChannelCredentials.createInsecure()
+	});
 
-    let client = new MangaClient(transport)
+	let client = new MangaClient(transport);
 
-    const call = await client.detail({
-        id: idNo,
-        user: user,
-    })
+	const call = await client.detail({
+		id: idNo,
+		user: user
+	});
 
-    const options = getViewOptions(cookies)
+	const options = getViewOptions(cookies);
 
-    return {
-        request: call.request,
-        response: call.response,
-        options: options,
-    };
+	return {
+		request: call.request,
+		response: call.response,
+		options: options
+	};
 };

@@ -1,8 +1,8 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
-import { SvelteKitPWA } from '@vite-pwa/sveltekit'
-import tailwindcss from "@tailwindcss/vite";
-import customLogger from './logger'
+import { SvelteKitPWA } from '@vite-pwa/sveltekit';
+import tailwindcss from '@tailwindcss/vite';
+import customLogger from './logger';
 
 export default defineConfig(({ command, mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
@@ -22,7 +22,7 @@ export default defineConfig(({ command, mode }) => {
 				base: '/',
 				selfDestroying: process.env.SELF_DESTROYING_SW === 'true',
 				pwaAssets: {
-					config: true,
+					config: true
 				},
 				manifest: {
 					short_name: 'MangaWeb 4',
@@ -31,24 +31,24 @@ export default defineConfig(({ command, mode }) => {
 					scope: '/',
 					display: 'standalone',
 					theme_color: '#ffffff',
-					background_color: '#000000',
+					background_color: '#000000'
 				},
 				injectManifest: {
-					globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}'],
+					globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
 				},
 				workbox: {
-					globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}'],
+					globPatterns: ['client/**/*.{js,css,ico,png,svg,webp,woff,woff2}']
 				},
 				devOptions: {
 					enabled: false,
 					suppressWarnings: process.env.SUPPRESS_WARNING === 'true',
 					type: 'module',
-					navigateFallback: '/',
+					navigateFallback: '/'
 				},
 				// if you have shared info in svelte config file put in a separate module and use it also here
 				kit: {
-					includeVersionFile: true,
-				},
+					includeVersionFile: true
+				}
 			})
 		],
 		customLogger: customLogger,
@@ -56,8 +56,8 @@ export default defineConfig(({ command, mode }) => {
 		test: {
 			include: ['src/**/*.{test,spec}.{js,ts}']
 		},
-		server:{
-			allowedHosts: ["host.docker.internal"]
+		server: {
+			allowedHosts: ['host.docker.internal']
 		}
-	}
+	};
 });

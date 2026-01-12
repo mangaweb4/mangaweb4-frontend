@@ -79,7 +79,7 @@
 			<div class="text-xl">About</div>
 		</NavBar>
 
-		<div class="container mx-auto prose max-w-5xl mt-4">
+		<div class="prose container mx-auto mt-4 max-w-5xl">
 			<h1>MangaWeb 4</h1>
 
 			<a class="btn" href="https://github.com/mangaweb4">
