@@ -32,8 +32,8 @@
 		disabled = $bindable(false)
 	} = $props();
 
-	let pages: Page[] = $state(new Array(imageURLs.length));
-	let progress = $state(startIndex);
+	let pages: Page[] = $derived(new Array(imageURLs.length));
+	let progress = $derived(startIndex);
 
 	function hammerJsAttachment(element: HTMLElement) {
 		let manager = new Hammer.Manager(element);
@@ -78,7 +78,7 @@
 	let emblaApi: EmblaCarouselType;
 	let options = {
 		loop: true,
-		startIndex,
+		startIndex: (() => startIndex)(), // use initial value here since the carousel is initialized once anyway.
 		watchDrag: () => {
 			return !disableAnimation && !disabled;
 		}
@@ -103,7 +103,7 @@
 </script>
 
 <button
-	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 start-2"
+	class="absolute inset-y-1/2 start-2 z-10 h-1/2 w-20 -translate-y-1/2 cursor-pointer text-gray-500/50 hover:text-gray-500"
 	onclick={() => previous()}
 	{disabled}
 >
@@ -111,7 +111,7 @@
 </button>
 
 <button
-	class="cursor-pointer text-gray-500/50 hover:text-gray-500 absolute inset-y-1/2 -translate-y-1/2 h-1/2 z-10 w-20 end-2"
+	class="absolute inset-y-1/2 end-2 z-10 h-1/2 w-20 -translate-y-1/2 cursor-pointer text-gray-500/50 hover:text-gray-500"
 	onclick={() => next()}
 	{disabled}
 >
@@ -119,15 +119,15 @@
 </button>
 
 <div
-	class="embla w-full h-full bg-base-300"
+	class="embla bg-base-300 h-full w-full"
 	class:brightness-50={disabled}
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onInit}
 	{@attach hammerJsAttachment}
 >
-	<div class="embla__container w-full h-full flex">
+	<div class="embla__container flex h-full w-full">
 		{#each imageURLs as url, index}
-			<div class="embla__slide w-full h-full flex grow-0 shrink-0">
+			<div class="embla__slide flex h-full w-full shrink-0 grow-0">
 				<Page
 					alt="page-{index}"
 					src={url}
