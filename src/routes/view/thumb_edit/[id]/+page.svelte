@@ -65,7 +65,7 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu><div class="text-xl">Edit thumbnail</div></NavBar>
-		<div class="container mx-auto prose max-w-5xl mt-4">
+		<div class="prose container mx-auto mt-4 max-w-5xl">
 			<h2>{data.response.name}</h2>
 			<div>
 				<label class="input">
@@ -79,7 +79,7 @@
 					/>
 				</label>
 			</div>
-			<div class="my-5 relative width-full h-[500px]">
+			<div class="width-full relative my-5 h-[500px]">
 				<Cropper {image} bind:crop bind:zoom {aspect} oncropcomplete={onCropComplete} />
 			</div>
 
@@ -97,7 +97,7 @@
 		<ul class="menu">
 			<li>
 				<button onclick={() => goto(viewURL(page.url, data.request.id))}>
-					<Icon data={viewIcon} class="stroke-slate-800 fill-slate-400" /> View current item.
+					<Icon data={viewIcon} class="fill-slate-400 stroke-slate-800" /> View current item.
 				</button>
 			</li>
 		</ul>

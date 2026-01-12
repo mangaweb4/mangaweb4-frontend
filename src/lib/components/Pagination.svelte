@@ -33,8 +33,8 @@
 	}
 </script>
 
-<div class="fixed bottom-10 inset-x-1/2 hidden md:flex">
-	<div class="join shadow-xl -translate-x-1/2">
+<div class="fixed inset-x-1/2 bottom-10 hidden md:flex">
+	<div class="join -translate-x-1/2 shadow-xl">
 		<button class="join-item btn" onclick={() => goto(createLink(0))}>
 			<Icon data={firstPageIcon} />
 		</button>

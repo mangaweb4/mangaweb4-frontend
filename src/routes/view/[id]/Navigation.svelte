@@ -15,10 +15,10 @@
 	} = $props();
 </script>
 
-<div class="w-full bg-base-100 fixed h-[10em] bottom-0" hidden={!show}>
+<div class="bg-base-100 fixed bottom-0 h-[10em] w-full" hidden={!show}>
 	<div class="mx-auto max-w-5xl p-3">
 		<h3 class="text-lg font-bold">Move to page</h3>
-		<div class="flex flex-row mt-4">
+		<div class="mt-4 flex flex-row">
 			<button
 				class="btn flex-none"
 				onclick={() => {
@@ -37,7 +37,7 @@
 			</button>
 			<input
 				type="range"
-				class="range flex-1 place-self-center mx-2"
+				class="range mx-2 flex-1 place-self-center"
 				min="0"
 				max={length}
 				bind:value={current}

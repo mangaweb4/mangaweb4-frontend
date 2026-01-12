@@ -87,14 +87,14 @@
 		</NavBar>
 
 		<div class="container mx-auto max-w-5xl">
-			<div class="md:hidden bg-base-200 flex py-4 top-16 sticky w-full z-1">
+			<div class="bg-base-200 sticky top-16 z-1 flex w-full py-4 md:hidden">
 				<div class="flex-1"></div>
 				<button class="btn btn-ghost" onclick={() => filterDialog.showModal()}>
 					<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800" /> Option
 				</button>
 			</div>
 			<div
-				class="hidden md:grid md:grid-cols-4 gap-4 w-full mb-4 shadow-sm p-4 bg-base-200 top-16 sticky z-1"
+				class="bg-base-200 sticky top-16 z-1 mb-4 hidden w-full gap-4 p-4 shadow-sm md:grid md:grid-cols-4"
 			>
 				<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
 			</div>
@@ -109,11 +109,11 @@
 <dialog class="modal modal-top" bind:this={filterDialog}>
 	<div class="modal-box">
 		<div class="text-xl">Option</div>
-		<div class="grid gap-4 bg-base-100">
+		<div class="bg-base-100 grid gap-4">
 			<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
 		</div>
 	</div>
-	<form method="dialog" class="modal-backdrop w-full h-full">
+	<form method="dialog" class="modal-backdrop h-full w-full">
 		<button>close</button>
 	</form>
 </dialog>

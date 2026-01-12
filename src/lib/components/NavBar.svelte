@@ -19,8 +19,8 @@
 </script>
 
 {#if show}
-	<div class="navbar bg-base-100 shadow-sm sticky top-0 z-2">
-		<div class="flex w-full max-w-5xl mx-auto">
+	<div class="navbar bg-base-100 sticky top-0 z-2 shadow-sm">
+		<div class="mx-auto flex w-full max-w-5xl">
 			{#if !isBrowser.current}
 				<div class="flex-none place-self-center">
 					<button

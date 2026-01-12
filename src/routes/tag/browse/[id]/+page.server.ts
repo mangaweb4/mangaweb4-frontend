@@ -10,38 +10,42 @@ import { ITEM_PER_PAGE } from '$lib/constants';
 import { TagClient } from '$lib/grpc/tag.client';
 
 export const load: PageServerLoad = async ({ request, url, cookies, params }) => {
-    const id = parseInt(params.id ?? "")
+	const id = parseInt(params.id ?? '');
 
-    const searchParams = url.searchParams;
-    const user = getUser(request, cookies);
-    const filter = $enum(Filter).getValueOrDefault(searchParams.get('filter'), Filter.UNKNOWN);
-    const sort = $enum(SortField).getValueOrDefault(searchParams.get('sort'), variables().defaultBrowseSortField);
-    const order = $enum(SortOrder).getValueOrDefault(searchParams.get('order'), variables().defaultBrowseSortOrder);
-    const page = parseInt(searchParams.get('page') ?? '0')
-    const search = searchParams.get('search') ?? "";
+	const searchParams = url.searchParams;
+	const user = getUser(request, cookies);
+	const filter = $enum(Filter).getValueOrDefault(searchParams.get('filter'), Filter.UNKNOWN);
+	const sort = $enum(SortField).getValueOrDefault(
+		searchParams.get('sort'),
+		variables().defaultBrowseSortField
+	);
+	const order = $enum(SortOrder).getValueOrDefault(
+		searchParams.get('order'),
+		variables().defaultBrowseSortOrder
+	);
+	const page = parseInt(searchParams.get('page') ?? '0');
+	const search = searchParams.get('search') ?? '';
 
-    let transport = new GrpcTransport({
-        host: variables().apiBasePath,
-        channelCredentials: ChannelCredentials.createInsecure(),
-    })
+	let transport = new GrpcTransport({
+		host: variables().apiBasePath,
+		channelCredentials: ChannelCredentials.createInsecure()
+	});
 
-    let client = new TagClient(transport)
+	let client = new TagClient(transport);
 
-    let call = await client.detail({
-        user: user,
-        id: id,
-        filter: filter,
-        page: page,
-        itemPerPage: ITEM_PER_PAGE,
-        search: search,
-        sort: sort,
-        order: order
-    })
+	let call = await client.detail({
+		user: user,
+		id: id,
+		filter: filter,
+		page: page,
+		itemPerPage: ITEM_PER_PAGE,
+		search: search,
+		sort: sort,
+		order: order
+	});
 
-    logger.debug(call.request, "browse request")
-    logger.debug(call.response, "browse response")
+	logger.debug(call.request, 'browse request');
+	logger.debug(call.response, 'browse response');
 
-    return { request: call.request, response: call.response }
+	return { request: call.request, response: call.response };
 };
-
-

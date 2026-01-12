@@ -6,18 +6,18 @@ import { TagClient } from '$lib/grpc/tag.client';
 import { getUser } from '$lib/user.server';
 
 export const GET: RequestHandler = async ({ request, cookies }) => {
-    let transport = new GrpcTransport({
-        host: variables().apiBasePath,
-        channelCredentials: ChannelCredentials.createInsecure(),
-    })
+	let transport = new GrpcTransport({
+		host: variables().apiBasePath,
+		channelCredentials: ChannelCredentials.createInsecure()
+	});
 
-    let client = new TagClient(transport)
-    const url = new URL(request.url)
+	let client = new TagClient(transport);
+	const url = new URL(request.url);
 
-    let user = getUser(request, cookies)
-    let favorite = url.searchParams.get('favorite')?.toLowerCase() == "true"
-    let id = parseInt(url.searchParams.get("id") ?? "")
-    let { response } = await client.setFavorite({ id: id, user, favorite })
+	let user = getUser(request, cookies);
+	let favorite = url.searchParams.get('favorite')?.toLowerCase() == 'true';
+	let id = parseInt(url.searchParams.get('id') ?? '');
+	let { response } = await client.setFavorite({ id: id, user, favorite });
 
-    return new Response(JSON.stringify(response));
+	return new Response(JSON.stringify(response));
 };

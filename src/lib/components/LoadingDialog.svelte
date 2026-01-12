@@ -28,7 +28,7 @@
 					<Icon data={reloadIcon} />
 				</button>
 			{/if}
-			<h3 class="text-lg font-bold inline">Now Loading</h3>
+			<h3 class="inline text-lg font-bold">Now Loading</h3>
 		</div>
 		<progress class="progress my-4"></progress>
 	</div>

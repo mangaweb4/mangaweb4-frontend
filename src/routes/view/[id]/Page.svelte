@@ -39,9 +39,9 @@
 	}
 </script>
 
-<div class="relative w-full h-full">
+<div class="relative h-full w-full">
 	<img
-		class="absolute w-full h-full object-contain max-w-full max-h-full"
+		class="absolute h-full max-h-full w-full max-w-full object-contain"
 		class:grayscale
 		{loading}
 		{alt}
@@ -51,11 +51,11 @@
 		bind:this={img}
 	/>
 	{#if !loaded}
-		<div class="absolute place-self-center inset-1/2">
+		<div class="absolute inset-1/2 place-self-center">
 			<span class="loading loading-bars loading-xl mx-auto my-auto"></span>
 		</div>
 	{:else if error}
-		<div class="absolute place-self-center inset-1/2">
+		<div class="absolute inset-1/2 place-self-center">
 			<Icon data={errorIcon} width="64" height="64" class="fill-error stroke-error" />
 		</div>
 	{/if}

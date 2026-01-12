@@ -28,16 +28,16 @@
 	let customInput: PaginationDialog;
 </script>
 
-<div class="fixed bottom-10 inset-x-1/2 md:hidden">
+<div class="fixed inset-x-1/2 bottom-10 md:hidden">
 	<div class="join -translate-x-1/2">
 		<button class="join-item btn" onclick={() => customInput.showModal()}>
-			<Icon data={pageIcon} class="stroke-slate-800 fill-slate-400" /> Page
+			<Icon data={pageIcon} class="fill-slate-400 stroke-slate-800" /> Page
 		</button>
 
 		<button class="join-item btn btn-active btn-primary">{currentPage}</button>
 
 		<button class="join-item btn" onclick={moveToTop}>
-			<Icon data={moveUpIcon} class="stroke-slate-800 fill-slate-400" />
+			<Icon data={moveUpIcon} class="fill-slate-400 stroke-slate-800" />
 			Top
 		</button>
 	</div>

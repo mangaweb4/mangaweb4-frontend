@@ -57,7 +57,7 @@
 	let img: HTMLImageElement | undefined = $state();
 	let imageLoadErr = $state(false);
 	let imageLoad = $state(false);
-	
+
 	function onImageError() {
 		imageLoadErr = true;
 	}
@@ -70,7 +70,10 @@
 	const READ_THRESHOLD = 95; // 5%
 </script>
 
-<div class="{borderCls} card card-border border-2 bg-base-100 h-full shadow-xl overflow-hidden md:overflow-visible" id={id.toString()}>
+<div
+	class="{borderCls} card card-border bg-base-100 h-full overflow-hidden border-2 shadow-xl md:overflow-visible"
+	id={id.toString()}
+>
 	{#if dummy}
 		<div class="mt-0 mb-0 h-full">
 			<div aria-label={name} class="aspect-ratio-[1/1.414]">
@@ -86,7 +89,7 @@
 							if (!dummy && linkUrl) goto(linkUrl);
 						}}
 					>
-						<div class="w-full h-full">
+						<div class="h-full w-full">
 							{name}
 						</div>
 					</button>
@@ -100,16 +103,16 @@
 	{:else}
 		<div class="mt-0 mb-0">
 			<a href={linkUrl?.toString()} aria-label={name}>
-				<div class="aspect-[1/1.414] relative">
+				<div class="relative aspect-[1/1.414]">
 					{#if imageLoadErr}
 						<Icon
-							class="absolute place-self-center inset-1/2 fill-yellow-400 stroke-yellow-800"
+							class="absolute inset-1/2 place-self-center fill-yellow-400 stroke-yellow-800"
 							data={errorThumbnail}
 							width="180"
 							height="180"
 						/>
 					{:else if !imageLoad}
-						<div class="absolute place-self-center inset-1/2">
+						<div class="absolute inset-1/2 place-self-center">
 							<span class="loading loading-bars loading-xl mx-auto my-auto"></span>
 						</div>
 					{/if}
@@ -126,25 +129,25 @@
 				</div>
 			</a>
 
-			<div class="absolute top-4 -right-2 grid grid-cols-1 gap-2 place-items-end">
+			<div class="absolute top-4 -right-2 grid grid-cols-1 place-items-end gap-2">
 				{#if favorite}
-					<div class="badge p-2 bg-pink-200 text-pink-800 border-pink-800">
+					<div class="badge border-pink-800 bg-pink-200 p-2 text-pink-800">
 						<Icon data={favoriteIcon} class="fill-pink-400" /> Favorite
 					</div>
 				{/if}
 
 				{#if favoriteTag}
-					<div class="badge p-2 bg-purple-200 text-purple-800 border-purple-800">
+					<div class="badge border-purple-800 bg-purple-200 p-2 text-purple-800">
 						<Icon data={favoriteTagIcon} class="fill-purple-400" /> Favorite Tag
 					</div>
 				{/if}
 
 				{#if !isRead}
-					<div class="badge p-2 bg-yellow-200 text-yellow-800 border-yellow-800">
+					<div class="badge border-yellow-800 bg-yellow-200 p-2 text-yellow-800">
 						<Icon data={newIcon} class="fill-yellow-400" /> New
 					</div>
 				{:else if pageCount != 0}
-					<div class="badge p-2 bg-emerald-200 text-emerald-800 border-emerald-800">
+					<div class="badge border-emerald-800 bg-emerald-200 p-2 text-emerald-800">
 						{#if progressPercent < READ_THRESHOLD}
 							<Icon data={readingIcon} class="fill-emerald-400" /> {Math.round(progressPercent)}%
 						{:else}
@@ -153,13 +156,13 @@
 					</div>
 				{/if}
 				{#if pageCount}
-					<div class="badge p-2 bg-blue-200 text-blue-800 border-blue-800">
+					<div class="badge border-blue-800 bg-blue-200 p-2 text-blue-800">
 						<Icon data={pageCountIcon} class="fill-blue-400" />
 						{pageCount}p
 					</div>
 				{/if}
 				{#if itemCount}
-					<div class="badge p-2 bg-blue-200 text-blue-800 border-blue-800">
+					<div class="badge border-blue-800 bg-blue-200 p-2 text-blue-800">
 						<Icon data={itemCountIcon} class="fill-blue-400" />
 						{itemCount}
 					</div>
@@ -179,7 +182,7 @@
 								if (!dummy && linkUrl) goto(linkUrl);
 							}}
 						>
-							<div class="w-full h-full">
+							<div class="h-full w-full">
 								{name}
 							</div>
 						</button>
