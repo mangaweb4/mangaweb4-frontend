@@ -25,7 +25,7 @@
 	} = $props();
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 	{#if !updated}
 		{#each { length: ITEM_PER_PAGE } as _}
 			<PlaceholderCard />
