@@ -105,35 +105,35 @@
 				<div class="whitespace-nowrap">Browse Tag</div>
 			</div>
 		</NavBar>
-		<div class="container mx-auto max-w-[1024px]">
-			<div class="w-full mb-4 shadow-sm p-4 bg-base-200 top-16 sticky w-full z-1">
-				<div class="flex mb-2">
+		<div class="container mx-auto max-w-5xl">
+			<div class="bg-base-200 sticky top-16 z-1 mb-4 w-full p-4 shadow-sm">
+				<div class="mb-2 flex">
 					<div class="flex-1 text-xl">
 						{data.response.name}
 					</div>
 					<button
-						class="flex-none btn btn-ghost"
+						class="btn btn-ghost flex-none"
 						class:bg-purple-200={favoriteTag}
 						class:text-purple-800={favoriteTag}
 						onclick={() => onTagFavorite()}
 					>
 						{#if favoriteTag}
-							<Icon data={isTagFavoriteIcon} class="stroke-purple-800 fill-purple-400" />
+							<Icon data={isTagFavoriteIcon} class="fill-purple-400 stroke-purple-800" />
 							Favorite
 						{:else}
-							<Icon data={isTagNotFavoriteIcon} class="stroke-slate-800 fill-slate-400" />
+							<Icon data={isTagNotFavoriteIcon} class="fill-slate-400 stroke-slate-800" />
 							Favorite
 						{/if}
 					</button>
 				</div>
-				<div class="md:hidden flex">
+				<div class="flex md:hidden">
 					<div class="flex-1"></div>
 					<button class="btn btn-ghost" onclick={() => filterDialog.showModal()}>
-						<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800"/> Option
+						<Icon data={filterIcon} class="fill-slate-400 stroke-slate-800" /> Option
 					</button>
 				</div>
 
-				<div class="hidden md:grid grid-cols-4 gap-4">
+				<div class="hidden grid-cols-4 gap-4 md:grid">
 					<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
 				</div>
 			</div>
@@ -158,11 +158,11 @@
 <dialog class="modal modal-top" bind:this={filterDialog}>
 	<div class="modal-box">
 		<div class="text-xl">Option</div>
-		<div class="grid gap-4 bg-base-100">
+		<div class="bg-base-100 grid gap-4">
 			<FilterPanel {data} bind:search bind:sort bind:order bind:filter />
 		</div>
 	</div>
-	<form method="dialog" class="modal-backdrop w-full h-full">
+	<form method="dialog" class="modal-backdrop h-full w-full">
 		<button>close</button>
 	</form>
 </dialog>

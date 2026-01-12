@@ -20,7 +20,7 @@
 
 {#if show}
 	<div class="navbar bg-base-100 shadow-sm sticky top-0 z-2">
-		<div class="flex w-full max-w-[1024px] mx-auto">
+		<div class="flex w-full max-w-5xl mx-auto">
 			{#if !isBrowser.current}
 				<div class="flex-none place-self-center">
 					<button

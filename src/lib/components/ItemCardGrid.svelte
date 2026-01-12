@@ -3,6 +3,11 @@
 	import ItemCard from './ItemCard.svelte';
 	import PlaceholderCard from './PlaceholderCard.svelte';
 
+	import { bindKey, unbindKey } from '@rwh/keystrokes';
+	import { onDestroy, onMount } from 'svelte';
+	import { MediaQuery } from 'svelte/reactivity';
+	import toPX from 'to-px';
+
 	interface Item {
 		favorite?: boolean;
 		isRead?: boolean;
@@ -23,9 +28,28 @@
 		items = $bindable([] as Item[]),
 		accessTime = false
 	} = $props();
+
+	const prefersReducedMotion = new MediaQuery('prefers-reduced-motion');
+	onMount(() => {
+		if (prefersReducedMotion.current) {
+			bindKey(['ArrowUp', 'PageUp'], (e) => {
+				e.preventDefault();
+				window.scrollBy(0, -1 * (toPX('10rem') ?? 50));
+			});
+			bindKey(['ArrowDown', 'PageDown'], (e) => {
+				e.preventDefault();
+				window.scrollBy(0, toPX('10rem') ?? 50);
+			});
+		}
+	});
+
+	onDestroy(() => {
+		unbindKey(['ArrowUp', 'PageUp']);
+		unbindKey(['ArrowDown', 'PageDown']);
+	});
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 m-2 overflow-visible">
 	{#if !updated}
 		{#each { length: ITEM_PER_PAGE } as _}
 			<PlaceholderCard />

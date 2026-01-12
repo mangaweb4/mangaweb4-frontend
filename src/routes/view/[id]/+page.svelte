@@ -342,7 +342,7 @@
 </Container>
 
 <dialog class="modal" bind:this={aboutDialog}>
-	<div class="modal-box w-full max-w-[1024px] mx-auto">
+	<div class="modal-box w-full max-w-5xl mx-auto">
 		<h3 class="text-lg font-bold">Information</h3>
 		<table class="table">
 			<tbody>

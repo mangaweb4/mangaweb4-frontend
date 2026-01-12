@@ -25,8 +25,7 @@
 	let { data } = $props();
 
 	let index = $state(0);
-	const image = $derived(createImageUrl(data.request.id, index, page.url).toString()
-	);
+	const image = $derived(createImageUrl(data.request.id, index, page.url).toString());
 	let pageCount = $derived(data.response.pageCount);
 
 	let crop = $state({ x: 0, y: 0 });
@@ -66,7 +65,7 @@
 <Container bind:showMenu>
 	<Content>
 		<NavBar bind:showMenu><div class="text-xl">Edit thumbnail</div></NavBar>
-		<div class="container mx-auto prose max-w-[1024px] mt-4">
+		<div class="container mx-auto prose max-w-5xl mt-4">
 			<h2>{data.response.name}</h2>
 			<div>
 				<label class="input">
@@ -98,7 +97,7 @@
 		<ul class="menu">
 			<li>
 				<button onclick={() => goto(viewURL(page.url, data.request.id))}>
-					<Icon data={viewIcon} class="stroke-slate-800 fill-slate-400"/> View current item.
+					<Icon data={viewIcon} class="stroke-slate-800 fill-slate-400" /> View current item.
 				</button>
 			</li>
 		</ul>

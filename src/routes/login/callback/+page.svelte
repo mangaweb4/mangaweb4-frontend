@@ -11,7 +11,7 @@
 <Container>
 	<Content>
 		<NavBar><div class="text-xl">Login</div></NavBar>
-		<div class="container mx-auto prose max-w-[1024px] mt-4">
+		<div class="container mx-auto prose max-w-5xl mt-4">
 			<h2>Authorized</h2>
 		</div>
 	</Content>

@@ -22,8 +22,8 @@
 
 <Container bind:showMenu>
 	<Content>
-		<NavBar bind:showMenu ><div class="text-xl">User</div></NavBar>
-		<div class="container mx-auto prose max-w-[1024px] mt-4">
+		<NavBar bind:showMenu><div class="text-xl">User</div></NavBar>
+		<div class="container mx-auto prose max-w-5xl mt-4">
 			<div class="avatar">
 				<div class="rounded-full">
 					<img class="mt-0" alt="user avartar" src="https://www.gravatar.com/avatar/{md5(email)}" />
