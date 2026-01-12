@@ -27,7 +27,7 @@
 	import logger from '$lib/logger';
 	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
 	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
-	import disableAnimationIcon from '@mdi/svg/svg/transition.svg?raw';
+	import disableAnimationIcon from '@mdi/svg/svg/motion-pause.svg?raw';
 	import grayscaleIcon from '@mdi/svg/svg/square-opacity.svg?raw';
 	import highQualityIcon from '@mdi/svg/svg/quality-high.svg?raw';
 	import lowQualityIcon from '@mdi/svg/svg/quality-low.svg?raw';
