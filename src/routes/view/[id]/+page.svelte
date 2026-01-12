@@ -6,6 +6,9 @@
 	import SideBar from '$lib/components/SideBar.svelte';
 	import Toast from '$lib/components/Toast.svelte';
 
+	import Navigation from './Navigation.svelte';
+	import type { ViewOptions } from '$lib/view_options.server';
+	import { MediaQuery } from 'svelte/reactivity';
 	import { browseTagURL } from '$lib/routes';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
@@ -24,14 +27,11 @@
 	import logger from '$lib/logger';
 	import isFavoriteIcon from '@mdi/svg/svg/heart.svg?raw';
 	import isNotFavoriteIcon from '@mdi/svg/svg/heart-outline.svg?raw';
-	import disableAnimationIcon from '@mdi/svg/svg/transition.svg?raw';
+	import disableAnimationIcon from '@mdi/svg/svg/motion-pause.svg?raw';
 	import grayscaleIcon from '@mdi/svg/svg/square-opacity.svg?raw';
 	import highQualityIcon from '@mdi/svg/svg/quality-high.svg?raw';
 	import lowQualityIcon from '@mdi/svg/svg/quality-low.svg?raw';
 	import originalQualityIcon from '@mdi/svg/svg/square-rounded.svg?raw';
-
-	import type { ViewOptions } from '$lib/view_options.server';
-	import Navigation from './Navigation.svelte';
 
 	let current = $state(0);
 	let viewer: Viewer;
@@ -49,8 +49,13 @@
 
 	let showNavBar = $state(false);
 
+	const prefersReducedMotion = new MediaQuery('prefers-reduced-motion');
+
 	let options = $state(data.options);
 	let quality = $derived.by(() => options.quality ?? ImageQuality.HIGH);
+	let disableAnimation = $derived.by(
+		() => options.disableAnimation || prefersReducedMotion.current
+	);
 
 	function createImageUrls(id: number, pageCount: number): string[] {
 		const url = new URL('/api/manga/page_image', page.url.origin);
@@ -182,7 +187,7 @@
 				bind:this={viewer}
 				startIndex={data.response.currentPage}
 				grayscale={options.grayscale}
-				disableAnimation={options.disableAnimation}
+				{disableAnimation}
 				onTapped={() => (showNavBar = !showNavBar)}
 				disabled={showNavBar}
 			/>
@@ -266,23 +271,24 @@
 				</button>
 			</li>
 
-			<li class="menu-title">Options</li>
-			<li>
+			<li class="menu-title">Read Options</li>
+			<li
+				class:menu-active={options.disableAnimation}
+				class:menu-disabled={prefersReducedMotion.current}
+			>
 				<button
-					class:menu-active={options.disableAnimation}
+					disabled={prefersReducedMotion.current}
 					onclick={async () => {
 						let o = options;
 						o.disableAnimation = !o.disableAnimation;
 						onUpdateOptions(o);
 					}}
 				>
-					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Disable Animation
+					<Icon data={disableAnimationIcon} class="fill-slate-400 stroke-slate-800" /> Reduce Motion
 				</button>
 			</li>
-			<li>
+			<li class:menu-active={options.grayscale}>
 				<button
-					class="my-1"
-					class:menu-active={options.grayscale}
 					onclick={async () => {
 						let o = options;
 						o.grayscale = !o.grayscale;
@@ -295,10 +301,8 @@
 
 			<li class="menu-title">Image Quality</li>
 			<li class="menu-sm"><em>This setting applies after the next item view.</em></li>
-			<li>
+			<li class:menu-active={quality === ImageQuality.ORIGINAL}>
 				<button
-					class="my-1"
-					class:menu-active={quality === ImageQuality.ORIGINAL}
 					onclick={async () => {
 						let o = options;
 						o.quality = ImageQuality.ORIGINAL;
@@ -308,10 +312,8 @@
 					<Icon data={originalQualityIcon} class="fill-slate-400 stroke-slate-800" /> Original
 				</button>
 			</li>
-			<li>
+			<li class:menu-active={quality === ImageQuality.HIGH}>
 				<button
-					class="my-1"
-					class:menu-active={quality === ImageQuality.HIGH}
 					onclick={async () => {
 						let o = options;
 						o.quality = ImageQuality.HIGH;
@@ -322,10 +324,8 @@
 				</button>
 			</li>
 
-			<li>
+			<li class:menu-active={quality === ImageQuality.LOW}>
 				<button
-					class="my-1"
-					class:menu-active={quality === ImageQuality.LOW}
 					onclick={async () => {
 						let o = options;
 						o.quality = ImageQuality.LOW;
