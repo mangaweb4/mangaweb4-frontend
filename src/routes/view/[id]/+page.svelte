@@ -303,7 +303,6 @@
 			</li>
 
 			<li class="menu-title">Image Quality</li>
-			<li class="menu-sm"><em>This setting applies after the next item view.</em></li>
 			<li class:menu-active={quality === ImageQuality.ORIGINAL}>
 				<button
 					onclick={async () => {
