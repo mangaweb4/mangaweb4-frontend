@@ -79,7 +79,7 @@
 					/>
 				</label>
 			</div>
-			<div class="width-full relative my-5 h-[500px]">
+			<div class="width-full relative my-5 h-125">
 				<Cropper {image} bind:crop bind:zoom {aspect} oncropcomplete={onCropComplete} />
 			</div>
 

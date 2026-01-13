@@ -22,5 +22,6 @@ jobs:
 
       - run: bun install
       - run: bun run build
+      - run: bun run eslint
 
       - uses: ghostdevv/svelte-check-action@v1

@@ -5,14 +5,14 @@ import variables from '$lib/variables.server';
 import { MaintenanceClient } from '$lib/grpc/maintenance.client';
 
 export const GET: RequestHandler = async () => {
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
 
-	let client = new MaintenanceClient(transport);
+	const client = new MaintenanceClient(transport);
 
-	let { response } = await client.updateLibrary({});
+	const { response } = await client.updateLibrary({});
 
 	return new Response(JSON.stringify({ success: response.isSuccess }));
 };

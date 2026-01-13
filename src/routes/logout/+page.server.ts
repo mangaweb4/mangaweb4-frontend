@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 import { browseURL } from '$lib/routes';
 import logger from '$lib/logger';
 
-export const load: PageServerLoad = async ({ url, fetch, cookies }) => {
+export const load: PageServerLoad = async ({ url, cookies }) => {
 	if (!variables().oidcEnable) {
 		logger.debug('OIDC not enable. redirect to browse page');
 		redirect(307, browseURL(url.origin));

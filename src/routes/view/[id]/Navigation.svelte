@@ -9,7 +9,7 @@
 		length,
 		current = $bindable(0),
 		show = $bindable(true),
-		onMovedToPage = (i: number) => {},
+		onMovedToPage = (_i: number) => {},
 		onPrevious = () => {},
 		onNext = () => {}
 	} = $props();
@@ -41,7 +41,7 @@
 				min="0"
 				max={length}
 				bind:value={current}
-				onchange={(e: any) => onMovedToPage(e.target.value)}
+				onchange={(e: Event) => onMovedToPage((e.target as HTMLInputElement).value)}
 			/>
 			<button
 				class="btn flex-none"

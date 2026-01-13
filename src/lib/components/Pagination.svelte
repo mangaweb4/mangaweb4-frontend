@@ -39,7 +39,7 @@
 			<Icon data={firstPageIcon} />
 		</button>
 
-		{#each pageNumbers as i}
+		{#each pageNumbers as i (i)}
 			<button
 				class="join-item btn"
 				class:btn-active={currentPage == i}

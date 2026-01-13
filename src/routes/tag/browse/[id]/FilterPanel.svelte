@@ -42,7 +42,7 @@
 			sort: data.request.sort
 		};
 		if (options != null) {
-			const { filter, item_per_page, order, page, search, sort, tag } = options;
+			const { filter, item_per_page, order, page, search, sort } = options;
 			if (filter != null) {
 				callOptions.filter = filter;
 			}
@@ -120,7 +120,7 @@
 	<details class="dropdown w-full">
 		<summary class="btn w-full">{@render sortFieldTitle(data.request.sort)}</summary>
 		<ul class="menu dropdown-content bg-base-100 shadow-sm">
-			{#each [SortField.NAME, SortField.CREATION_TIME, SortField.PAGECOUNT] as option}
+			{#each [SortField.NAME, SortField.CREATION_TIME, SortField.PAGECOUNT] as option (option)}
 				<li>
 					<button
 						class:menu-active={sort == option}
@@ -138,7 +138,7 @@
 	<details class="dropdown w-full">
 		<summary class="btn w-full">{@render orderTitle(data.request.order)}</summary>
 		<ul class="menu dropdown-content bg-base-100 shadow-sm">
-			{#each [SortOrder.ASCENDING, SortOrder.DESCENDING] as option}
+			{#each [SortOrder.ASCENDING, SortOrder.DESCENDING] as option (option)}
 				<li>
 					<button
 						class:menu-active={order == option}
@@ -156,7 +156,7 @@
 	<details class="dropdown w-full">
 		<summary class="btn w-full">{@render filterTitle(data.request.filter)}</summary>
 		<ul class="menu dropdown-content bg-base-100 shadow-sm">
-			{#each [Filter.UNKNOWN, Filter.FAVORITE_ITEMS, Filter.FAVORITE_TAGS] as option}
+			{#each [Filter.UNKNOWN, Filter.FAVORITE_ITEMS, Filter.FAVORITE_TAGS] as option (option)}
 				<li>
 					<button
 						class:menu-active={filter == option}

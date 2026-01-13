@@ -15,7 +15,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 			const response = await resolve(event);
 			return response;
-		} catch (e: any) {
+		} catch (e) {
 			return new Response(JSON.stringify(e));
 		}
 	}

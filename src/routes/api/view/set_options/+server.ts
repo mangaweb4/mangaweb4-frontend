@@ -3,7 +3,7 @@ import { setViewOptions } from '$lib/view_options.server';
 import { ImageQuality } from '$lib/grpc/types';
 import { $enum } from 'ts-enum-util';
 
-export const GET: RequestHandler = async ({ request, cookies, url }) => {
+export const GET: RequestHandler = async ({ cookies, url }) => {
 	const disableAnimation = url.searchParams.get('disableAnimation') ?? 'false';
 	const grayscale = url.searchParams.get('grayscale') ?? 'false';
 	const quality = $enum(ImageQuality).getValueOrDefault(

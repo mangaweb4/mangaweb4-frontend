@@ -10,39 +10,39 @@ import { ImageQuality } from '$lib/grpc/types';
 import { $enum } from 'ts-enum-util';
 
 export const GET: RequestHandler = async ({ request, cookies, url }) => {
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
 
-	let client = new MangaClient(transport);
-	let index = parseInt(url.searchParams.get('i') ?? '') || 0;
-	let user = getUser(request, cookies);
-	let id = parseInt(url.searchParams.get('id') ?? '');
+	const client = new MangaClient(transport);
+	const index = parseInt(url.searchParams.get('i') ?? '') || 0;
+	const user = getUser(request, cookies);
+	const id = parseInt(url.searchParams.get('id') ?? '');
 	if (id == 0 || Number.isNaN(id)) {
 		error(404);
 	}
-	let quality = $enum(ImageQuality).getValueOrDefault(
+	const quality = $enum(ImageQuality).getValueOrDefault(
 		url.searchParams.get('quality'),
 		ImageQuality.HIGH
 	);
 
-	let stream = client.pageImageStream({ id: id, user, index, quality });
+	const stream = client.pageImageStream({ id: id, user, index, quality });
 
 	let filename = '';
 	let contentType = '';
-	let buffer = new ArrayBuffer(0, { maxByteLength: MAX_STREAM_OBJECT_SIZE });
+	const buffer = new ArrayBuffer(0, { maxByteLength: MAX_STREAM_OBJECT_SIZE });
 
-	for await (let message of stream.responses) {
+	for await (const message of stream.responses) {
 		if (filename == '') {
 			filename = message.filename;
 			contentType = message.contentType;
 		}
 
-		let offset = buffer.byteLength;
+		const offset = buffer.byteLength;
 		buffer.resize(buffer.byteLength + message.data.length);
 
-		let array = new Uint8Array(buffer, offset, message.data.length);
+		const array = new Uint8Array(buffer, offset, message.data.length);
 		array.set(message.data);
 	}
 

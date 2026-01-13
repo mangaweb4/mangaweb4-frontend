@@ -18,7 +18,7 @@
 </script>
 
 <div class="toast z-20">
-	{#each messages as m}
+	{#each messages as m, _index (_index)}
 		<div
 			class="alert"
 			class:alert-info={m.type == 'info'}

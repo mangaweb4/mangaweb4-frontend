@@ -3,19 +3,19 @@ import { createLogger } from 'vite';
 
 const customLogger = createLogger();
 
-customLogger.info = (msg, options) => {
+customLogger.info = (msg, _options) => {
 	logger.info(msg);
 };
 
-customLogger.warn = (msg, options) => {
+customLogger.warn = (msg, _options) => {
 	logger.warn(msg);
 };
 
-customLogger.warnOnce = (msg, options) => {
+customLogger.warnOnce = (msg, _options) => {
 	logger.warn(msg);
 };
 
-customLogger.error = (msg, options) => {
+customLogger.error = (msg, _options) => {
 	logger.error(msg);
 };
 

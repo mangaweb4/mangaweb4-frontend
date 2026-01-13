@@ -6,19 +6,19 @@ import variables from '$lib/variables.server';
 import { error } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url }) => {
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
 
-	let client = new MangaClient(transport);
+	const client = new MangaClient(transport);
 
 	const id = parseInt(url.searchParams.get('id') ?? '');
 	if (id == 0 || Number.isNaN(id)) {
 		error(404);
 	}
 
-	let { response } = await client.thumbnail({ id });
+	const { response } = await client.thumbnail({ id });
 
 	return new Response(response.data as BodyInit, {
 		status: 200,

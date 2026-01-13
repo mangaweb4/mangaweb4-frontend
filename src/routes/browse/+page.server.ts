@@ -31,14 +31,17 @@ function createDefaultRequest(): {
 }
 
 export const load: PageServerLoad = async ({ request, url, cookies }) => {
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
 
-	let client = new MangaClient(transport);
+	const client = new MangaClient(transport);
 
-	let { user, filter, item_per_page, order, page, search, sort } = createDefaultRequest();
+	const req = createDefaultRequest();
+	let { user, filter, order, page, search, sort } = req;
+	const item_per_page = req.item_per_page;
+
 	user = getUser(request, cookies);
 
 	const params = url.searchParams;
@@ -55,20 +58,20 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
 	}
 
 	if (params.has('page')) {
-		let v = params.get('page');
+		const v = params.get('page');
 		if (v != null) {
 			page = parseInt(v);
 		}
 	}
 
 	if (params.has('search')) {
-		let v = params.get('search');
+		const v = params.get('search');
 		if (v != null) {
 			search = v;
 		}
 	}
 
-	let call = await client.list({
+	const call = await client.list({
 		user: user,
 		filter: filter,
 		page: page,
