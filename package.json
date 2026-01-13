@@ -1,6 +1,6 @@
 {
 	"name": "mangaweb4-frontend",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev --host | pino-pretty ",
