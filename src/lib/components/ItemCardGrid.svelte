@@ -51,7 +51,7 @@
 
 <div class="m-2 grid grid-cols-1 gap-8 overflow-visible sm:grid-cols-2 md:grid-cols-3">
 	{#if !updated}
-		{#each { length: ITEM_PER_PAGE } as _ (_)}
+		{#each { length: ITEM_PER_PAGE } as _, _index (_index)}
 			<PlaceholderCard />
 		{/each}
 	{:else}
