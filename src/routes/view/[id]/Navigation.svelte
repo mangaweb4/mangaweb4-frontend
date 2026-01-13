@@ -15,7 +15,13 @@
 	} = $props();
 </script>
 
-<div class="bg-base-100 fixed bottom-0 h-[10em] w-full" hidden={!show}>
+<div
+	class="bg-base-100 fixed bottom-0 h-50 w-full transition-all duration-200 ease-in motion-reduce:transition-none motion-reduce:duration-0"
+	class:opacity-0={!show}
+	class:opacity-100={show}
+	class:visible={show}
+	class:invisible={!show}
+>
 	<div class="mx-auto max-w-5xl p-3">
 		<h3 class="text-lg font-bold">Move to page</h3>
 		<div class="mt-4 flex flex-row">

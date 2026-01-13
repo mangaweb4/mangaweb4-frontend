@@ -119,7 +119,7 @@
 </button>
 
 <div
-	class="embla bg-base-300 h-full w-full"
+	class="embla bg-base-300 h-full w-full transition-all duration-200 motion-reduce:transition-none motion-reduce:duration-0"
 	class:brightness-50={disabled}
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onEmblaInit}
