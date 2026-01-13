@@ -32,7 +32,7 @@
 		disabled = $bindable(false)
 	} = $props();
 
-	let pages: Page[] = $state(() => Array(imageURLs.length));
+	let pages: Page[] = $state((() => Array(imageURLs.length))());
 	let progress = $derived(startIndex);
 
 	function hammerJsAttachment(element: HTMLElement) {
