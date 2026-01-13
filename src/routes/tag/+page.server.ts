@@ -64,12 +64,12 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
 		if (v != null) search = v;
 	}
 
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
 
-	let client = new TagClient(transport);
+	const client = new TagClient(transport);
 	const call = await client.list({
 		user: user,
 		filter: filter,

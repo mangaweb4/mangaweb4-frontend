@@ -15,12 +15,12 @@ export const load: PageServerLoad = async ({ request, cookies, params }) => {
 
 	const user = getUser(request, cookies);
 
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
 
-	let client = new MangaClient(transport);
+	const client = new MangaClient(transport);
 
 	const call = await client.detail({
 		id: idNo,

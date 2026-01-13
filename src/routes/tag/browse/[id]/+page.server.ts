@@ -26,14 +26,14 @@ export const load: PageServerLoad = async ({ request, url, cookies, params }) =>
 	const page = parseInt(searchParams.get('page') ?? '0');
 	const search = searchParams.get('search') ?? '';
 
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
 
-	let client = new TagClient(transport);
+	const client = new TagClient(transport);
 
-	let call = await client.detail({
+	const call = await client.detail({
 		user: user,
 		id: id,
 		filter: filter,

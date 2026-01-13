@@ -7,7 +7,7 @@ import { version } from '$app/environment';
 import logger from '$lib/logger';
 
 export const load: PageServerLoad = async ({ url }) => {
-	let transport = new GrpcTransport({
+	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()
 	});
