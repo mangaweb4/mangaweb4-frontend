@@ -41,7 +41,7 @@ export async function validateSessionWithHeader(url: URL, request: Request) {
 		});
 
 		logger.debug({ payload, protectedHeader }, 'verify JWT token');
-	} catch (err: any) {
+	} catch {
 		throw Error('invalid access token');
 	}
 }
@@ -75,7 +75,7 @@ export async function validateSession(url: URL, cookies: Cookies) {
 		});
 
 		logger.debug({ payload, protectedHeader }, 'verify JWT token');
-	} catch (err: any) {
+	} catch (err) {
 		logger.debug(err, 'validate JWT error');
 		redirect(307, loginUrl(url.origin, url));
 	}

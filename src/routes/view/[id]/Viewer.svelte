@@ -24,7 +24,7 @@
 
 	let {
 		imageURLs = [],
-		onIndexChange = (i: number) => {},
+		onIndexChange = (_i: number) => {},
 		onTapped = () => {},
 		startIndex,
 		grayscale = false,
@@ -84,7 +84,7 @@
 		}
 	};
 
-	function onInit(event: any) {
+	function onEmblaInit(event: CustomEvent<EmblaCarouselType>) {
 		emblaApi = event.detail;
 		emblaApi.on('slidesInView', slidesInView);
 	}
@@ -122,11 +122,11 @@
 	class="embla bg-base-300 h-full w-full"
 	class:brightness-50={disabled}
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
-	onemblaInit={onInit}
+	onemblaInit={onEmblaInit}
 	{@attach hammerJsAttachment}
 >
 	<div class="embla__container flex h-full w-full">
-		{#each imageURLs as url, index}
+		{#each imageURLs as url, index (index)}
 			<div class="embla__slide flex h-full w-full shrink-0 grow-0">
 				<Page
 					alt="page-{index}"

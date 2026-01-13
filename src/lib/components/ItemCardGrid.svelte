@@ -51,11 +51,11 @@
 
 <div class="m-2 grid grid-cols-1 gap-8 overflow-visible sm:grid-cols-2 md:grid-cols-3">
 	{#if !updated}
-		{#each { length: ITEM_PER_PAGE } as _}
+		{#each { length: ITEM_PER_PAGE } as _ (_)}
 			<PlaceholderCard />
 		{/each}
 	{:else}
-		{#each items as item}
+		{#each items as item (item.id)}
 			<ItemCard
 				favorite={item.favorite}
 				isRead={item.isRead}

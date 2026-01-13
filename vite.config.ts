@@ -4,8 +4,8 @@ import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import tailwindcss from '@tailwindcss/vite';
 import customLogger from './logger';
 
-export default defineConfig(({ command, mode }) => {
-	const env = loadEnv(mode, process.cwd(), '');
+export default defineConfig(({ mode }) => {
+	loadEnv(mode, process.cwd(), '');
 
 	return {
 		plugins: [

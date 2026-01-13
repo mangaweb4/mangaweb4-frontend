@@ -34,10 +34,10 @@ function createDefaultRequest(
 }
 
 export const load: PageServerLoad = async ({ request, url, cookies }) => {
-	let { user, search, filter, page, item_per_page, order, sort } = createDefaultRequest(
-		request,
-		cookies
-	);
+	const req = createDefaultRequest(request, cookies);
+
+	let { search, filter, page, item_per_page, order, sort } = req;
+	const user = req.user;
 
 	const params = url.searchParams;
 	if (params.has('sort')) {

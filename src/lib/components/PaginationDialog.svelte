@@ -10,7 +10,7 @@
 	import minusIcon from '@mdi/svg/svg/minus.svg?raw';
 	import { goto } from '$app/navigation';
 
-	let { currentPage = 0, totalPage = 0, createLink = (n: number) => {} } = $props();
+	let { currentPage = 0, totalPage = 0, createLink = (_n: number) => {} } = $props();
 	let customPage = $derived(currentPage);
 
 	let dialog: HTMLDialogElement;

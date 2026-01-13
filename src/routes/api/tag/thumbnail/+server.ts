@@ -4,7 +4,7 @@ import { ChannelCredentials } from '@grpc/grpc-js';
 import variables from '$lib/variables.server';
 import { TagClient } from '$lib/grpc/tag.client';
 
-export const GET: RequestHandler = async ({ request, url }) => {
+export const GET: RequestHandler = async ({ url }) => {
 	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()

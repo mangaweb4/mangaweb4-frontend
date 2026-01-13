@@ -38,7 +38,10 @@ export const load: PageServerLoad = async ({ request, url, cookies }) => {
 
 	const client = new MangaClient(transport);
 
-	let { user, filter, item_per_page, order, page, search, sort } = createDefaultRequest();
+	const req = createDefaultRequest();
+	let { user, filter, order, page, search, sort } = req;
+	const item_per_page = req.item_per_page;
+
 	user = getUser(request, cookies);
 
 	const params = url.searchParams;

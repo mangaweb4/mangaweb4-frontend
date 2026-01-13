@@ -147,7 +147,7 @@
 
 		try {
 			fetch(url);
-		} catch (err: any) {
+		} catch (err) {
 			logger.error(err, 'error during update progress.');
 		}
 	}
@@ -240,7 +240,7 @@
 			</li>
 
 			<li class="menu-title">Tags</li>
-			{#each tags as t}
+			{#each tags as t (t.id)}
 				<li>
 					<button onclick={() => goto(browseTagURL(page.url, t.id))}>
 						<Icon data={tagIcon} class="fill-slate-400 stroke-slate-800" />

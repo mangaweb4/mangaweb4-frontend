@@ -7,7 +7,7 @@ import logger from '$lib/logger';
 import { UserClient } from '$lib/grpc/user.client';
 import { SystemClient } from '$lib/grpc/system.client';
 
-export const load: PageServerLoad = async ({ request, url, cookies }) => {
+export const load: PageServerLoad = async ({ request, cookies }) => {
 	const user = getUserDetail(request, cookies);
 
 	const transport = new GrpcTransport({

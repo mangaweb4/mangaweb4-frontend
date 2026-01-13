@@ -14,12 +14,13 @@
 </script>
 
 <svelte:head>
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html webManifestLink}
 
 	{#if pwaAssetsHead.themeColor}
 		<meta name="theme-color" content={pwaAssetsHead.themeColor.content} />
 	{/if}
-	{#each pwaAssetsHead.links as link}
+	{#each pwaAssetsHead.links as link (link.id)}
 		<link {...link} />
 	{/each}
 </svelte:head>

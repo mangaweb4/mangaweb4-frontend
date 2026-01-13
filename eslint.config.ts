@@ -1,9 +1,6 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
 
-import tsParser from '@typescript-eslint/parser';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
-import parser from 'svelte-eslint-parser';
 import js from '@eslint/js';
 import svelte from 'eslint-plugin-svelte';
 import ts from 'typescript-eslint';
@@ -22,8 +19,38 @@ export default defineConfig(
 		}
 	},
 	{
+		name: 'typescript',
+		files: ['**/*.ts', '**/*.tsx'],
+		languageOptions: {
+			parserOptions: {
+				tsconfigRootDir: import.meta.dirname // Helps resolve the absolute path
+			}
+		},
+		rules: {
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_'
+				}
+			]
+		}
+	},
+	{
+		name: 'svelte',
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
-
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off', //TODO: remove this rule after figuring out the effects.
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_'
+				}
+			]
+		},
 		languageOptions: {
 			parserOptions: {
 				projectService: true,

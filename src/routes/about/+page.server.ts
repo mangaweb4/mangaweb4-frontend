@@ -6,7 +6,7 @@ import { SystemClient } from '$lib/grpc/system.client';
 import { version } from '$app/environment';
 import logger from '$lib/logger';
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async () => {
 	const transport = new GrpcTransport({
 		host: variables().apiBasePath,
 		channelCredentials: ChannelCredentials.createInsecure()

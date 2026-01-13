@@ -14,7 +14,6 @@
 	import SideBar from '$lib/components/SideBar.svelte';
 
 	interface Props {
-		version?: string;
 		data: PageData;
 	}
 
