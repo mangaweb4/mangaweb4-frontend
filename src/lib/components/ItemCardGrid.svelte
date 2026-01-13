@@ -51,11 +51,11 @@
 
 <div class="m-2 grid grid-cols-1 gap-8 overflow-visible sm:grid-cols-2 md:grid-cols-3">
 	{#if !updated}
-		{#each { length: ITEM_PER_PAGE } as _, _index (_index)}
+		{#each Array(ITEM_PER_PAGE)}
 			<PlaceholderCard />
 		{/each}
 	{:else}
-		{#each items as item (item.id)}
+		{#each items as item (item)}
 			<ItemCard
 				favorite={item.favorite}
 				isRead={item.isRead}
@@ -71,7 +71,7 @@
 				currentPage={item.currentPage}
 			/>
 		{/each}
-		{#each { length: ITEM_PER_PAGE - items.length }}
+		{#each Array(ITEM_PER_PAGE - items.length)}
 			<ItemCard dummy={true} accessTime={accessTime == true} />
 		{/each}
 	{/if}
