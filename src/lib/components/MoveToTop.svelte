@@ -9,7 +9,7 @@
 </script>
 
 <nav aria-label="Move to top navigation" class="fixed end-5 bottom-10 hidden md:flex xl:end-30">
-	<button class="btn" onclick={moveToTop}>
+	<button class="btn shadow-xl" onclick={moveToTop}>
 		<Icon data={icon} class="fill-slate-400 stroke-slate-800" />
 		<span class="d-none d-sm-block">Top</span>
 	</button>
