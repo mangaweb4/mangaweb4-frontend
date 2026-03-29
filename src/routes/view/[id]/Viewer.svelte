@@ -78,7 +78,8 @@
 	let emblaApi: EmblaCarouselType;
 	let options = {
 		loop: true,
-		startIndex: (() => startIndex)(), // use initial value here since the carousel is initialized once anyway.
+		// use initial value here since the carousel is initialized once anyway.
+		startIndex: (() => startIndex)(),
 		watchDrag: () => {
 			return !disableAnimation && !disabled;
 		}
@@ -103,23 +104,26 @@
 </script>
 
 <button
-	class="absolute inset-y-1/2 start-2 z-10 h-1/2 w-20 -translate-y-1/2 cursor-pointer text-gray-500/50 hover:text-gray-500"
+	class="absolute inset-y-1/2 inset-s-0 z-10 h-full w-1/5
+		-translate-y-1/2 cursor-pointer text-gray-500/50 hover:text-gray-500"
 	onclick={() => previous()}
 	{disabled}
 >
-	<Icon data={prevIcon} class="mx-auto"></Icon>
+	<Icon data={prevIcon} class="ms-10 me-auto"></Icon>
 </button>
 
 <button
-	class="absolute inset-y-1/2 end-2 z-10 h-1/2 w-20 -translate-y-1/2 cursor-pointer text-gray-500/50 hover:text-gray-500"
+	class="absolute inset-y-1/2 inset-e-0 z-10 h-full w-1/5
+		-translate-y-1/2 cursor-pointer text-gray-500/50 hover:text-gray-500"
 	onclick={() => next()}
 	{disabled}
 >
-	<Icon data={nextIcon} class="mx-auto"></Icon>
+	<Icon data={nextIcon} class="ms-auto me-10"></Icon>
 </button>
 
 <div
-	class="embla bg-base-300 h-full w-full transition-all duration-200 motion-reduce:transition-none motion-reduce:duration-0"
+	class="embla bg-base-300 h-full w-full transition-all duration-200
+		motion-reduce:transition-none motion-reduce:duration-0"
 	class:brightness-50={disabled}
 	use:emblaCarouselSvelte={{ options, plugins: [] }}
 	onemblaInit={onEmblaInit}
